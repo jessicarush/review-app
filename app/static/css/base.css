@@ -1,0 +1,130 @@
+@charset "UTF-8";
+
+/* Global variables */
+:root {
+	--main-font-family: 'Source Sans Pro', serif;
+	--heading-font-family: 'Nunito', sans-serif;
+	--subheading-font-family: 'Source Serif Pro', serif;
+	--minor-font-family: 'Source Serif Pro', serif;
+	--main-font-color: rgb(50, 50, 50);
+	--heading-font-color: rgb(0, 0, 0);
+	--minor-font-color: rgb(180, 180, 180);
+	--emphasis-color: rgb(255, 102, 102);
+	--content-width: 1000px;
+}
+
+/* Layout */
+body {
+	background-image: url(../img/vintage_speckles.png);
+	background-repeat: repeat;
+	-webkit-text-size-adjust: 100%;
+}
+div.container_outer {
+	margin: 50px auto 0px auto;
+	width: 1000px;
+}
+div.content {
+}
+
+/* Typography */
+h1 {
+	font-family: var(--heading-font-family);
+	color: var(--heading-font-color);
+	font-weight: 500;
+	font-size: 38px;
+	line-height: 1em;
+}
+p {
+	font-family: var(--main-font-family);
+	color: var(--main-font-color);
+	font-size: 15px;
+	line-height: 1.6em;
+}
+strong {
+	/* font-weight: 700; */
+}
+a:link, a:visited {
+	font-family: var(--main-font-family);
+	color: var(--emphasis-color);
+	text-decoration: none;
+}
+a:hover, a:active {
+	/* color: #10ae86; */
+}
+.error {
+	/* color: #FF1010;
+	font-weight: 600; */
+}
+::selection {
+  /* background: #3d4d62;
+  color: #FFF; */
+}
+::-moz-selection {
+  /* background: #3d4d62;
+  color: #FFF; */
+}
+
+
+/* Design Elements */
+hr.clear {
+	border: 0;
+	margin: 0;
+	height: 0;
+	clear: both;
+}
+ul.error, ul.error li {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+
+/* Forms */
+input, textarea {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	outline: none;
+	background: none;
+	box-shadow: none;
+	border-radius: 0;
+	font-family: inherit;
+}
+input.single {
+	/* height: 2.5em;
+	width: 100%;
+	font-size: 18px;
+	color: #a5adb8;
+	margin: 2px 0px;
+	padding: 0px 15px;
+	border:1px solid #D0DAD7; */
+}
+textarea.multiple {
+	/* height: 11em;
+	width: 100%;
+	font-size: 18px;
+	color: #a5adb8;
+	margin: 2px 0px;
+	padding: 5px 15px;
+	border:1px solid #D0DAD7; */
+}
+input.button {
+	/* padding: 7px 12px;
+	margin: 10px 0px 0px 0px;
+	font-weight: 700;
+	font-size: 16px;
+	color: #1BD3A5;
+	border: 3px solid #1BD3A5;
+	cursor: pointer; */
+}
+p.button {
+	/* text-align: right; */
+}
+input:focus {
+	/* border:1px solid #a6b5bc; */
+}
+input.check{
+	-webkit-appearance: checkbox;
+	-moz-appearance: checkbox;
+	appearance: checkbox;
+}

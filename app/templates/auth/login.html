@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Sign In</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.user_or_email.label }}
+            <!-- Display error message if field is empty-->
+            {% for error in form.user_or_email.errors %}
+            <span class="error"> : {{ error }}</span>
+            {% endfor %}<br>
+            {{ form.user_or_email(class="single") }}<br>
+        </p>
+        <p>
+            {{ form.password.label }}
+            <!-- Display error message if field is empty-->
+            {% for error in form.password.errors %}
+            <span class="error"> : {{ error }}</span>
+            {% endfor %}<br>
+            {{ form.password(class="single") }}<br>
+        </p>
+        <p>{{ form.remember_me(class="check", checked="True") }} {{ form.remember_me.label }}</p>
+        <p class="button">{{ form.submit(class="button") }}</p>
+    </form>
+
+    <strong>Forgot password:</strong>
+        <a href="{{ url_for('auth.reset_password_request') }}">Reset password.</a></p>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <!-- conditional statements -->
+        {% if title %}
+        <title>{{ title }} | Site Name</title>
+        {% else %}
+        <title>Site Name</title>
+        {% endif %}
+
+        <link href="{{ url_for('static', filename='img/favicon.ico' )}}" rel="shortcut icon" type="image/x-icon" >
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css' )}}">
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900|Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet">
+
+        {{ moment.include_jquery() }}
+        {{ moment.include_moment() }}
+
+    </head>
+
+    <body>
+    <div class="container_outer">
+        <div class="content">
+        <!-- display flashed messages -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="error">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {%  endfor %}
+        </ul>
+        {%  endif %}
+        {%  endwith %}
+
+        <!-- template inheritance -->
+        {% block content %}{% endblock %}
+        </div>
+    </div>
+    </body>
+</html>
