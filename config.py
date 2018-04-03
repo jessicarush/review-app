@@ -5,7 +5,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.env'))
 
 class Config(object):
-    PROJECT_NAME = 'new_project'
+    PROJECT_NAME = 'review'
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'password'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'data.db')
@@ -17,4 +17,4 @@ class Config(object):
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     # For emailing error log:
-    ADMINS = ['jesskrush@me.com']
+    ADMINS = [os.environ.get('ADMIN')]
