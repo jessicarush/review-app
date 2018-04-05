@@ -2,29 +2,57 @@
 
 /* Global variables */
 :root {
-	--main-font-family: 'Source Sans Pro', serif;
+	--main-font-family: 'Source Sans Pro', sans-serif;
 	--heading-font-family: 'Nunito', sans-serif;
-	--subheading-font-family: 'Source Serif Pro', serif;
-	--minor-font-family: 'Source Serif Pro', serif;
+	--subheading-font-family: 'Nunito', sans-serif;
+	--minor-font-family: 'Source Serif Pro', sans-serif;
 	--main-font-color: rgb(50, 50, 50);
 	--heading-font-color: rgb(0, 0, 0);
 	--minor-font-color: rgb(180, 180, 180);
 	--emphasis-color: rgb(255, 102, 102);
+	/* --emphasis-color: rgb(54, 199, 167); */
+	/* --emphasis-color: rgb(0, 173, 221); */
 	--content-width: 1000px;
 }
+
 
 /* Layout */
 body {
 	background-image: url(../img/vintage_speckles.png);
 	background-repeat: repeat;
 	-webkit-text-size-adjust: 100%;
+	margin: 0;
 }
-div.container_outer {
-	margin: 50px auto 0px auto;
-	width: 1000px;
+div.container-outer {
+	margin: 40px 10px 40px 35px;
 }
 div.content {
 }
+div.topic {
+	background: rgba(255, 255, 255, 0.65);
+	padding: 10px 20px 20px 20px;
+	margin: 0px 15px 15px 0px;
+	position: relative;
+	width: 350px;
+	float: left;
+	border: solid 1px rgb(230, 230, 230);
+}
+div.reviews {
+	clear: both;
+	border-top: solid 1px rgb(220, 220, 220);
+	padding-top: 3px;
+	height: 75px;
+	overflow: auto;
+}
+div.mastery {
+	width: 70px;
+	text-align: right;
+	font-size: 13px;
+	position: absolute;
+	top: 20;
+	right: 20;
+}
+
 
 /* Typography */
 h1 {
@@ -34,38 +62,145 @@ h1 {
 	font-size: 38px;
 	line-height: 1em;
 }
+h2.topic {
+	font-family: var(--subheading-font-family);
+	font-size: 15px;
+	font-weight: 800;
+	margin: 0px 0px 0px 45px;
+	padding: 7px 0px 0px 0px;
+}
+h2.reviews {
+	font-family: var(--subheading-font-family);
+	color: var(--heading-font-color);
+	font-size: 12px;
+	margin: 15px 0px 4px 0px;
+	padding-bottom: 4px;
+	border-bottom: solid 1px rgb(220, 220, 220);
+
+}
+.topic h3 {
+	font-family: var(--subheading-font-family);
+	font-size: 9px;
+	text-transform: uppercase;
+	color: var(--minor-font-color);
+	font-weight: 400;
+	float: left;
+	margin: 0px 0px 2px 0px;
+}
 p {
 	font-family: var(--main-font-family);
 	color: var(--main-font-color);
-	font-size: 15px;
+	font-size: 13px;
+	font-weight: 400;
 	line-height: 1.6em;
+	margin: 0;
 }
-strong {
-	/* font-weight: 700; */
+p.created-date {
+	font-family: var(--subheading-font-family);
+	color: var(--minor-font-color);
+	font-size: 11px;
+	margin: 0px 0px 0px 45px;
+	float: left;
+}
+p.current-skill {
+	font-family: var(--subheading-font-family);
+	color: var(--minor-font-color);
+	font-size: 11px;
+	margin: 0;
+	float: right;
+}
+p.current-skill strong {
+	color: var(--heading-font-color);
+	font-weight: 800;
+	font-size: 13px;
+	line-height: 0.8em;
+	padding-left: 3px;
 }
 a:link, a:visited {
-	font-family: var(--main-font-family);
-	color: var(--emphasis-color);
+	/* color: var(--emphasis-color); */
+	color: #000;
 	text-decoration: none;
 }
 a:hover, a:active {
-	/* color: #10ae86; */
+	opacity: 0.85;
+}
+.review span {
+
+}
+.review-id {
+	display: inline-block;
+	width: 45px;
+	color: rgb(200, 200, 200);
+}
+.review-date {
+	display: inline-block;
+	width: 105px;
+}
+.review-time {
+	display: inline-block;
+	width: 95px;
+}
+.review-before {
+	display: inline-block;
+	width: 65px;
+}
+.review-after {
+	display: inline-block;
+	width: 40px;
+}
+/* span.topic-id {
+	display: block;
+	width: 60px;
+	float: left;
+	font-family: var(--subheading-font-family);
+	color: rgb(220, 220, 220);
+	font-size: 36px;
+	font-weight: 200;
+} */
+span.topic-id {
+	display: block;
+	position: absolute;
+	top: 18;
+	left: 18;
+	width: 37px;
+	padding-top: 6px;
+	height: 31px;
+	font-family: var(--subheading-font-family);
+	color: rgb(255, 255, 255);
+	background: #000;
+	border-radius: 20px;
+	font-size: 17px;
+	font-weight: 200;
+	text-align: center;
+}
+span.star-on {
+	color: var(--emphasis-color);
+}
+span.star-off {
+	color: rgb(210, 210, 210);
 }
 .error {
 	/* color: #FF1010;
 	font-weight: 600; */
 }
 ::selection {
-  /* background: #3d4d62;
-  color: #FFF; */
+  background: var(--emphasis-color);
+  color: #FFF;
 }
 ::-moz-selection {
-  /* background: #3d4d62;
-  color: #FFF; */
+  background: var(--emphasis-color);
+  color: #FFF;
 }
 
 
 /* Design Elements */
+hr.thin {
+	clear: both;
+	border: 0;
+	margin: 0;
+	height: 0;
+	background: rgb(220, 220, 220);
+}
 hr.clear {
 	border: 0;
 	margin: 0;

@@ -1,0 +1,50 @@
+<div class="topic">
+
+    <div class="mastery">
+    {% if topic.mastery is ge 3 %}
+        <span class="star-on">&starf;</span>
+        <span class="star-on">&starf;</span>
+        <span class="star-on">&starf;</span>
+    {% elif topic.mastery is eq 2 %}
+        <span class="star-on">&starf;</span>
+        <span class="star-on">&starf;</span>
+        <span class="star-off">&starf;</span>
+    {% elif topic.mastery is eq 1 %}
+        <span class="star-on">&starf;</span>
+        <span class="star-off">&starf;</span>
+        <span class="star-off">&starf;</span>
+    {% else %}
+        <span class="star-off">&starf;</span>
+        <span class="star-off">&starf;</span>
+        <span class="star-off">&starf;</span>
+    {% endif %}
+    </div>
+
+    <span class="topic-id">{{ topic.id }}</span>
+    <h2 class="topic">
+        <a href="https://github.com/jessicarush/python-examples/blob/master/{{ topic.filename }}" target="_blank">{{ topic.filename }}</a></h2>
+
+    <p class="created-date">Added:
+        {{ moment(topic.created_date).format('LL') }}
+    </p>
+
+    <p class="current-skill">Current skill:
+        <strong>{{ topic.current_skill }}</strong>
+    </p>
+
+    <hr class="thin">
+
+    <h2 class="reviews">Review Sessions</h2>
+    <h3 class="review-id">id</h3>
+    <h3 class="review-date">date</h3>
+    <h3 class="review-time">time spent</h3>
+    <h3 class="review-before">before</h3>
+    <h3 class="review-after">after</h3>
+    <div class="reviews">
+        {% for review in topic.reviews %}
+        <p><span class="review-id">{{ review.id }}</span><span class="review-date">{{ moment(review.review_date).fromNow() }}</span><span class="review-time">{{ review.time_spent }} minutes</span><span class="review-before">{{ review.skill_before }} / 5</span><span class="review-after">{{ review.skill_after }} / 5</span></p>
+        {% endfor %}
+    </div>
+
+
+</div>

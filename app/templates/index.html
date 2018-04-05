@@ -2,7 +2,15 @@
 
 {% block content %}
 
-    <h1>Welcome to home/index.</h1>
-    <a href="{{ url_for('auth.logout') }}">Logout</a>
+    <h1>home/index.</h1>
 
+    {% for topic in topics %}
+        {% include '_topic.html' %}
+    {% endfor %}
+    <hr class="clear">
+
+    <a href="{{ url_for('main.sort_by_skill') }}">Sort by skill</a>
+    <a href="{{ url_for('main.sort_by_date') }}">Sort by date</a>
+    <a href="{{ url_for('main.index') }}">Sort by name</a>
+    <a href="{{ url_for('auth.logout') }}">Logout</a>
 {% endblock %}

@@ -50,7 +50,8 @@ class Topic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String(64), index=True, unique=True)
     created_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    current_skill = db.Column(db.Integer)
+    last_study_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    current_skill = db.Column(db.Float)
     mastery = db.Column(db.Integer, default=0)
     # one to many relationships:
     reviews = db.relationship('Review', backref='topic', lazy='dynamic')
@@ -63,8 +64,9 @@ class Review(db.Model):
     '''Model for review session'''
     id = db.Column(db.Integer, primary_key=True)
     review_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    before_skill = db.Column(db.Integer)
-    after_skill = db.Column(db.Integer)
+    time_spent = db.Column(db.Integer)
+    skill_before = db.Column(db.Float)
+    skill_after = db.Column(db.Float)
     # one to many relationship:
     topic_id = db.Column(db.Integer, db.ForeignKey('topic.id'))
 

@@ -5,13 +5,13 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.env'))
 
 class Config(object):
-    PROJECT_NAME = 'review'
+    PROJECT_NAME = 'Review'
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'password'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'data.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    # The url to the repo with topics to be studied:
+    # The url to the repo contaning topics (filenames) to be studied:
     API_URL = 'https://api.github.com/repos/jessicarush/python-examples/contents'
 
     # For sending emails:
