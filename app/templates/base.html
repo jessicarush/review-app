@@ -2,9 +2,9 @@
     <head>
         <!-- conditional statements -->
         {% if title %}
-        <title>{{ title }} | Site Name</title>
+        <title>{{ title }} | Review Log</title>
         {% else %}
-        <title>Site Name</title>
+        <title>Review Log</title>
         {% endif %}
 
         <link href="{{ url_for('static', filename='img/favicon.ico' )}}" rel="shortcut icon" type="image/x-icon" >
@@ -18,21 +18,30 @@
 
     <body>
     <div class="container-outer">
-        <div class="content">
-        <!-- display flashed messages -->
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul class="error">
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {%  endfor %}
-        </ul>
-        {%  endif %}
-        {%  endwith %}
 
-        <!-- template inheritance -->
-        {% block content %}{% endblock %}
+        <div class="header">
+            <!-- template inheritance -->
+            {% block header %}{% endblock %}
         </div>
+
+        <div class="flashed_messages">
+            <!-- display flashed messages -->
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class="error">
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {%  endfor %}
+            </ul>
+            {%  endif %}
+            {%  endwith %}
+        </div>
+
+        <div class="content">
+            <!-- template inheritance -->
+            {% block content %}{% endblock %}
+        </div>
+
     </div>
     </body>
 </html>
