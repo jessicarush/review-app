@@ -1,16 +1,116 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block header %}
+<div class="nav">
+    <h1 class="header">Python review:</h1>
+    <a href="{{ url_for('main.recommend') }}" class="recommend">recommend a topic</a>
+    <ul class="sort_by">
+        <h2 class="header">Sort topics:</h2>
+        <li><a href="{{ url_for('main.index', sort_by='name') }}">name</a></li>
+        <li><a href="{{ url_for('main.index', sort_by='date') }}">date</a></li>
+        <li><a href="{{ url_for('main.index', sort_by='skill') }}">skill</a></li>
+    </ul>
+    <h2 class="header">{{ current_user.username.title() }}: </h2>
+    <a href="{{ url_for('auth.logout') }}" class="logout">logout</a>
+</div>
 
-    <h1>home/index.</h1>
+<div class="forms">
+    <!-- form: log a review -->
+    <form action="" method="post" class="review">
+        <h2 class="form">Log a Study Session</h2>
+        {{ review_form.hidden_tag() }}
+        <p>
+            <!-- {{ review_form.filename.label }} -->
+            {% for error in review_form.filename.errors %}
+            <span class="error">{{ error }}</span>
+            {% endfor %}
+            {{ review_form.filename(class="select") }}
+        </p>
+        <p>
+            <!-- {{ review_form.time_spent.label }} -->
+            {% for error in review_form.time_spent.errors %}
+            <span class="error">{{ error }}</span>
+            {% endfor %}
+            {{ review_form.time_spent(class="single", placeholder="time: minutes") }}<br>
+        </p>
+        <p>
+            <!-- {{ review_form.skill_before.label }} -->
+            {% for error in review_form.skill_before.errors %}
+            <span class="error">{{ error }}</span>
+            {% endfor %}
+            {{ review_form.skill_before(class="single", placeholder="skill before: 0–5") }}<br>
+        </p>
+        <p>
+            <!-- {{ review_form.skill_after.label }} -->
+            {% for error in review_form.skill_after.errors %}
+            <span class="error">{{ error }}</span>
+            {% endfor %}
+            {{ review_form.skill_after(class="single", placeholder="skill after: 0–5") }}<br>
+        </p>
+
+        <p class="button">{{ review_form.submit(class="button") }}</p>
+    </form>
+
+    <!-- form: delete a review -->
+    <form action="" method="post" class="review">
+        <h2 class="form">Delete a Study Session</h2>
+        {{ del_review_form.hidden_tag() }}
+        <p class="warning"><strong>Be careful !</strong> You cannot undo this and <br>I won't ask you if you're sure once you press delete. That's it, no going back. Consider yourself warned.</p>
+        <p>
+            <!-- {{ del_review_form.review_id.label }} -->
+            {% for error in del_review_form.review_id.errors %}
+            <span class="error">{{ error }}</span>
+            {% endfor %}
+            {{ del_review_form.review_id(class="single", placeholder="study session ID") }}
+        </p>
+        <p class="button">{{ del_review_form.submit(class="button") }}</p>
+    </form>
+
+    <!-- form: delete a topic -->
+    <form action="" method="post" class="review">
+        <h2 class="form">Delete a Topic</h2>
+        {{ del_topic_form.hidden_tag() }}
+        <p class="warning"><strong>Caution!</strong> You can't undo this. Once you press delete, it's permanent. I won't ask you if you're sure either. That's it, no going back. Consider yourself warned.</p>
+        <p>
+            <!-- {{ del_topic_form.filename.label }} -->
+            {% for error in del_topic_form.filename.errors %}
+            <span class="error">{{ error }}</span>
+            {% endfor %}
+            {{ del_topic_form.filename(class="select") }}
+        </p>
+        <p class="button">{{ del_topic_form.submit(class="button") }}</p>
+    </form>
+
+    <!-- form: rename a review -->
+    <form action="" method="post" class="review">
+        <h2 class="form">Rename a Topic</h2>
+        {{ rename_form.hidden_tag() }}
+            <!-- {{ rename_form.old_filename.label }} -->
+            {% for error in rename_form.old_filename.errors %}
+            <span class="error">{{ error }}</span>
+            {% endfor %}
+            {{ rename_form.old_filename(class="select") }}
+        </p>
+        <p>
+            <!-- {{ rename_form.new_filename.label }} -->
+            {% for error in rename_form.new_filename.errors %}
+            <span class="error">{{ error }}</span>
+            {% endfor %}
+            {{ rename_form.new_filename(class="single", placeholder="new_filename.py") }}
+        </p>
+        <p class="button">{{ rename_form.submit(class="button") }}</p>
+    </form>
+
+    <hr class="clear">
+</div>
+
+{% endblock %}
+
+{% block content %}
 
     {% for topic in topics %}
         {% include '_topic.html' %}
     {% endfor %}
-    <hr class="clear">
 
-    <a href="{{ url_for('main.sort_by_skill') }}">Sort by skill</a>
-    <a href="{{ url_for('main.sort_by_date') }}">Sort by date</a>
-    <a href="{{ url_for('main.index') }}">Sort by name</a>
-    <a href="{{ url_for('auth.logout') }}">Logout</a>
+
 {% endblock %}
