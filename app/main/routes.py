@@ -4,58 +4,87 @@ from flask import flash, render_template, redirect, request, url_for, \
 from flask_login import current_user, login_required
 from app import db
 from app.main import bp
+from app.main.forms import ReviewForm, DeleteReviewForm, DeleteTopicForm, \
+    RenameTopicForm
 from app.main.models import User, Topic, Review
-from app.main.topics import get_topics_from_repo
-
-import shelve
+from app.main.topics import topics_from_repo
 
 
-@bp.route('/', methods=['GET', 'POST'])
-@bp.route('/index', methods=['GET', 'POST'])
+
+
+@bp.route('/<sort_by>', methods=['GET', 'POST'])
+# @bp.route('/index/<sort_by>', methods=['GET', 'POST'])
 @login_required
-def index():
+def index(sort_by='name'):
     '''View function for the main index page.'''
-    # topics = get_topics_from_repo()
-    topics = Topic.query.order_by(Topic.filename).all()
-    return render_template('index.html', topics=topics)
+    review_form = ReviewForm()
+    del_review_form = DeleteReviewForm()
+    del_topic_form = DeleteTopicForm()
+    rename_form = RenameTopicForm()
+
+    if review_form.validate_on_submit():
+        topic = Topic.query.filter_by(filename=review_form.filename.data).first()
+        review = Review(time_spent=review_form.time_spent.data,
+                        skill_before=review_form.skill_before.data,
+                        skill_after=review_form.skill_after.data,
+                        topic_id=topic.id)
+        topic.current_skill = review_form.skill_after.data
+        topic.last_study_date = datetime.utcnow()
+        if topic.current_skill == int(5):
+            topic.mastery += 1
+        db.session.add(review)
+        db.session.commit()
+        flash('Review logged!')
+        return redirect(url_for('main.index', sort_by='name'))
+
+    if del_review_form.validate_on_submit():
+        Review.query.filter_by(id=del_review_form.review_id.data).delete()
+        db.session.commit()
+        flash('Review session deleted.')
+
+    if del_topic_form.validate_on_submit():
+        Topic.query.filter_by(filename=del_topic_form.filename).delete()
+        db.session.commit()
+        flash('Topic deleted.')
+
+    if rename_form.validate_on_submit():
+        topic = Topic.query.filter_by(filename=rename_form.old_filename).first()
+        topic.filename = rename_form.new_filename.data
+        db.session.commit()
+        flash('Topic renamed!')
+
+    if sort_by == 'skill':
+        topics=Topic.query.order_by(Topic.current_skill).all()
+    elif sort_by == 'date':
+        topics=Topic.query.order_by(Topic.last_study_date).all()
+    else:
+        topics = Topic.query.order_by(Topic.filename).all()
+    return render_template('index.html', topics=topics,
+        review_form=review_form, del_review_form=del_review_form,
+        del_topic_form=del_topic_form, rename_form=rename_form)
 
 
-@bp.route('/sort_by_skill', methods=['GET', 'POST'])
+@bp.route('/recommend')
 @login_required
-def sort_by_skill():
-    '''View function for the main index page, sorted by current skill.'''
-    # topics = get_topics_from_repo()
-    topics=Topic.query.order_by(Topic.current_skill).all()
-    return render_template('index.html', topics=topics)
+def recommend():
+    '''View function to recommend a study topic.'''
+    # TODO: recommend function
+    flash('You should study...')
+    return redirect(url_for('main.index', sort_by='date'))
 
 
-@bp.route('/sort_by_date', methods=['GET', 'POST'])
-@login_required
-def sort_by_date():
-    '''View function for the main index page, sorted by current skill.'''
-    # topics = get_topics_from_repo()
-    topics=Topic.query.order_by(Topic.last_study_date).all()
-    return render_template('index.html', topics=topics)
 
 
-# topics = Topic.query.order_by(Topic.filename).all()
-# for topic in topics:
-#     mastery = 0
-#     for review in topic.reviews:
-#         if review.skill_after == 5.0:
-#             mastery += 1
-#     topic.mastery = mastery
-# db.session.commit()
 
 
-# review = Review(review_date=review_date,
-#                 time_spent=time_spent,
-#                 skill_before=skill_before,
-#                 skill_after=skill_after,
-#                 topic_id=topic.id)
-# db.session.add(review)
-# flash('New topic(s) added.')
-# db.session.commit()
+
+
+
+
+
+
+
+
 
 
 # @bp.route('/update', methods=['GET', 'POST'])
