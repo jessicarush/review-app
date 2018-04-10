@@ -26,7 +26,7 @@ def register():
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.index', sort_by='name'))
     form = LoginForm()
     if form.validate_on_submit():
         # check if field is an existing username:
@@ -44,7 +44,7 @@ def login():
             return redirect(url_for('auth.login'))
         # otherwise, all is well:
         login_user(user, remember=form.remember_me.data)
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.index', sort_by='name'))
     return render_template('auth/login.html', title='Sign In', form=form)
 
 
@@ -57,7 +57,7 @@ def logout():
 @bp.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
     if current_user.is_authenticated:
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.index', sort_by='name'))
     form = ResetPasswordRequestForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -72,10 +72,10 @@ def reset_password_request():
 @bp.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     if current_user.is_authenticated:
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.index', sort_by='name'))
     user = User.verify_reset_password_token(token)
     if not user:
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.index', sort_by='name'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
         user.set_password(form.password.data)
