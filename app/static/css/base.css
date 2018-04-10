@@ -2,17 +2,18 @@
 
 /* Global variables */
 :root {
-	--main-font-family: 'Source Sans Pro', sans-serif;
+	--main-font-family: 'Nunito', sans-serif;
 	--heading-font-family: 'Nunito', sans-serif;
-	--subheading-font-family: 'Nunito', sans-serif;
-	--minor-font-family: 'Source Serif Pro', sans-serif;
-	--main-font-color: rgb(50, 50, 50);
+	--minor-font-family: 'Nunito', sans-serif;
+	--main-font-color: rgb(60, 60, 60);
 	--heading-font-color: rgb(0, 0, 0);
-	--minor-font-color: rgb(180, 180, 180);
-	--emphasis-color: rgb(255, 102, 102);
+	--minor-font-color: rgb(160, 160, 160);
+	/* --emphasis-color: rgb(255, 102, 102); */
 	/* --emphasis-color: rgb(54, 199, 167); */
 	/* --emphasis-color: rgb(0, 173, 221); */
+	--emphasis-color: rgb(250, 201, 5);
 	--content-width: 1000px;
+	--margin-left: 35px;
 }
 
 
@@ -24,9 +25,29 @@ body {
 	margin: 0;
 }
 div.container-outer {
-	margin: 40px 10px 40px 35px;
+	margin: 0;
+}
+div.header {
+}
+div.nav {
+	background: rgba(255, 255, 255, 0.95);
+	padding: 10px var(--margin-left);
+	box-shadow: 0px 0px 8px rgba(50, 50, 50, 0.2);
+	width: 100%;
+	position: fixed;
+	z-index: 5;
+}
+div.forms {
+	background: rgb(55, 60, 72);
+	padding: 65px 0px 15px var(--margin-left);
+	margin-bottom: 15px;
+}
+div.flashed_messages {
+	margin-left: var(--margin-left);
 }
 div.content {
+	clear: both;
+	margin-left: var(--margin-left);
 }
 div.topic {
 	background: rgba(255, 255, 255, 0.65);
@@ -39,50 +60,77 @@ div.topic {
 }
 div.reviews {
 	clear: both;
-	border-top: solid 1px rgb(220, 220, 220);
-	padding-top: 3px;
+	border-top: solid 1px rgb(230, 230, 230);
+	padding-top: 5px;
 	height: 75px;
 	overflow: auto;
 }
 div.mastery {
 	width: 70px;
 	text-align: right;
-	font-size: 13px;
+	font-size: 14px;
 	position: absolute;
 	top: 20;
 	right: 20;
 }
 
 
+
 /* Typography */
 h1 {
 	font-family: var(--heading-font-family);
 	color: var(--heading-font-color);
-	font-weight: 500;
-	font-size: 38px;
-	line-height: 1em;
+	font-weight: 300;
+	font-size: 36px;
+}
+h1.header, h2.header {
+	font-family: var(--heading-font-family);
+	color: var(--main-font-color);
+	font-weight: 300;
+	font-size: 16px;
+	display: inline;
+}
+h1.header {
+	margin: 0px 3px 0px 0px;
+}
+h2.header {
+	margin: 0px 3px 0px 25px;
 }
 h2.topic {
-	font-family: var(--subheading-font-family);
-	font-size: 15px;
+	font-family: var(--heading-font-family);
+	font-size: 16px;
 	font-weight: 800;
-	margin: 0px 0px 0px 45px;
-	padding: 7px 0px 0px 0px;
+	margin: 0px 0px 2px 45px;
+	padding: 6px 0px 0px 0px;
 }
 h2.reviews {
-	font-family: var(--subheading-font-family);
-	color: var(--heading-font-color);
-	font-size: 12px;
-	margin: 15px 0px 4px 0px;
-	padding-bottom: 4px;
-	border-bottom: solid 1px rgb(220, 220, 220);
+	font-family: var(--heading-font-family);
+	color: var(--minor-font-color);
+	font-weight: 300;
+	font-size: 11px;
+	margin: 4px 0px 4px 0px;
+	padding: 0px 0px 8px 45px;
+	border-bottom: solid 1px rgb(230, 230, 230);
 
 }
+h2.form, p.warning {
+	font-family: var(--heading-font-family);
+	color: rgba(230, 247, 253, 0.6);
+	font-size: 12px;
+	font-weight: 300;
+}
+h2.form {
+	margin: 0 0 8px 0;
+}
+p.warning {
+	margin: 0 0 15px 0;
+}
+
 .topic h3 {
-	font-family: var(--subheading-font-family);
+	font-family: var(--heading-font-family);
+	color: var(--minor-font-color);
 	font-size: 9px;
 	text-transform: uppercase;
-	color: var(--minor-font-color);
 	font-weight: 400;
 	float: left;
 	margin: 0px 0px 2px 0px;
@@ -90,20 +138,20 @@ h2.reviews {
 p {
 	font-family: var(--main-font-family);
 	color: var(--main-font-color);
-	font-size: 13px;
+	font-size: 12.5px;
 	font-weight: 400;
 	line-height: 1.6em;
 	margin: 0;
 }
 p.created-date {
-	font-family: var(--subheading-font-family);
+	font-family: var(--heading-font-family);
 	color: var(--minor-font-color);
 	font-size: 11px;
 	margin: 0px 0px 0px 45px;
 	float: left;
 }
 p.current-skill {
-	font-family: var(--subheading-font-family);
+	font-family: var(--heading-font-family);
 	color: var(--minor-font-color);
 	font-size: 11px;
 	margin: 0;
@@ -116,60 +164,62 @@ p.current-skill strong {
 	line-height: 0.8em;
 	padding-left: 3px;
 }
+p.warning strong {
+	color: #fff;
+}
 a:link, a:visited {
-	/* color: var(--emphasis-color); */
-	color: #000;
+	font-family: var(--main-font-family);
 	text-decoration: none;
 }
 a:hover, a:active {
-	opacity: 0.85;
+	text-decoration: underline;
 }
-.review span {
+.nav a:link, .nav a:visited {
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--main-font-color);
+}
+.topic a:link, .topic a:visited {
+	color: var(--heading-font-color);
+}
+.topic a:hover, .topic a:active {
 
 }
 .review-id {
 	display: inline-block;
 	width: 45px;
-	color: rgb(200, 200, 200);
+	color: var(--minor-font-color);
+	font-weight: 300;
 }
 .review-date {
 	display: inline-block;
-	width: 105px;
+	width: 110px;
 }
 .review-time {
 	display: inline-block;
-	width: 95px;
+	width: 93px;
 }
 .review-before {
 	display: inline-block;
-	width: 65px;
+	width: 60px;
 }
 .review-after {
 	display: inline-block;
 	width: 40px;
 }
-/* span.topic-id {
-	display: block;
-	width: 60px;
-	float: left;
-	font-family: var(--subheading-font-family);
-	color: rgb(220, 220, 220);
-	font-size: 36px;
-	font-weight: 200;
-} */
 span.topic-id {
 	display: block;
 	position: absolute;
 	top: 18;
 	left: 18;
-	width: 37px;
-	padding-top: 6px;
-	height: 31px;
-	font-family: var(--subheading-font-family);
+	width: 30px;
+	padding-top: 4px;
+	height: 26px;
+	font-family: var(--heading-font-family);
 	color: rgb(255, 255, 255);
-	background: #000;
-	border-radius: 20px;
-	font-size: 17px;
+	background: var(--heading-font-color);
+	border-radius: 15px;
+	font-size: 15px;
 	font-weight: 200;
 	text-align: center;
 }
@@ -185,11 +235,11 @@ span.star-off {
 }
 ::selection {
   background: var(--emphasis-color);
-  color: #FFF;
+  color: rgb(255, 255, 255);
 }
 ::-moz-selection {
   background: var(--emphasis-color);
-  color: #FFF;
+  color: rgb(255, 255, 255);
 }
 
 
@@ -211,55 +261,95 @@ ul.error, ul.error li {
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
+	font-family: var(--main-font-family);
+	color: var(--emphasis-color);
+}
+ul.sort_by {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	display: inline;
+}
+ul.sort_by li {
+	display: inline;
+	margin-right: 5px;
+}
+.reviews p {
+	border-bottom: dotted 1px rgb(230, 230, 230);
 }
 
 
 /* Forms */
-input, textarea {
+form.review {
+	width: 210px;
+	margin-right: 25px;
+	float: left;
+}
+input, textarea, select {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
 	outline: none;
+	border: none;
 	background: none;
 	box-shadow: none;
 	border-radius: 0;
 	font-family: inherit;
 }
 input.single {
-	/* height: 2.5em;
+	color: rgba(230, 247, 253, 1);
+	font-weight: 200;
+	font-size: 15px;
+	padding: 5px 0px 5px 8px;
+	background: rgba(200, 200, 255, 0.15);
+	border: 1px solid rgba(18, 19, 23, 0.1);
+	border-radius: 3px;
+	margin-bottom: 5px;
 	width: 100%;
-	font-size: 18px;
-	color: #a5adb8;
-	margin: 2px 0px;
-	padding: 0px 15px;
-	border:1px solid #D0DAD7; */
 }
-textarea.multiple {
-	/* height: 11em;
+.review select {
+	color: rgba(230, 247, 253, 1);
+	font-weight: 200;
+	font-size: 15px;
+	padding: 4px 0 4px 5px;
+	background: rgba(200, 200, 255, 0.15);
+	border: 1px solid rgba(18, 19, 23, 0.1);
+	border-radius: 3px;
+	margin-bottom: 5px;
 	width: 100%;
-	font-size: 18px;
-	color: #a5adb8;
-	margin: 2px 0px;
-	padding: 5px 15px;
-	border:1px solid #D0DAD7; */
 }
-input.button {
-	/* padding: 7px 12px;
-	margin: 10px 0px 0px 0px;
-	font-weight: 700;
-	font-size: 16px;
-	color: #1BD3A5;
-	border: 3px solid #1BD3A5;
-	cursor: pointer; */
+/* prevent <option>s from becoming select color in firefox */
+option:not(:checked) {
+	color: black;
+}
+/* prevent ugly focus outline in firefox */
+select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 rgba(230, 247, 253, 1);
+}
+/* custom focus outline */
+input:focus, select:focus {
+	border: 1px solid rgba(230, 247, 253, 0.8);
+}
+.forms input.button {
+	font-weight: 400;
+	font-size: 15px;
+	color: rgb(55, 60, 72);
+	background: rgba(230, 247, 253, 1);
+	cursor: pointer;
+	margin: 0;
+	padding: 5px 10px;
+	border-radius: 3px;
+	width: 100%;
 }
 p.button {
-	/* text-align: right; */
-}
-input:focus {
-	/* border:1px solid #a6b5bc; */
+	text-align: center;
 }
 input.check{
 	-webkit-appearance: checkbox;
 	-moz-appearance: checkbox;
 	appearance: checkbox;
+}
+.error {
+	color: var(--emphasis-color);
 }
