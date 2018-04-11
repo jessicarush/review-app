@@ -5,9 +5,9 @@
 	--main-font-family: 'Nunito', sans-serif;
 	--heading-font-family: 'Nunito', sans-serif;
 	--minor-font-family: 'Nunito', sans-serif;
-	--main-font-color: rgb(60, 60, 60);
-	--heading-font-color: rgb(0, 0, 0);
-	--minor-font-color: rgb(160, 160, 160);
+	--main-color: rgb(60, 60, 60);
+	--heading-color: rgb(0, 0, 0);
+	--minor-color: rgb(160, 160, 160);
 	/* --emphasis-color: rgb(255, 102, 102); */
 	--emphasis-color: rgb(54, 199, 167);
 	/* --emphasis-color: rgb(0, 173, 221); */
@@ -26,10 +26,20 @@ body {
 }
 div.container {
 }
+div.auth, footer.auth {
+	width: 265px;
+	margin: 25px auto;
+}
+div.error-page  {
+	width: 500px;
+	margin: 25px auto;
+	text-align: center;
+}
 div.flashed_messages {
 	position: sticky;
 }
 div.content {
+	padding-bottom: 100px;
 }
 div.nav {
 	background: rgba(255, 255, 255, 0.95);
@@ -77,30 +87,29 @@ div.mastery {
 	top: 20;
 	right: 20;
 }
-footer {
-	margin-top: 50px;
+span.header-group {
+	display: inline-block;
+	width: 240px;
 }
-
 
 /* Typography */
 h1 {
 	font-family: var(--heading-font-family);
-	color: var(--heading-font-color);
+	color: var(--heading-color);
 	font-weight: 300;
 	font-size: 36px;
+	margin: 35px 0 25px 0;
+}
+.auth h1 {
+	text-align: center;
 }
 h1.header, h2.header {
 	font-family: var(--heading-font-family);
-	color: var(--main-font-color);
+	color: var(--main-color);
 	font-weight: 300;
 	font-size: 14px;
 	display: inline;
-}
-h1.header {
-	margin: 0 0;
-}
-h2.header {
-	margin: 0 0 0 25px;
+	margin: 0;
 }
 h2.topic {
 	font-family: var(--heading-font-family);
@@ -111,7 +120,7 @@ h2.topic {
 }
 h2.reviews {
 	font-family: var(--heading-font-family);
-	color: var(--minor-font-color);
+	color: var(--minor-color);
 	font-weight: 300;
 	font-size: 11px;
 	margin: 4px 0 4px 0;
@@ -131,10 +140,9 @@ h2.form {
 p.warning {
 	margin: 0 0 15px 0;
 }
-
 .topic h3 {
 	font-family: var(--heading-font-family);
-	color: var(--minor-font-color);
+	color: var(--minor-color);
 	font-size: 9px;
 	text-transform: uppercase;
 	font-weight: 400;
@@ -143,28 +151,38 @@ p.warning {
 }
 p {
 	font-family: var(--main-font-family);
-	color: var(--main-font-color);
-	font-size: 12.5px;
+	color: var(--main-color);
+	font-size: 16px;
 	font-weight: 400;
 	line-height: 1.6em;
 	margin: 0;
 }
+footer.auth p {
+	text-align: left;
+	font-size: 13px;
+}
+p.review {
+	font-size: 12.5px;
+}
+.reviews p {
+	border-bottom: dotted 1px rgb(230, 230, 230);
+}
 p.created-date {
 	font-family: var(--heading-font-family);
-	color: var(--minor-font-color);
+	color: var(--minor-color);
 	font-size: 11px;
 	margin: 0 0 0 45px;
 	float: left;
 }
 p.current-skill {
 	font-family: var(--heading-font-family);
-	color: var(--minor-font-color);
+	color: var(--minor-color);
 	font-size: 11px;
 	margin: 0;
 	float: right;
 }
 p.current-skill strong {
-	color: var(--heading-font-color);
+	color: var(--heading-color);
 	font-weight: 800;
 	font-size: 13px;
 	line-height: 0.8em;
@@ -176,25 +194,23 @@ p.warning strong {
 a:link, a:visited {
 	font-family: var(--main-font-family);
 	text-decoration: none;
+	color: var(--heading-color);
+	font-weight: 700;
 }
 a:hover, a:active {
 	text-decoration: underline;
 }
 .nav a:link, .nav a:visited {
 	font-size: 14px;
-	font-weight: 700;
 	color: var(--emphasis-color);
 }
 .topic a:link, .topic a:visited {
-	color: var(--heading-font-color);
-}
-.topic a:hover, .topic a:active {
-
+	color: var(--heading-color);
 }
 .review-id {
 	display: inline-block;
 	width: 45px;
-	color: var(--minor-font-color);
+	color: var(--minor-color);
 	font-weight: 300;
 }
 .review-date {
@@ -223,7 +239,7 @@ span.topic-id {
 	height: 26px;
 	font-family: var(--heading-font-family);
 	color: rgb(255, 255, 255);
-	background: var(--heading-font-color);
+	background: var(--heading-color);
 	border-radius: 15px;
 	font-size: 15px;
 	font-weight: 200;
@@ -281,17 +297,13 @@ ul.sort_by {
 ul.sort_by li {
 	display: inline;
 }
-.reviews p {
-	border-bottom: dotted 1px rgb(230, 230, 230);
+.error-page img {
+	width: 100px;
+	margin: -15px 0 15px 0;
 }
 
 
 /* Forms */
-form.review {
-	width: 210px;
-	margin-right: 35px;
-	float: left;
-}
 input, textarea, select {
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -303,7 +315,12 @@ input, textarea, select {
 	border-radius: 0;
 	font-family: inherit;
 }
-input.single {
+form.review {
+	width: 210px;
+	margin-right: 35px;
+	float: left;
+}
+.review input.single {
 	color: rgba(230, 247, 253, 1);
 	font-weight: 200;
 	font-size: 15px;
@@ -312,6 +329,15 @@ input.single {
 	border: 1px solid rgba(18, 19, 23, 0.1);
 	border-radius: 3px;
 	margin-bottom: 5px;
+	width: 100%;
+}
+.auth input.single {
+	color: var(--main-color);
+	font-weight: 400;
+	font-size: 18px;
+	padding: 0;
+	border-bottom: 2px solid rgb(200, 200, 200);
+	margin: 5px 0 15px 0;
 	width: 100%;
 }
 .review select {
@@ -335,8 +361,11 @@ select:-moz-focusring {
     text-shadow: 0 0 0 rgba(230, 247, 253, 1);
 }
 /* custom focus outline */
-input:focus, select:focus {
+.forms input:focus, .forms select:focus {
 	border: 1px solid rgba(230, 247, 253, 0.8);
+}
+.auth input:focus {
+	border-bottom: 2px solid var(--heading-color);
 }
 .forms input.button {
 	font-weight: 400;
@@ -349,13 +378,39 @@ input:focus, select:focus {
 	border-radius: 3px;
 	width: 100%;
 }
-p.button {
+.auth input.button {
+	font-weight: 300;
+	font-size: 16px;
+	color: #fff;
+	background: var(--heading-color);
+	border-radius: 4px;
+	cursor: pointer;
+	margin-top: 20px;
+	padding: 5px 0;
+	width: 100%;
+}
+.forms p.button {
 	text-align: center;
+}
+.auth p.button {
+	text-align: center;
+}
+p.remember {
+	font-size: 13px;
+}
+p.reset {
+	text-align: center;
+	font-size: 13px;
+	border-top: 2px solid rgb(200, 200, 200);
+	padding-top: 5px;
+	margin-top: 5px;
 }
 input.check{
 	-webkit-appearance: checkbox;
 	-moz-appearance: checkbox;
 	appearance: checkbox;
+	padding: 0;
+	margin: 0;
 }
 span.error {
 	color: var(--emphasis-color);
