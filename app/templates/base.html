@@ -17,12 +17,7 @@
     </head>
 
     <body>
-    <div class="container-outer">
-
-        <div class="header">
-            <!-- template inheritance -->
-            {% block header %}{% endblock %}
-        </div>
+    <div class="container">
 
         <div class="flashed_messages">
             <!-- display flashed messages -->
@@ -40,7 +35,13 @@
         <div class="content">
             <!-- template inheritance -->
             {% block content %}{% endblock %}
+        <hr class="clear">
         </div>
+
+        <footer>
+            <p>footer</p>
+        </footer>
+
 
     </div>
     </body>
