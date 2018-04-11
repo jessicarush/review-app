@@ -10,10 +10,7 @@ from app.main.models import User, Topic, Review
 from app.main.topics import topics_from_repo
 
 
-
-
 @bp.route('/<sort_by>', methods=['GET', 'POST'])
-# @bp.route('/index/<sort_by>', methods=['GET', 'POST'])
 @login_required
 def index(sort_by='name'):
     '''View function for the main index page.'''
@@ -38,7 +35,19 @@ def index(sort_by='name'):
         return redirect(url_for('main.index', sort_by='name'))
 
     if del_review_form.submit2.data and del_review_form.validate_on_submit():
+        review = Review.query.filter_by(id=del_review_form.review_id.data).first()
+        topic = Topic.query.filter_by(id=review.topic_id).first()
+        if review.skill_after == int(5):
+            topic.mastery -= 1
         Review.query.filter_by(id=del_review_form.review_id.data).delete()
+
+        prev_review = Review.query.filter_by(topic_id=topic.id).order_by(Review.review_date.desc()).first()
+        if prev_review:
+            topic.current_skill = prev_review.skill_after
+            topic.last_study_date = prev_review.review_date
+        else:
+            topic.current_skill = topic.start_skill
+            topic.last_study_date = topic.created_date
         db.session.commit()
         flash('Review session deleted.')
         return redirect(url_for('main.index', sort_by='name'))
@@ -78,26 +87,13 @@ def recommend():
     return redirect(url_for('main.index', sort_by='date', recommend=topics[0].filename))
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # @bp.route('/update', methods=['GET', 'POST'])
 # @login_required
 # def update_topics():
-#     # form = UpdateTopicsForm()
-#     # if form.validate_on_submit():
-    # topic = Topic(filename='ajax_notes.md', created_date=datetime(2018, 3, 26), current_skill=3)
-    # db.session.add(topic)
-    # db.session.commit()
-    # flash('New topic(s) added.')
+#     form = UpdateTopicsForm()
+#     if form.validate_on_submit():
+#         pass
+#         topic = Topic(filename='ajax_notes.md', created_date=datetime(2018, 3, 26), current_skill=3)
+#         db.session.add(topic)
+#         db.session.commit()
+#         flash('New topic(s) added.')
