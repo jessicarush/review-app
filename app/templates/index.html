@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block header %}
+{% block content %}
 <div class="nav">
     <h1 class="header">Python review:</h1>
-    <a href="{{ url_for('main.recommend') }}" class="recommend">recommend a topic</a>
+    <a href="{{ url_for('main.recommend') }}" class="recommend">recommend topic</a>
     <ul class="sort_by">
-        <h2 class="header">Sort topics:</h2>
-        <li><a href="{{ url_for('main.index', sort_by='name') }}">name</a></li>
-        <li><a href="{{ url_for('main.index', sort_by='date') }}">date</a></li>
+        <h2 class="header">Sort topics by:</h2>
+        <li><a href="{{ url_for('main.index', sort_by='name') }}">name</a>,</li>
+        <li><a href="{{ url_for('main.index', sort_by='date') }}">date</a>,</li>
         <li><a href="{{ url_for('main.index', sort_by='skill') }}">skill</a></li>
     </ul>
     <h2 class="header">{{ current_user.username.title() }}: </h2>
@@ -48,14 +48,14 @@
             {{ review_form.skill_after(class="single", placeholder="skill after: 0–5") }}<br>
         </p>
 
-        <p class="button">{{ review_form.submit(class="button") }}</p>
+        <p class="button">{{ review_form.submit1(class="button") }}</p>
     </form>
 
     <!-- form: delete a review -->
     <form action="" method="post" class="review">
         <h2 class="form">Delete a Study Session</h2>
         {{ del_review_form.hidden_tag() }}
-        <p class="warning"><strong>Be careful !</strong> You cannot undo this and <br>I won't ask you if you're sure once you press delete. That's it, no going back. Consider yourself warned.</p>
+        <p class="warning"><strong>Be careful!</strong> You cannot undo this and <br>I won't ask you if you're sure once you press delete. That's it, no going back. Consider yourself warned.</p>
         <p>
             <!-- {{ del_review_form.review_id.label }} -->
             {% for error in del_review_form.review_id.errors %}
@@ -63,7 +63,7 @@
             {% endfor %}
             {{ del_review_form.review_id(class="single", placeholder="study session ID") }}
         </p>
-        <p class="button">{{ del_review_form.submit(class="button") }}</p>
+        <p class="button">{{ del_review_form.submit2(class="button") }}</p>
     </form>
 
     <!-- form: delete a topic -->
@@ -78,12 +78,14 @@
             {% endfor %}
             {{ del_topic_form.filename(class="select") }}
         </p>
-        <p class="button">{{ del_topic_form.submit(class="button") }}</p>
+        <p class="button">{{ del_topic_form.submit3(class="button") }}</p>
     </form>
 
     <!-- form: rename a review -->
     <form action="" method="post" class="review">
         <h2 class="form">Rename a Topic</h2>
+        <p class="warning"><strong>Remember: </strong>If the renamed file was just added as a new topic, delete it first.</p>
+        <p>
         {{ rename_form.hidden_tag() }}
             <!-- {{ rename_form.old_filename.label }} -->
             {% for error in rename_form.old_filename.errors %}
@@ -98,19 +100,15 @@
             {% endfor %}
             {{ rename_form.new_filename(class="single", placeholder="new_filename.py") }}
         </p>
-        <p class="button">{{ rename_form.submit(class="button") }}</p>
+        <p class="button">{{ rename_form.submit4(class="button") }}</p>
     </form>
 
     <hr class="clear">
 </div>
 
-{% endblock %}
-
-{% block content %}
-
+<div class="topics">
     {% for topic in topics %}
         {% include '_topic.html' %}
     {% endfor %}
-
-
+</div>
 {% endblock %}
