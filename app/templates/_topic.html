@@ -1,4 +1,8 @@
-<div class="topic">
+{% if topic.filename is eq recommend %}
+<div class="topic topic-on">
+{% else %}
+<div class="topic topic-off">
+{% endif %}
 
     <div class="mastery">
     {% if topic.mastery is ge 3 %}
