@@ -19,19 +19,19 @@ class ReviewForm(FlaskForm):
     time_spent = IntegerField('Time spent:', validators=[DataRequired()])
     skill_before = DecimalField('skill before:', places=1, validators=[DataRequired()])
     skill_after = DecimalField('skill after: ', places=1, validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    submit1 = SubmitField('Submit')
 
 
 class DeleteReviewForm(FlaskForm):
     review_id = IntegerField('Review ID', validators=[DataRequired()])
-    submit = SubmitField('Delete')
+    submit2 = SubmitField('Delete')
 
 
 class DeleteTopicForm(FlaskForm):
     filename = SelectField('Topic:', choices=choices(), validators=[DataRequired()])
-    submit = SubmitField('Delete')
+    submit3 = SubmitField('Delete')
 
 class RenameTopicForm(FlaskForm):
     old_filename = SelectField('Old name:', choices=choices(), validators=[DataRequired()])
     new_filename = StringField('New name:', validators=[DataRequired()])
-    submit = SubmitField('Delete')
+    submit4 = SubmitField('Rename')
