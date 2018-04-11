@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<div class="error-page">
 <h1>Whoops, it's a 404&hellip;</h1>
-<p>Page not found, now let's<a href="{{ url_for('main.index', sort_by='name') }}"> move on.</a></p>
-
+<img src="{{ url_for('static', filename='img/bottle.png' )}}">
+<p>Page not found. Let's<a href="{{ url_for('main.index', sort_by='name') }}"> move on.</a></p>
+</div>
 {% endblock %}

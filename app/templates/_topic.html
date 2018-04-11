@@ -46,7 +46,7 @@
     <h3 class="review-after">after</h3>
     <div class="reviews">
         {% for review in topic.reviews %}
-        <p><span class="review-id">{{ review.id }}</span><span class="review-date">{{ moment(review.review_date).fromNow() }}</span><span class="review-time">{{ review.time_spent }} minutes</span><span class="review-before">{{ review.skill_before }} / 5</span><span class="review-after">{{ review.skill_after }} / 5</span></p>
+        <p class="review"><span class="review-id">{{ review.id }}</span><span class="review-date">{{ moment(review.review_date).fromNow() }}</span><span class="review-time">{{ review.time_spent }} minutes</span><span class="review-before">{{ review.skill_before }} / 5</span><span class="review-after">{{ review.skill_after }} / 5</span></p>
         {% endfor %}
     </div>
 

@@ -2,16 +2,22 @@
 
 {% block content %}
 <div class="nav">
+    <span class="header-group">
     <h1 class="header">Python review:</h1>
     <a href="{{ url_for('main.recommend') }}" class="recommend">recommend topic</a>
+    </span>
+    <span class="header-group">
     <ul class="sort_by">
         <h2 class="header">Sort topics by:</h2>
         <li><a href="{{ url_for('main.index', sort_by='name') }}">name</a>,</li>
         <li><a href="{{ url_for('main.index', sort_by='date') }}">date</a>,</li>
         <li><a href="{{ url_for('main.index', sort_by='skill') }}">skill</a></li>
     </ul>
+    </span>
+    <span class="header-group">
     <h2 class="header">{{ current_user.username.title() }}: </h2>
     <a href="{{ url_for('auth.logout') }}" class="logout">logout</a>
+    </span>
 </div>
 
 <div class="forms">
@@ -102,7 +108,6 @@
         </p>
         <p class="button">{{ rename_form.submit4(class="button") }}</p>
     </form>
-
     <hr class="clear">
 </div>
 

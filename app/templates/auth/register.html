@@ -1,42 +1,40 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="auth">
     <h1>Register</h1>
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <p>
-            {{ form.username.label }}
-            <!-- Display error message if field empty or username taken -->
+            <!-- {{ form.username.label }} -->
             {% for error in form.username.errors %}
             <span class="error"> : {{ error }}</span>
-            {% endfor %}<br>
-            {{ form.username(class="single") }}<br>
+            {% endfor %}
+            {{ form.username(class="single", placeholder="username") }}<br>
         </p>
         <p>
-            {{ form.email.label }}
-            <!-- Display error message if field empty or email registered -->
+            <!-- {{ form.email.label }} -->
             {% for error in form.email.errors %}
             <span class="error"> : {{ error }}</span>
-            {% endfor %}<br>
-            {{ form.email(class="single") }}<br>
+            {% endfor %}
+            {{ form.email(class="single", placeholder="email address") }}<br>
         </p>
         <p>
-            {{ form.password.label }}
-            <!-- Display error message if field empty -->
+            <!-- {{ form.password.label }} -->
             {% for error in form.password.errors %}
             <span class="error"> : {{ error }}</span>
-            {% endfor %}<br>
-            {{ form.password(class="single") }}<br>
+            {% endfor %}
+            {{ form.password(class="single", placeholder="password") }}<br>
         </p>
         <p>
-            {{ form.password2.label }}
-            <!-- Display error message if field empty -->
+            <!-- {{ form.password2.label }} -->
             {% for error in form.password2.errors %}
             <span class="error"> : {{ error }}</span>
-            {% endfor %}<br>
-            {{ form.password2(class="single") }}<br>
+            {% endfor %}
+            {{ form.password2(class="single", placeholder="repeat password") }}<br>
         </p>
 
         <p class="button">{{ form.submit(class="button") }}</p>
     </form>
+</div>
 {% endblock %}
