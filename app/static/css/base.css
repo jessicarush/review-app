@@ -9,9 +9,9 @@
 	--heading-font-color: rgb(0, 0, 0);
 	--minor-font-color: rgb(160, 160, 160);
 	/* --emphasis-color: rgb(255, 102, 102); */
-	/* --emphasis-color: rgb(54, 199, 167); */
+	--emphasis-color: rgb(54, 199, 167);
 	/* --emphasis-color: rgb(0, 173, 221); */
-	--emphasis-color: rgb(250, 201, 5);
+	/* --emphasis-color: rgb(250, 201, 5); */
 	--content-width: 1000px;
 	--margin-left: 35px;
 }
@@ -24,39 +24,43 @@ body {
 	-webkit-text-size-adjust: 100%;
 	margin: 0;
 }
-div.container-outer {
-	margin: 0;
+div.container {
 }
-div.header {
+div.flashed_messages {
+	position: sticky;
+}
+div.content {
 }
 div.nav {
 	background: rgba(255, 255, 255, 0.95);
+	box-shadow: 0 0 8px rgba(50, 50, 50, 0.2);
 	padding: 10px var(--margin-left);
-	box-shadow: 0px 0px 8px rgba(50, 50, 50, 0.2);
-	width: 100%;
-	position: fixed;
+	position: sticky;
+	top: 0;
 	z-index: 5;
 }
 div.forms {
 	background: rgb(55, 60, 72);
-	padding: 65px 0px 15px var(--margin-left);
-	margin-bottom: 15px;
+	padding: 25px 0 15px var(--margin-left);
 }
-div.flashed_messages {
-	margin-left: var(--margin-left);
-}
-div.content {
-	clear: both;
+div.topics {
 	margin-left: var(--margin-left);
 }
 div.topic {
 	background: rgba(255, 255, 255, 0.65);
 	padding: 10px 20px 20px 20px;
-	margin: 0px 15px 15px 0px;
 	position: relative;
 	width: 350px;
 	float: left;
+}
+div.topic-on {
+	border: solid 4px var(--emphasis-color);
+	margin: 12px 15px 0 -3px;
+}
+div.topic-off {
+	margin: 15px 15px 0 0;
 	border: solid 1px rgb(230, 230, 230);
+
 }
 div.reviews {
 	clear: both;
@@ -73,7 +77,9 @@ div.mastery {
 	top: 20;
 	right: 20;
 }
-
+footer {
+	margin-top: 50px;
+}
 
 
 /* Typography */
@@ -87,29 +93,29 @@ h1.header, h2.header {
 	font-family: var(--heading-font-family);
 	color: var(--main-font-color);
 	font-weight: 300;
-	font-size: 16px;
+	font-size: 14px;
 	display: inline;
 }
 h1.header {
-	margin: 0px 3px 0px 0px;
+	margin: 0 0;
 }
 h2.header {
-	margin: 0px 3px 0px 25px;
+	margin: 0 0 0 25px;
 }
 h2.topic {
 	font-family: var(--heading-font-family);
-	font-size: 16px;
+	font-size: 15px;
 	font-weight: 800;
-	margin: 0px 0px 2px 45px;
-	padding: 6px 0px 0px 0px;
+	margin: 0 0 2px 45px;
+	padding: 6px 0 0 0;
 }
 h2.reviews {
 	font-family: var(--heading-font-family);
 	color: var(--minor-font-color);
 	font-weight: 300;
 	font-size: 11px;
-	margin: 4px 0px 4px 0px;
-	padding: 0px 0px 8px 45px;
+	margin: 4px 0 4px 0;
+	padding: 0 0 8px 45px;
 	border-bottom: solid 1px rgb(230, 230, 230);
 
 }
@@ -133,7 +139,7 @@ p.warning {
 	text-transform: uppercase;
 	font-weight: 400;
 	float: left;
-	margin: 0px 0px 2px 0px;
+	margin: 0 0 2px 0;
 }
 p {
 	font-family: var(--main-font-family);
@@ -147,7 +153,7 @@ p.created-date {
 	font-family: var(--heading-font-family);
 	color: var(--minor-font-color);
 	font-size: 11px;
-	margin: 0px 0px 0px 45px;
+	margin: 0 0 0 45px;
 	float: left;
 }
 p.current-skill {
@@ -175,9 +181,9 @@ a:hover, a:active {
 	text-decoration: underline;
 }
 .nav a:link, .nav a:visited {
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: 700;
-	color: var(--main-font-color);
+	color: var(--emphasis-color);
 }
 .topic a:link, .topic a:visited {
 	color: var(--heading-font-color);
@@ -229,10 +235,6 @@ span.star-on {
 span.star-off {
 	color: rgb(210, 210, 210);
 }
-.error {
-	/* color: #FF1010;
-	font-weight: 600; */
-}
 ::selection {
   background: var(--emphasis-color);
   color: rgb(255, 255, 255);
@@ -257,12 +259,18 @@ hr.clear {
 	height: 0;
 	clear: both;
 }
-ul.error, ul.error li {
+ul.error {
 	list-style-type: none;
-	padding: 0;
+	padding: 4px var(--margin-left);
 	margin: 0;
 	font-family: var(--main-font-family);
-	color: var(--emphasis-color);
+	font-size: 15px;
+	background: var(--emphasis-color);
+	color: #fff;
+}
+ul.error li {
+	list-style-type: none;
+	padding: 0;
 }
 ul.sort_by {
 	list-style-type: none;
@@ -272,7 +280,6 @@ ul.sort_by {
 }
 ul.sort_by li {
 	display: inline;
-	margin-right: 5px;
 }
 .reviews p {
 	border-bottom: dotted 1px rgb(230, 230, 230);
@@ -282,7 +289,7 @@ ul.sort_by li {
 /* Forms */
 form.review {
 	width: 210px;
-	margin-right: 25px;
+	margin-right: 35px;
 	float: left;
 }
 input, textarea, select {
@@ -300,7 +307,7 @@ input.single {
 	color: rgba(230, 247, 253, 1);
 	font-weight: 200;
 	font-size: 15px;
-	padding: 5px 0px 5px 8px;
+	padding: 5px 0 5px 8px;
 	background: rgba(200, 200, 255, 0.15);
 	border: 1px solid rgba(18, 19, 23, 0.1);
 	border-radius: 3px;
@@ -350,6 +357,6 @@ input.check{
 	-moz-appearance: checkbox;
 	appearance: checkbox;
 }
-.error {
+span.error {
 	color: var(--emphasis-color);
 }
