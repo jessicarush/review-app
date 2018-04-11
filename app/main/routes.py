@@ -22,7 +22,7 @@ def index(sort_by='name'):
     del_topic_form = DeleteTopicForm()
     rename_form = RenameTopicForm()
 
-    if review_form.validate_on_submit():
+    if review_form.submit1.data and review_form.validate_on_submit():
         topic = Topic.query.filter_by(filename=review_form.filename.data).first()
         review = Review(time_spent=review_form.time_spent.data,
                         skill_before=review_form.skill_before.data,
@@ -37,21 +37,24 @@ def index(sort_by='name'):
         flash('Review logged!')
         return redirect(url_for('main.index', sort_by='name'))
 
-    if del_review_form.validate_on_submit():
+    if del_review_form.submit2.data and del_review_form.validate_on_submit():
         Review.query.filter_by(id=del_review_form.review_id.data).delete()
         db.session.commit()
         flash('Review session deleted.')
+        return redirect(url_for('main.index', sort_by='name'))
 
-    if del_topic_form.validate_on_submit():
-        Topic.query.filter_by(filename=del_topic_form.filename).delete()
+    if del_topic_form.submit3.data and del_topic_form.validate_on_submit():
+        Topic.query.filter_by(filename=del_topic_form.filename.data).delete()
         db.session.commit()
         flash('Topic deleted.')
+        return redirect(url_for('main.index', sort_by='name'))
 
-    if rename_form.validate_on_submit():
-        topic = Topic.query.filter_by(filename=rename_form.old_filename).first()
+    if rename_form.submit4.data and rename_form.validate_on_submit():
+        topic = Topic.query.filter_by(filename=rename_form.old_filename.data).first()
         topic.filename = rename_form.new_filename.data
         db.session.commit()
         flash('Topic renamed!')
+        return redirect(url_for('main.index', sort_by='name'))
 
     if sort_by == 'skill':
         topics=Topic.query.order_by(Topic.current_skill).all()
@@ -61,16 +64,18 @@ def index(sort_by='name'):
         topics = Topic.query.order_by(Topic.filename).all()
     return render_template('index.html', topics=topics,
         review_form=review_form, del_review_form=del_review_form,
-        del_topic_form=del_topic_form, rename_form=rename_form)
+        del_topic_form=del_topic_form, rename_form=rename_form,
+        recommend=request.args.get('recommend'))
 
 
 @bp.route('/recommend')
 @login_required
 def recommend():
     '''View function to recommend a study topic.'''
-    # TODO: recommend function
-    flash('You should study...')
-    return redirect(url_for('main.index', sort_by='date'))
+    topics = Topic.query.order_by(Topic.last_study_date).limit(10).all()
+    topics = sorted(topics, key=lambda x: x.current_skill)
+    flash('You should review {}'.format(topics[0].filename))
+    return redirect(url_for('main.index', sort_by='date', recommend=topics[0].filename))
 
 
 
