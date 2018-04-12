@@ -5,9 +5,9 @@ from flask_login import current_user, login_required
 from app import db
 from app.main import bp
 from app.main.forms import ReviewForm, DeleteReviewForm, DeleteTopicForm, \
-    RenameTopicForm
+    RenameTopicForm, AddTopicsForm
 from app.main.models import User, Topic, Review
-from app.main.topics import topics_from_repo
+from app.main.topics import topics_from_repo, topics_from_db
 
 
 @bp.route('/<sort_by>', methods=['GET', 'POST'])
@@ -87,13 +87,21 @@ def recommend():
     return redirect(url_for('main.index', sort_by='date', recommend=topics[0].filename))
 
 
-# @bp.route('/update', methods=['GET', 'POST'])
-# @login_required
-# def update_topics():
-#     form = UpdateTopicsForm()
-#     if form.validate_on_submit():
-#         pass
-#         topic = Topic(filename='ajax_notes.md', created_date=datetime(2018, 3, 26), current_skill=3)
-#         db.session.add(topic)
-#         db.session.commit()
-#         flash('New topic(s) added.')
+@bp.route('/update', methods=['GET', 'POST'])
+@login_required
+def update():
+    form = AddTopicsForm()
+    repo_topics = set(topics_from_repo())
+    db_topics = set(topics_from_db())
+    new_topics = list(repo_topics.difference(db_topics))
+    print('NEW ', new_topics)
+    if not new_topics:
+        return redirect(url_for('main.index', sort_by='name'))
+
+    if form.validate_on_submit():
+        topic = Topic(filename=new_topics[0], start_skill=form.start_skill.data, current_skill=form.start_skill.data)
+        db.session.add(topic)
+        db.session.commit()
+        flash('New topic added.')
+        return redirect(url_for('main.update'))
+    return render_template('update.html', title='New Topics', form=form, filename=new_topics[0])
