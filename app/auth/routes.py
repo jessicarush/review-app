@@ -44,7 +44,7 @@ def login():
             return redirect(url_for('auth.login'))
         # otherwise, all is well:
         login_user(user, remember=form.remember_me.data)
-        return redirect(url_for('main.index', sort_by='name'))
+        return redirect(url_for('main.update'))
     return render_template('auth/login.html', title='Sign In', form=form)
 
 
