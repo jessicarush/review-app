@@ -26,7 +26,7 @@ body {
 }
 div.container {
 }
-div.auth, footer.auth {
+div.auth, footer.auth, div.update {
 	width: 265px;
 	margin: 25px auto;
 }
@@ -127,6 +127,13 @@ h2.reviews {
 	padding: 0 0 8px 45px;
 	border-bottom: solid 1px rgb(230, 230, 230);
 
+}
+h2.update {
+	font-family: var(--main-font-family);
+	color: var(--heading-color);
+	font-size: 18px;
+	font-weight: 700;
+	margin: 10px 0;
 }
 h2.form, p.warning {
 	font-family: var(--heading-font-family);
@@ -331,7 +338,7 @@ form.review {
 	margin-bottom: 5px;
 	width: 100%;
 }
-.auth input.single {
+.auth input.single, .update input.single {
 	color: var(--main-color);
 	font-weight: 400;
 	font-size: 18px;
@@ -364,7 +371,7 @@ select:-moz-focusring {
 .forms input:focus, .forms select:focus {
 	border: 1px solid rgba(230, 247, 253, 0.8);
 }
-.auth input:focus {
+.auth input:focus, .update input:focus {
 	border-bottom: 2px solid var(--heading-color);
 }
 .forms input.button {
@@ -378,7 +385,7 @@ select:-moz-focusring {
 	border-radius: 3px;
 	width: 100%;
 }
-.auth input.button {
+.auth input.button, .update input.button {
 	font-weight: 300;
 	font-size: 16px;
 	color: #fff;
