@@ -421,4 +421,5 @@ input.check{
 }
 span.error {
 	color: var(--emphasis-color);
+	font-size: 12px;
 }

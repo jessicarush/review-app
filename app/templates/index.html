@@ -1,6 +1,28 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+{% if current_user.is_anonymous %}
+<div class="nav">
+    <span class="header-group">
+    <h1 class="header">Python review:</h1>
+    <a href="{{ url_for('main.demo_recommend') }}" class="recommend">recommend topic</a>
+    </span>
+    <span class="header-group">
+    <ul class="sort_by">
+        <h2 class="header">Sort topics by:</h2>
+        <li><a href="{{ url_for('main.demo', sort_by='name') }}">name</a>,</li>
+        <li><a href="{{ url_for('main.demo', sort_by='date') }}">date</a>,</li>
+        <li><a href="{{ url_for('main.demo', sort_by='skill') }}">skill</a></li>
+    </ul>
+    </span>
+    <span class="header-group">
+    <h2 class="header">Demo: </h2>
+    <a href="{{ url_for('auth.login') }}" class="logout">exit</a>
+    </span>
+</div>
+
+{% else %}
 <div class="nav">
     <span class="header-group">
     <h1 class="header">Python review:</h1>
@@ -19,11 +41,12 @@
     <a href="{{ url_for('auth.logout') }}" class="logout">logout</a>
     </span>
 </div>
+{% endif %}
 
 <div class="forms">
     <!-- form: log a review -->
     <form action="" method="post" class="review">
-        <h2 class="form">Log a Study Session</h2>
+        <h2 class="form">Log a Review Session</h2>
         {{ review_form.hidden_tag() }}
         <p>
             <!-- {{ review_form.filename.label }} -->
@@ -59,7 +82,7 @@
 
     <!-- form: delete a review -->
     <form action="" method="post" class="review">
-        <h2 class="form">Delete a Study Session</h2>
+        <h2 class="form">Delete a Review Session</h2>
         {{ del_review_form.hidden_tag() }}
         <p class="warning"><strong>Be careful!</strong> You cannot undo this and <br>I won't ask you if you're sure once you press delete. That's it, no going back. Consider yourself warned.</p>
         <p>
@@ -67,7 +90,7 @@
             {% for error in del_review_form.review_id.errors %}
             <span class="error">{{ error }}</span>
             {% endfor %}
-            {{ del_review_form.review_id(class="single", placeholder="study session ID") }}
+            {{ del_review_form.review_id(class="single", placeholder="review session ID") }}
         </p>
         <p class="button">{{ del_review_form.submit2(class="button") }}</p>
     </form>

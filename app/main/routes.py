@@ -112,3 +112,55 @@ def update():
         flash('New topic added.')
         return redirect(url_for('main.update'))
     return render_template('update.html', title='New Topics', form=form, filename=new_topics[0])
+
+
+@bp.route('/demo/<sort_by>', methods=['GET', 'POST'])
+def demo(sort_by='name'):
+    '''View function for the main index page.'''
+    review_form = ReviewForm()
+    del_review_form = DeleteReviewForm()
+    del_topic_form = DeleteTopicForm()
+    rename_form = RenameTopicForm()
+
+    topics = Topic.query.order_by(Topic.filename).all()
+    choices = [(t.filename, t.filename) for t in topics]
+
+    review_form.filename.choices = choices
+    del_topic_form.filename.choices = choices
+    rename_form.old_filename.choices = choices
+
+    if review_form.submit1.data and review_form.validate_on_submit():
+        flash("Sorry, 'Log a Study Session' has been disabled for this demo.")
+        return redirect(url_for('main.demo', sort_by='name'))
+
+    if del_review_form.submit2.data and del_review_form.validate_on_submit():
+        flash("Sorry, 'Delete a Study Session' has been disabled for this demo.")
+        return redirect(url_for('main.demo', sort_by='name'))
+
+    if del_topic_form.submit3.data and del_topic_form.validate_on_submit():
+        flash("Sorry, 'Delete a Topic' has been disabled for this demo.")
+        return redirect(url_for('main.demo', sort_by='name'))
+
+    if rename_form.submit4.data and rename_form.validate_on_submit():
+        flash("Sorry, 'Rename a Topic' has been disabled for this demo.")
+        return redirect(url_for('main.demo', sort_by='name'))
+
+    if sort_by == 'skill':
+        topics=Topic.query.order_by(Topic.current_skill).all()
+    elif sort_by == 'date':
+        topics=Topic.query.order_by(Topic.last_study_date).all()
+    else:
+        topics = Topic.query.order_by(Topic.filename).all()
+    return render_template('index.html', topics=topics,
+        review_form=review_form, del_review_form=del_review_form,
+        del_topic_form=del_topic_form, rename_form=rename_form,
+        recommend=request.args.get('recommend'))
+
+
+@bp.route('/demo_recommend')
+def demo_recommend():
+    '''View function to recommend a study topic.'''
+    topics = Topic.query.order_by(Topic.last_study_date).limit(10).all()
+    topics = sorted(topics, key=lambda x: x.current_skill)
+    flash('You should review {}'.format(topics[0].filename))
+    return redirect(url_for('main.demo', sort_by='date', recommend=topics[0].filename))
