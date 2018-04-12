@@ -19,11 +19,3 @@ def topics_from_db():
         topics = Topic.query.order_by(Topic.filename).all()
         t = [t.filename for t in topics]
     return t
-
-
-def topic_choices():
-    app = create_app()
-    with app.app_context():
-        topics = Topic.query.order_by(Topic.filename).all()
-        t = [(t.filename, t.filename) for t in topics]
-    return t

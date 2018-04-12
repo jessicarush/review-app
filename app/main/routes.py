@@ -19,6 +19,13 @@ def index(sort_by='name'):
     del_topic_form = DeleteTopicForm()
     rename_form = RenameTopicForm()
 
+    topics = Topic.query.order_by(Topic.filename).all()
+    choices = [(t.filename, t.filename) for t in topics]
+
+    review_form.filename.choices = choices
+    del_topic_form.filename.choices = choices
+    rename_form.old_filename.choices = choices
+
     if review_form.submit1.data and review_form.validate_on_submit():
         topic = Topic.query.filter_by(filename=review_form.filename.data).first()
         review = Review(time_spent=review_form.time_spent.data,
