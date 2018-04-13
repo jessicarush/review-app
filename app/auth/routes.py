@@ -10,7 +10,7 @@ from app.auth.email import send_password_reset_email
 
 
 @bp.route('/register', methods=['GET', 'POST'])
-@login_required
+# @login_required
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():

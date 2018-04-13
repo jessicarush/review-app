@@ -51,7 +51,7 @@ class Topic(db.Model):
     filename = db.Column(db.String(64), index=True, unique=True)
     created_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     last_study_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    start_skill = db.Column(db.Float)
+    start_skill = db.Column(db.Float, default=0)
     current_skill = db.Column(db.Float, index=True)
     mastery = db.Column(db.Integer, default=0)
     # one to many relationships:

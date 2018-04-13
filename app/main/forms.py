@@ -1,13 +1,13 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField, DecimalField, IntegerField
-from wtforms.validators import DataRequired, ValidationError, Length, Email
+from wtforms.validators import DataRequired, ValidationError, Length, Email, NumberRange
 
 
 class ReviewForm(FlaskForm):
     filename = SelectField('Topic:', choices=[])
     time_spent = IntegerField('Time spent:', validators=[DataRequired()])
-    skill_before = DecimalField('skill before:', places=1, validators=[DataRequired()])
-    skill_after = DecimalField('skill after:', places=1, validators=[DataRequired()])
+    skill_before = DecimalField('skill before:', places=1, validators=[NumberRange(min=0, max=5)])
+    skill_after = DecimalField('skill after:', places=1, validators=[NumberRange(min=0, max=5)])
     submit1 = SubmitField('Submit')
 
 
@@ -28,5 +28,5 @@ class RenameTopicForm(FlaskForm):
 
 
 class AddTopicsForm(FlaskForm):
-    start_skill = DecimalField('start_skill:', places=1, validators=[DataRequired()])
+    start_skill = DecimalField('start_skill:', places=1, validators=[NumberRange(min=0, max=5)])
     submit = SubmitField('Submit')
