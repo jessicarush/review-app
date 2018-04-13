@@ -116,7 +116,7 @@ def update():
 
 @bp.route('/demo/<sort_by>', methods=['GET', 'POST'])
 def demo(sort_by='name'):
-    '''View function for the main index page.'''
+    '''View function for a DEMO of the main index page.'''
     review_form = ReviewForm()
     del_review_form = DeleteReviewForm()
     del_topic_form = DeleteTopicForm()
@@ -159,7 +159,7 @@ def demo(sort_by='name'):
 
 @bp.route('/demo_recommend')
 def demo_recommend():
-    '''View function to recommend a study topic.'''
+    '''View function to recommend a study topic on the demo route.'''
     topics = Topic.query.order_by(Topic.last_study_date).limit(10).all()
     topics = sorted(topics, key=lambda x: x.current_skill)
     flash('You should review {}'.format(topics[0].filename))

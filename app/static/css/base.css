@@ -323,7 +323,6 @@ form, input, textarea, select {
 }
 form.review-form, div.review-form {
 	width: 210px;
-	height: 235px;
 	margin: 0 25px 0 0;
 	float: left;
 }
@@ -392,7 +391,7 @@ select:-moz-focusring {
 	background: var(--heading-color);
 	border-radius: 4px;
 	cursor: pointer;
-	margin-top: 20px;
+	margin-top: 15px;
 	padding: 5px 0;
 	width: 100%;
 }
