@@ -45,7 +45,7 @@
 
 <div class="forms">
     <!-- form: log a review -->
-    <form action="" method="post" class="review">
+    <form action="" method="post" class="review-form">
         <h2 class="form">Log a Review Session</h2>
         {{ review_form.hidden_tag() }}
         <p>
@@ -80,11 +80,11 @@
         <p class="button">{{ review_form.submit1(class="button") }}</p>
     </form>
 
+    <div class="review-form">
     <!-- form: delete a review -->
-    <form action="" method="post" class="review">
+    <form action="" method="post" class="">
         <h2 class="form">Delete a Review Session</h2>
         {{ del_review_form.hidden_tag() }}
-        <p class="warning"><strong>Be careful!</strong> You cannot undo this and <br>I won't ask you if you're sure once you press delete. That's it, no going back. Consider yourself warned.</p>
         <p>
             <!-- {{ del_review_form.review_id.label }} -->
             {% for error in del_review_form.review_id.errors %}
@@ -96,10 +96,9 @@
     </form>
 
     <!-- form: delete a topic -->
-    <form action="" method="post" class="review">
+    <form action="" method="post" class="">
         <h2 class="form">Delete a Topic</h2>
         {{ del_topic_form.hidden_tag() }}
-        <p class="warning"><strong>Caution!</strong> You can't undo this. Once you press delete, it's permanent. I won't ask you if you're sure either. That's it, no going back. Consider yourself warned.</p>
         <p>
             <!-- {{ del_topic_form.filename.label }} -->
             {% for error in del_topic_form.filename.errors %}
@@ -109,11 +108,11 @@
         </p>
         <p class="button">{{ del_topic_form.submit3(class="button") }}</p>
     </form>
+    </div>
 
     <!-- form: rename a review -->
-    <form action="" method="post" class="review">
+    <form action="" method="post" class="review-form">
         <h2 class="form">Rename a Topic</h2>
-        <p class="warning"><strong>Remember: </strong>If the renamed file was just added as a new topic, delete it first.</p>
         <p>
         {{ rename_form.hidden_tag() }}
             <!-- {{ rename_form.old_filename.label }} -->
@@ -130,6 +129,9 @@
             {{ rename_form.new_filename(class="single", placeholder="new_filename.py") }}
         </p>
         <p class="button">{{ rename_form.submit4(class="button") }}</p>
+
+        <p class="warning"><strong>Remember: </strong>Double check your entry. These functions are final. There's no going back once you press 'delete'.</p>
+
     </form>
     <hr class="clear">
 </div>

@@ -24,7 +24,12 @@
     {% endif %}
     </div>
 
-    <span class="topic-id">{{ topic.id }}</span>
+    {% if topic.filename is eq recommend %}
+    <span class="topic-id topic-on">{{ topic.id }}</span>
+    {% else %}
+    <span class="topic-id topic-off">{{ topic.id }}</span>
+    {% endif %}
+    
     <h2 class="topic">
         <a href="https://github.com/jessicarush/python-examples/blob/master/{{ topic.filename }}" target="_blank">{{ topic.filename }}</a></h2>
 
