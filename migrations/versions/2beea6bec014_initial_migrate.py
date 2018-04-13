@@ -1,8 +1,8 @@
-"""create users, topic, review
+"""initial migrate
 
-Revision ID: 9cf6c873fd85
+Revision ID: 2beea6bec014
 Revises: 
-Create Date: 2018-04-03 22:17:19.917230
+Create Date: 2018-04-12 18:26:15.151465
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '9cf6c873fd85'
+revision = '2beea6bec014'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,12 +22,16 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('filename', sa.String(length=64), nullable=True),
     sa.Column('created_date', sa.DateTime(), nullable=True),
+    sa.Column('last_study_date', sa.DateTime(), nullable=True),
+    sa.Column('start_skill', sa.Float(), nullable=True),
     sa.Column('current_skill', sa.Float(), nullable=True),
     sa.Column('mastery', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_topic_created_date'), 'topic', ['created_date'], unique=False)
+    op.create_index(op.f('ix_topic_current_skill'), 'topic', ['current_skill'], unique=False)
     op.create_index(op.f('ix_topic_filename'), 'topic', ['filename'], unique=True)
+    op.create_index(op.f('ix_topic_last_study_date'), 'topic', ['last_study_date'], unique=False)
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=64), nullable=True),
@@ -58,7 +62,9 @@ def downgrade():
     op.drop_index(op.f('ix_users_username'), table_name='users')
     op.drop_index(op.f('ix_users_email'), table_name='users')
     op.drop_table('users')
+    op.drop_index(op.f('ix_topic_last_study_date'), table_name='topic')
     op.drop_index(op.f('ix_topic_filename'), table_name='topic')
+    op.drop_index(op.f('ix_topic_current_skill'), table_name='topic')
     op.drop_index(op.f('ix_topic_created_date'), table_name='topic')
     op.drop_table('topic')
     # ### end Alembic commands ###
