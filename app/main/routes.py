@@ -1,7 +1,10 @@
 from datetime import datetime
+import os
 from flask import flash, render_template, redirect, request, url_for, \
     current_app
 from flask_login import current_user, login_required
+from wtforms import DecimalField
+from wtforms.validators import NumberRange
 from app import db
 from app.main import bp
 from app.main.forms import ReviewForm, DeleteReviewForm, DeleteTopicForm, \
@@ -97,21 +100,31 @@ def recommend():
 @bp.route('/update', methods=['GET', 'POST'])
 @login_required
 def update():
-    form = AddTopicsForm()
-    repo_topics = set(topics_from_repo())
-    db_topics = set(topics_from_db())
-    new_topics = list(repo_topics.difference(db_topics))
-    print('NEW ', new_topics)
-    if not new_topics:
+    repo_filenames = set(topics_from_repo())
+    db_filenames = set(topics_from_db())
+    new_filenames = list(repo_filenames.difference(db_filenames))
+    # new_field_names = [os.path.splitext(n)[0] for n in new_filenames]
+    if not new_filenames:
         return redirect(url_for('main.index', sort_by='name'))
 
+    class F(AddTopicsForm):
+        pass
+
+    for field_name in new_filenames:
+        setattr(F, field_name, DecimalField(field_name, places=1, validators=[NumberRange(min=0, max=5)]))
+
+    form = F()
+
     if form.validate_on_submit():
-        topic = Topic(filename=new_topics[0], start_skill=form.start_skill.data, current_skill=form.start_skill.data)
-        db.session.add(topic)
+        for field in form:
+            if field.widget.input_type != 'hidden' and field.id != 'submit':
+                print(field.id, field.data)
+                topic = Topic(filename=field.id, start_skill=field.data, current_skill=field.data)
+                db.session.add(topic)
         db.session.commit()
-        flash('New topic added.')
-        return redirect(url_for('main.update'))
-    return render_template('update.html', title='New Topics', form=form, filename=new_topics[0])
+        flash('New topic(s) added.')
+        return redirect(url_for('main.index', sort_by='name'))
+    return render_template('update.html', title='New Topics', form=form)
 
 
 @bp.route('/demo/<sort_by>', methods=['GET', 'POST'])

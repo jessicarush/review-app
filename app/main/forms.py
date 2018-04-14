@@ -28,5 +28,5 @@ class RenameTopicForm(FlaskForm):
 
 
 class AddTopicsForm(FlaskForm):
-    start_skill = DecimalField('start_skill:', places=1, validators=[NumberRange(min=0, max=5)])
+    # fields are generated dynamically in the /update route
     submit = SubmitField('Submit')

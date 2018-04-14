@@ -4,15 +4,20 @@
 <div class="update">
     <h1>New Topics!</h1>
     <form action="" method="post" class="update">
-        <h2 class="update"><a href="">{{ filename }}</a></h2>
         {{ form.hidden_tag() }}
-        <p>
-            <!-- {{ form.start_skill.label }} -->
-            {% for error in form.start_skill.errors %}
-            <span class="error">{{ error }}</span>
-            {% endfor %}
-            {{ form.start_skill(class="single", placeholder="start skill: 0–5") }}
-        </p>
+
+        {% for field in form if field.widget.input_type != 'hidden' and field.id != 'submit' %}
+
+                <h2 class="update"><a href="">{{ field.label }}</a></h2>
+                <p>
+                {% for error in field.errors %}
+                <span class="error">{{ error }}</span>
+                {% endfor %}
+                {{ field(class="single", placeholder="start skill: 0–5") }}
+                </p>
+
+        {% endfor %}
+
         <p class="button">{{ form.submit(class="button") }}</p>
     </form>
 
