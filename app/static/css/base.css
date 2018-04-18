@@ -103,7 +103,7 @@ h1 {
 h1.header, h2.header {
 	font-family: var(--heading-font-family);
 	color: var(--main-color);
-	font-weight: 300;
+	font-weight: 700;
 	font-size: 14px;
 	display: inline;
 	margin: 0;
@@ -379,8 +379,8 @@ select:-moz-focusring {
 .forms input.button {
 	font-weight: 400;
 	font-size: 15px;
-	color: rgb(55, 60, 72);
-	background: rgba(230, 247, 253, 1);
+	color: rgb(230, 247, 253, 1);
+	background: rgba(39, 43, 53, 1);
 	cursor: pointer;
 	margin: 0 0 20px 0;
 	padding: 5px 10px;
