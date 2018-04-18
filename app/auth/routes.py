@@ -25,6 +25,7 @@ def register():
     return render_template('auth/register.html', title='Register', form=form)
 
 
+@bp.route('/', methods=['GET', 'POST'])
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     '''View for logging in a user.'''
