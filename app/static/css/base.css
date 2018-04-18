@@ -40,7 +40,6 @@ div.error-page  {
 	text-align: center;
 }
 div.flashed_messages {
-	position: sticky;
 }
 div.content {
 	padding-bottom: 100px;
