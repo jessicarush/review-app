@@ -1,3 +1,5 @@
+'''Functions for comparing database topics to repo topics.'''
+
 from flask import current_app
 import requests
 from app import create_app
@@ -5,6 +7,7 @@ from app.main.models import Topic
 
 
 def topics_from_repo():
+    '''Collects all the filenames from a given Github repo.'''
     url = current_app.config['API_URL']
     response = requests.get(url)
     # print('Status code:', response.status_code)
@@ -14,6 +17,7 @@ def topics_from_repo():
 
 
 def topics_from_db():
+    '''Collects all the filenames from the database.'''
     app = create_app()
     with app.app_context():
         topics = Topic.query.order_by(Topic.filename).all()

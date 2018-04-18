@@ -8,7 +8,7 @@
 
         {% for field in form if field.widget.input_type != 'hidden' and field.id != 'submit' %}
 
-                <h2 class="update"><a href="">{{ field.label }}</a></h2>
+                <h2 class="update"><a href="https://github.com/jessicarush/python-examples/blob/master/{{ field.label }}">{{ field.label }}</a></h2>
                 <p>
                 {% for error in field.errors %}
                 <span class="error">{{ error }}</span>

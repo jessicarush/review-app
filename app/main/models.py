@@ -1,5 +1,6 @@
+'''Models for Review app database tables.'''
+
 from datetime import datetime
-from hashlib import md5
 from time import time
 from flask import current_app
 from flask_login import UserMixin
@@ -20,18 +21,22 @@ class User(UserMixin, db.Model):
         return '<User {}>'.format(self.username)
 
     def set_password(self, password):
+        '''Generates a password hash.'''
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
+        '''Checks that the password matches that hash.'''
         return check_password_hash(self.password_hash, password)
 
     def get_reset_password_token(self, expires_in=600):
+        '''Returns a password reset token.'''
         return jwt.encode(
             {'reset_password': self.id, 'exp': time() + expires_in},
             current_app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
 
     @staticmethod
     def verify_reset_password_token(token):
+        '''Verifies the token to allow a password reset.'''
         try:
             id = jwt.decode(token, current_app.config['SECRET_KEY'],
                             algorithms=['HS256'])['reset_password']
@@ -42,6 +47,7 @@ class User(UserMixin, db.Model):
 
 @login.user_loader
 def load_user(id):
+    '''Helper function for Flask-Login.'''
     return User.query.get(int(id))
 
 

@@ -1,3 +1,5 @@
+'''Blueprint for errora package of Review application.'''
+
 from flask import Blueprint
 
 bp = Blueprint('errors', __name__)

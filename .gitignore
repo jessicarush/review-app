@@ -1,6 +1,9 @@
 .DS_Store
 __pycache__
+.env
 venv
 working_files
 logs
-.env
+data.db
+boot.sh
+Dockerfile

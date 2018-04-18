@@ -1,6 +1,7 @@
-from flask import flash, render_template, redirect, request, url_for
+'''Authorization view functions for Review application.'''
+
+from flask import flash, render_template, redirect, url_for
 from flask_login import current_user, login_user, logout_user, login_required
-from werkzeug.urls import url_parse
 from app import db
 from app.auth import bp
 from app.auth.forms import LoginForm, RegistrationForm, ResetPasswordForm, \
@@ -12,6 +13,7 @@ from app.auth.email import send_password_reset_email
 @bp.route('/register', methods=['GET', 'POST'])
 # @login_required
 def register():
+    '''View for registering a new user.'''
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data)
@@ -25,6 +27,7 @@ def register():
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
+    '''View for logging in a user.'''
     if current_user.is_authenticated:
         return redirect(url_for('main.index', sort_by='name'))
     form = LoginForm()
@@ -50,12 +53,14 @@ def login():
 
 @bp.route('/logout')
 def logout():
+    '''View for logging out a user.'''
     logout_user()
     return redirect(url_for('auth.login'))
 
 
 @bp.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
+    '''View for requesting a password reset.'''
     if current_user.is_authenticated:
         return redirect(url_for('main.index', sort_by='name'))
     form = ResetPasswordRequestForm()
@@ -71,6 +76,7 @@ def reset_password_request():
 
 @bp.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
+    '''View for resetting password.'''
     if current_user.is_authenticated:
         return redirect(url_for('main.index', sort_by='name'))
     user = User.verify_reset_password_token(token)

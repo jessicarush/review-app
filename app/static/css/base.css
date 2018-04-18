@@ -8,8 +8,8 @@
 	--main-color: rgb(60, 60, 60);
 	--heading-color: rgb(0, 0, 0);
 	--minor-color: rgb(160, 160, 160);
-	/* --emphasis-color: rgb(255, 102, 102); */
 	--emphasis-color: rgb(54, 199, 167);
+	/* --emphasis-color: rgb(255, 102, 102); */
 	/* --emphasis-color: rgb(0, 173, 221); */
 	/* --emphasis-color: rgb(250, 201, 5); */
 	--content-width: 1000px;
@@ -29,6 +29,10 @@ div.container {
 div.auth, footer.auth, div.update {
 	width: 265px;
 	margin: 25px auto;
+}
+footer.main {
+	margin: 75px 0 10px 0;
+	text-align: center;
 }
 div.error-page  {
 	width: 400px;
@@ -84,6 +88,7 @@ span.header-group {
 	display: inline-block;
 	width: 230px;
 }
+
 
 /* Typography */
 h1 {
@@ -157,8 +162,7 @@ p {
 	line-height: 1.6em;
 	margin: 0;
 }
-footer.auth p {
-	text-align: left;
+footer.auth p, footer.main p {
 	font-size: 13px;
 }
 p.review {
@@ -386,10 +390,10 @@ select:-moz-focusring {
 }
 .auth input.button, .update input.button {
 	font-weight: 300;
-	font-size: 16px;
+	font-size: 18px;
 	color: #fff;
 	background: var(--heading-color);
-	border-radius: 4px;
+	border-radius: 3px;
 	cursor: pointer;
 	margin-top: 15px;
 	padding: 5px 0;

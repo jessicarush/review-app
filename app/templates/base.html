@@ -21,9 +21,6 @@
 
         {{ moment.include_jquery() }}
         {{ moment.include_moment() }}
-
-
-
     </head>
 
     <body>
@@ -42,11 +39,9 @@
             {%  endwith %}
         </div>
 
-        <div class="content">
-            <!-- template inheritance -->
-            {% block content %}{% endblock %}
-        <hr class="clear">
-        </div>
+
+        <!-- template inheritance -->
+        {% block content %}{% endblock %}
 
 
     </div>
