@@ -3,48 +3,43 @@
 
 
 /* Layout */
-
-div.nav {
-	padding: 10px 0 10px 40px;
-}
-div.forms {
-	padding: 25px 40px;
-}
 div.topic {
-	margin: 10px 0 0 0;
+        margin: 10px 0 0 0;
 }
 span.header-group {
-	display: block;
-	width: 100%;
+        margin-left: 53px;
+        width: 300px;
 }
 
 /* Typography */
 h1.header, h2.header {
-	font-size: 18px;
+        font-size: 18px;
 }
 h2.form, p.warning {
-	font-size: 15px;
+        font-size: 15px;
 }
 h2.form {
-	margin: 10px 0 8px 0;
+        margin: 10px 0 8px 0;
 }
 .nav a:link, .nav a:visited {
-	font-size: 18px;
+        font-size: 18px;
 }
-
+ul.error .container {
+        text-align: center;
+}
 
 /* Forms */
 form.review-form, div.review-form {
-	/* width: 100%; */
-	margin: 0;
-	float: none;
+        width: 275px;
+        margin: 0 0 0 53px;
+        float: none;
 }
 .review-form input.single {
-	font-size: 18px;
+        font-size: 18px;
 }
 .review-form select {
-	font-size: 18px;
+        font-size: 18px;
 }
 .forms input.button {
-	font-size: 18px;
+        font-size: 18px;
 }

@@ -53,20 +53,20 @@ div.content {
 div.nav {
 	background: rgba(255, 255, 255, 0.95);
 	box-shadow: 0 0 8px rgba(50, 50, 50, 0.2);
-	padding: 10px 0;
+	padding: 10px;
 	position: sticky;
 	top: 0;
 	z-index: 5;
 }
 div.forms {
 	background: rgb(55, 60, 72);
-	padding: 25px 0 15px 0;
+	padding: 25px 0 15px 10px;
 }
 div.topic {
 	background: rgba(255, 255, 255, 0.65);
 	border: solid 1px rgb(230, 230, 230);
 	padding: 10px 20px 20px 20px;
-	margin: 10px 10px 0 0;
+	margin: 10px 5px 0 5px;
 	position: relative;
 	width: 350px;
 	float: left;
@@ -88,7 +88,8 @@ div.mastery {
 }
 span.header-group {
 	display: inline-block;
-	width: 240px;
+	width: 235px;
+	padding-left: 5px;
 }
 
 
@@ -288,7 +289,7 @@ hr.clear {
 }
 ul.error {
 	list-style-type: none;
-	padding: 4px 0;
+	padding: 4px;
 	margin: 0;
 	font-family: var(--main-font-family);
 	font-size: 15px;
@@ -297,7 +298,7 @@ ul.error {
 }
 ul.error li {
 	list-style-type: none;
-	padding: 0;
+	padding-left: 5px;
 }
 ul.sort_by {
 	list-style-type: none;
@@ -343,12 +344,16 @@ form.review-form, div.review-form {
 	margin-bottom: 5px;
 	width: 100%;
 }
+.review-form input::placeholder {
+	color: rgb(230, 247, 253);
+	opacity: 0.8;
+}
 .auth input.single, .update input.single {
 	color: var(--main-color);
 	font-weight: 400;
 	font-size: 18px;
 	padding: 0;
-	border-bottom: 2px solid rgb(200, 200, 200);
+	border-bottom: 1px solid rgb(200, 200, 200);
 	margin: 5px 0 15px 0;
 	width: 100%;
 }
@@ -377,7 +382,7 @@ select:-moz-focusring {
 	border: 1px solid rgba(230, 247, 253, 0.8);
 }
 .auth input:focus, .update input:focus {
-	border-bottom: 2px solid var(--heading-color);
+	border-bottom: 1px solid var(--heading-color);
 }
 .forms input.button {
 	font-weight: 400;
