@@ -8,6 +8,7 @@ div.topic {
 }
 span.header-group {
         width: 300px;
+		padding-left: 25px;
 }
 
 /* Typography */
@@ -24,6 +25,11 @@ h2.form {
         font-size: 18px;
 }
 
+/* Design Elements */
+ul.error li {
+	padding-left: 25px;
+}
+
 /* Forms */
 form.review-form, div.review-form {
         width: 275px;
@@ -38,4 +44,7 @@ form.review-form, div.review-form {
 }
 .forms input.button {
         font-size: 18px;
+}
+form.adj {
+	padding-left: 25px;
 }
