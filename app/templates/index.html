@@ -4,6 +4,7 @@
 
 {% if current_user.is_anonymous %}
 <div class="nav">
+    <div class="container">
     <span class="header-group">
     <h1 class="header">Python review:</h1>
     <a href="{{ url_for('main.demo_recommend') }}" class="recommend">recommend topic</a>
@@ -20,10 +21,12 @@
     <h2 class="header">Demo: </h2>
     <a href="{{ url_for('auth.login') }}" class="logout">exit</a>
     </span>
+    </div>
 </div>
 
 {% else %}
 <div class="nav">
+    <div class="container">
     <span class="header-group">
     <h1 class="header">Python review:</h1>
     <a href="{{ url_for('main.recommend') }}" class="recommend">recommend topic</a>
@@ -40,10 +43,12 @@
     <h2 class="header">{{ current_user.username.title() }}: </h2>
     <a href="{{ url_for('auth.logout') }}" class="logout">logout</a>
     </span>
+    </div>
 </div>
 {% endif %}
 
 <div class="forms">
+    <div class="container">
     <!-- form: log a review -->
     <form action="" method="post" class="review-form">
         <h2 class="form">Log a Review Session</h2>
@@ -134,13 +139,15 @@
 
     </form>
     <hr class="clear">
+    </div>
 </div>
 
-<div class="topics">
-    {% for topic in topics %}
-        {% include '_topic.html' %}
-    {% endfor %}
-    <hr class="clear">
+
+<div class="container">
+{% for topic in topics %}
+    {% include '_topic.html' %}
+{% endfor %}
+<hr class="clear">
 </div>
 
 <footer class="main">

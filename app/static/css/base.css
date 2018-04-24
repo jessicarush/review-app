@@ -13,7 +13,6 @@
 	/* --emphasis-color: rgb(0, 173, 221); */
 	/* --emphasis-color: rgb(250, 201, 5); */
 	--content-width: 1000px;
-	--margin-left: 45px;
 }
 
 
@@ -24,11 +23,18 @@ body {
 	-webkit-text-size-adjust: 100%;
 	margin: 0;
 }
-div.container {
+#parent {
+   text-align: center;
+}
+.container {
+    display: inline-block;
+    margin: auto;
+    text-align: left;
 }
 div.auth, footer.auth, div.update {
 	width: 265px;
 	margin: 25px auto;
+	text-align: left;
 }
 footer.main {
 	margin: 75px 0 10px 0;
@@ -47,17 +53,17 @@ div.content {
 div.nav {
 	background: rgba(255, 255, 255, 0.95);
 	box-shadow: 0 0 8px rgba(50, 50, 50, 0.2);
-	padding: 10px 0 10px var(--margin-left);
+	padding: 10px 0;
 	position: sticky;
 	top: 0;
 	z-index: 5;
 }
 div.forms {
 	background: rgb(55, 60, 72);
-	padding: 25px 0 15px var(--margin-left);
+	padding: 25px 0 15px 0;
 }
 div.topics {
-	margin: 0 0 0 var(--margin-left);
+	margin: 0;
 }
 div.topic {
 	background: rgba(255, 255, 255, 0.65);
@@ -78,14 +84,14 @@ div.reviews {
 div.mastery {
 	width: 70px;
 	text-align: right;
-	font-size: 14px;
+	font-size: 14.5px;
 	position: absolute;
 	top: 20;
 	right: 20;
 }
 span.header-group {
 	display: inline-block;
-	width: 230px;
+	width: 240px;
 }
 
 
@@ -104,7 +110,7 @@ h1.header, h2.header {
 	font-family: var(--heading-font-family);
 	color: var(--main-color);
 	font-weight: 700;
-	font-size: 14px;
+	font-size: 14.5px;
 	display: inline;
 	margin: 0;
 }
@@ -285,7 +291,7 @@ hr.clear {
 }
 ul.error {
 	list-style-type: none;
-	padding: 4px var(--margin-left);
+	padding: 4px 0;
 	margin: 0;
 	font-family: var(--main-font-family);
 	font-size: 15px;
@@ -326,7 +332,7 @@ form, input, textarea, select {
 }
 form.review-form, div.review-form {
 	width: 210px;
-	margin: 0 25px 0 0;
+	margin: 0 35px 0 0;
 	float: left;
 }
 .review-form input.single {
