@@ -45,6 +45,6 @@ form.review-form, div.review-form {
 .forms input.button {
         font-size: 18px;
 }
-form.adj {
+form.review-form, div.review-form form.adj {
 	padding-left: 25px;
 }
