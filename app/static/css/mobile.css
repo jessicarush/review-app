@@ -8,7 +8,7 @@ div.topic {
 }
 span.header-group {
         width: 300px;
-		padding-left: 35px;
+		padding-left: 40px;
 }
 
 /* Typography */
@@ -27,12 +27,12 @@ h2.form {
 
 /* Design Elements */
 ul.error li {
-	padding-left: 35px;
+	padding-left: 40px;
 }
 
 /* Forms */
 form.review-form, div.review-form {
-        width: 275px;
+        width: 310px;
         margin: 0;
         float: none;
 }
@@ -46,5 +46,5 @@ form.review-form, div.review-form {
         font-size: 18px;
 }
 form.review-form, div.review-form {
-	padding-left: 35px;
+	padding-left: 40px;
 }
