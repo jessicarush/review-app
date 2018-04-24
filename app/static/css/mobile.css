@@ -7,7 +7,6 @@ div.topic {
         margin: 10px 0 0 0;
 }
 span.header-group {
-        margin-left: 53px;
         width: 300px;
 }
 
@@ -24,14 +23,11 @@ h2.form {
 .nav a:link, .nav a:visited {
         font-size: 18px;
 }
-ul.error .container {
-        text-align: center;
-}
 
 /* Forms */
 form.review-form, div.review-form {
         width: 275px;
-        margin: 0 0 0 53px;
+        margin: 0;
         float: none;
 }
 .review-form input.single {

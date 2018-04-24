@@ -53,14 +53,14 @@ div.content {
 div.nav {
 	background: rgba(255, 255, 255, 0.95);
 	box-shadow: 0 0 8px rgba(50, 50, 50, 0.2);
-	padding: 10px;
+	padding: 10px 0;
 	position: sticky;
 	top: 0;
 	z-index: 5;
 }
 div.forms {
 	background: rgb(55, 60, 72);
-	padding: 25px 0 15px 10px;
+	padding: 25px 0 15px 0;
 }
 div.topic {
 	background: rgba(255, 255, 255, 0.65);
@@ -289,7 +289,7 @@ hr.clear {
 }
 ul.error {
 	list-style-type: none;
-	padding: 4px;
+	padding: 4px 0;
 	margin: 0;
 	font-family: var(--main-font-family);
 	font-size: 15px;
@@ -332,6 +332,9 @@ form.review-form, div.review-form {
 	width: 210px;
 	margin: 0 35px 0 0;
 	float: left;
+}
+form.adj {
+	padding-left: 5px;
 }
 .review-form input.single {
 	color: rgba(230, 247, 253, 1);
