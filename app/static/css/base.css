@@ -32,7 +32,7 @@ body {
     text-align: left;
 }
 div.auth, footer.auth, div.update {
-	width: 265px;
+	width: 270px;
 	margin: 25px auto;
 	text-align: left;
 }
@@ -98,11 +98,8 @@ h1 {
 	font-family: var(--heading-font-family);
 	color: var(--heading-color);
 	font-weight: 300;
-	font-size: 36px;
-	margin: 35px 0 25px 0;
-}
-.auth h1 {
-	text-align: center;
+	font-size: 40px;
+	margin: 35px 0 10px 0;
 }
 h1.header, h2.header {
 	font-family: var(--heading-font-family);
@@ -128,13 +125,6 @@ h2.reviews {
 	padding: 0 0 8px 45px;
 	border-bottom: solid 1px rgb(230, 230, 230);
 
-}
-h2.update {
-	font-family: var(--main-font-family);
-	color: var(--heading-color);
-	font-size: 18px;
-	font-weight: 700;
-	margin: 10px 0;
 }
 h2.form, p.warning {
 	font-family: var(--heading-font-family);
@@ -213,6 +203,11 @@ a:hover, a:active {
 }
 .topic a:link, .topic a:visited {
 	color: var(--heading-color);
+}
+.update a:link, .update a:visited {
+	font-size: 13px;
+	font-weight: 400;
+	font-style: italic;
 }
 .review-id {
 	display: inline-block;
@@ -399,29 +394,32 @@ select:-moz-focusring {
 	width: 100%;
 }
 .auth input.button, .update input.button {
-	font-weight: 300;
+	font-weight: 800;
 	font-size: 18px;
-	color: #fff;
-	background: var(--heading-color);
-	border-radius: 3px;
+	color: var(--heading-color);
+	border: 3px solid var(--heading-color);
 	cursor: pointer;
 	margin-top: 15px;
-	padding: 5px 0;
-	width: 100%;
+	padding: 7px 20px;
 }
-.forms p.button {
-	text-align: center;
+p.button {
+	text-align: left;
 }
-.auth p.button {
-	text-align: center;
+.update_label {
+	font-family: var(--main-font-family);
+	color: var(--main-color);
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1.6em;
+	margin: 0;
 }
 p.remember {
 	font-size: 13px;
 }
 p.reset {
-	text-align: center;
+	text-align: left;
 	font-size: 13px;
-	border-top: 2px solid rgb(200, 200, 200);
+	border-top: 1px solid rgb(200, 200, 200);
 	padding-top: 5px;
 	margin-top: 5px;
 }
