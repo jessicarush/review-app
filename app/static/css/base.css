@@ -385,7 +385,7 @@ select:-moz-focusring {
 .forms input.button {
 	font-weight: 400;
 	font-size: 15px;
-	color: rgb(230, 247, 253, 1);
+	color: rgb(230, 247, 253);
 	background: rgba(39, 43, 53, 1);
 	cursor: pointer;
 	margin: 0 0 20px 0;
