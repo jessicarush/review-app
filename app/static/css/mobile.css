@@ -7,12 +7,14 @@ div.topic {
     margin: 5px 0 0 0;
 }
 span.header-group-1 {
+    width: auto;
+    float: left;
 	padding-left: 20px;
 }
 span.header-group-2 {
     width: auto;
-    float: left;
-	padding-left: 20px;
+    float: right;
+	padding-right: 20px;
 }
 span.header-group-3 {
 	width: auto;
@@ -39,13 +41,13 @@ form.review-form, div.review-form {
         float: none;
 }
 .review-form input.single {
-        font-size: 18px;
+        font-size: 16px;
 }
 .review-form select {
-        font-size: 18px;
+        font-size: 16px;
 }
 .forms input.button {
-        font-size: 18px;
+        font-size: 16px;
 }
 form.review-form, div.review-form {
 	padding-left: 40px;
