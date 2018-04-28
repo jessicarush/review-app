@@ -302,10 +302,11 @@ ul.error {
 	list-style-type: none;
 	padding: 8px 0;
 	margin: 0;
-	font-family: var(--main-font-family);
-	font-size: 15px;
 	background: var(--emphasis-color);
-	color: #fff;
+	font-family: var(--heading-font-family);
+	color: rgba(255, 255, 255, 0.9);
+	font-weight: 300;
+	font-size: 15px;
 }
 ul.error li {
 	list-style-type: none;
