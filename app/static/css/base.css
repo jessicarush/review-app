@@ -105,7 +105,6 @@ h1 {
 	font-weight: 300;
 	font-size: 50px;
 	margin: 35px 0 10px 0;
-	/* text-align: center; */
 }
 .nav h1, .nav h2 {
 	font-family: var(--heading-font-family);
@@ -367,7 +366,7 @@ form.adj {
 	font-size: 22px;
 	padding: 0;
 	border-bottom: 1px solid rgb(200, 200, 200);
-	margin: 5px 0 10px 0;
+	margin: 15px 0 0 0;
 	width: 100%;
 }
 .review-form select {
@@ -413,7 +412,7 @@ select:-moz-focusring {
 	font-size: 22px;
 	color: var(--heading-color);
 	cursor: pointer;
-	margin: 35px 0 0 0;
+	margin: 44px 0 0 0;
 	width: 100%;
 	padding: 6px 0;
 	border: solid 2px var(--heading-color);
@@ -432,8 +431,10 @@ a.reset:link, a.reset:visited {
 	float: right;
 }
 p.remember_reset {
-	margin: 0 0 0 0;
+	margin: 10px 0 0 0;
 	font-size: 15px;
+	font-weight: 700;
+	color: var(--heading-color);
 }
 .update_label {
 	font-family: var(--main-font-family);

@@ -4,36 +4,27 @@
 
 /* Layout */
 div.topic {
-        margin: 5px 0 0 0;
+    margin: 5px 0 0 0;
 }
-
 span.header-group-1 {
-	display: inline-block;
-	float: left;
 	padding-left: 20px;
 }
 span.header-group-2 {
-	display: inline-block;
+    width: auto;
+    float: left;
+	padding-left: 20px;
+}
+span.header-group-3 {
+	width: auto;
     float: right;
 	padding-right: 20px;
 }
-span.header-group-3 {
-	display: inline-block;
-	clear: both;
-	padding-left: 20px;
-}
 /* Typography */
-h1.header, h2.header {
-        font-size: 18px;
-}
 h2.form, p.warning {
         font-size: 15px;
 }
 h2.form {
         margin: 10px 0 8px 0;
-}
-.nav a:link, .nav a:visited {
-        font-size: 18px;
 }
 
 /* Design Elements */
