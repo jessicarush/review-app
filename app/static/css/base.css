@@ -206,7 +206,7 @@ a:hover, a:active {
 	color: #fff;
 	font-size: 15px;
 	font-weight: 600;
-	padding-right: 3px;
+	padding-left: 3px;
 	text-shadow: 0 0 3px rgba(33, 121, 99, 0.5);
 }
 .nav a:hover, .nav a:active {
@@ -349,7 +349,7 @@ form.adj {
 	color: rgba(230, 247, 253, 1);
 	font-weight: 200;
 	font-size: 15px;
-	padding: 5px 0 5px 8px;
+	padding: 5px 0 5px 10px;
 	background: rgba(200, 200, 255, 0.15);
 	border: 1px solid rgba(18, 19, 23, 0.1);
 	border-radius: 3px;
@@ -373,7 +373,7 @@ form.adj {
 	color: rgba(230, 247, 253, 1);
 	font-weight: 200;
 	font-size: 15px;
-	padding: 4px 0 4px 8px;
+	padding: 4px 0 4px 10px;
 	background: rgba(200, 200, 255, 0.15);
 	border: 1px solid rgba(18, 19, 23, 0.1);
 	border-radius: 3px;
