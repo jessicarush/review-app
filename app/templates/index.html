@@ -6,14 +6,14 @@
 <div class="nav">
     <div class="container">
     <span class="header-group">
-    <h1 class="header">Python review:</h1>
+    <h1 class="header">Python:</h1>
     <a href="{{ url_for('main.demo_recommend') }}" class="recommend">recommend topic</a>
     </span>
     <span class="header-group">
     <ul class="sort_by">
-        <h2 class="header">Sort topics by:</h2>
-        <li><a href="{{ url_for('main.demo', sort_by='name') }}">name</a>,</li>
-        <li><a href="{{ url_for('main.demo', sort_by='date') }}">date</a>,</li>
+        <h2 class="header">Sort:</h2>
+        <li><a href="{{ url_for('main.demo', sort_by='name') }}">name</a></li>
+        <li><a href="{{ url_for('main.demo', sort_by='date') }}">date</a></li>
         <li><a href="{{ url_for('main.demo', sort_by='skill') }}">skill</a></li>
     </ul>
     </span>
@@ -28,14 +28,14 @@
 <div class="nav">
     <div class="container">
     <span class="header-group">
-    <h1 class="header">Python review:</h1>
+    <h1 class="header">Python:</h1>
     <a href="{{ url_for('main.recommend') }}" class="recommend">recommend topic</a>
     </span>
     <span class="header-group">
     <ul class="sort_by">
-        <h2 class="header">Sort topics by:</h2>
-        <li><a href="{{ url_for('main.index', sort_by='name') }}">name</a>,</li>
-        <li><a href="{{ url_for('main.index', sort_by='date') }}">date</a>,</li>
+        <h2 class="header">Sort:</h2>
+        <li><a href="{{ url_for('main.index', sort_by='name') }}">name</a></li>
+        <li><a href="{{ url_for('main.index', sort_by='date') }}">date</a></li>
         <li><a href="{{ url_for('main.index', sort_by='skill') }}">skill</a></li>
     </ul>
     </span>

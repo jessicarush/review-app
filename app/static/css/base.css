@@ -7,6 +7,7 @@
 	--minor-font-family: 'Nunito', sans-serif;
 	--main-color: rgba(26, 37, 37, 0.6);
 	--heading-color: rgba(26, 37, 37, 0.9);
+	--subheading-color: rgb(0, 0, 0);
 	--minor-color: rgb(160, 160, 160);
 	--emphasis-color: rgb(54, 199, 167);
 	/* --emphasis-color: rgb(255, 102, 102); */
@@ -54,7 +55,7 @@ div.content {
 	padding-bottom: 100px;
 }
 div.nav {
-	background: rgba(255, 255, 255, 0.95);
+	background: rgba(54, 199, 167, 0.9);
 	box-shadow: 0 0 8px rgba(50, 50, 50, 0.2);
 	padding: 10px 0;
 	position: sticky;
@@ -108,9 +109,9 @@ h1 {
 }
 h1.header, h2.header {
 	font-family: var(--heading-font-family);
-	color: var(--main-color);
-	font-weight: 700;
-	font-size: 14.5px;
+	color: rgba(255, 255, 255, 0.9);
+	font-weight: 300;
+	font-size: 15px;
 	display: inline;
 	margin: 0;
 }
@@ -203,11 +204,20 @@ a:hover, a:active {
 	color: var(--emphasis-color);
 }
 .nav a:link, .nav a:visited {
-	font-size: 14px;
-	color: var(--emphasis-color);
+	color: #fff;
+	font-size: 15px;
+	font-weight: 600;
+	padding-right: 3px;
+	text-shadow: 0 0 3px rgba(33, 121, 99, 0.6);
+}
+.nav a:hover, .nav a:active {
+	text-decoration: underline;
 }
 .topic a:link, .topic a:visited {
-	color: var(--heading-color);
+	color: var(--subheading-color);
+}
+.topic a:hover, .topic a:active {
+	color: var(--emphasis-color);
 }
 .update a:link, .update a:visited {
 	font-size: 13px;
@@ -255,7 +265,7 @@ span.topic-on {
 	background: var(--emphasis-color);
 }
 span.topic-off {
-	background: var(--heading-color);
+	background: var(--subheading-color);
 }
 span.star-on {
 	color: var(--emphasis-color);
@@ -289,7 +299,7 @@ hr.clear {
 }
 ul.error {
 	list-style-type: none;
-	padding: 4px 0;
+	padding: 8px 0;
 	margin: 0;
 	font-family: var(--main-font-family);
 	font-size: 15px;
