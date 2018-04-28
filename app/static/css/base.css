@@ -202,14 +202,16 @@ a:link, a:visited {
 a:hover, a:active {
 	color: var(--emphasis-color);
 }
-.nav a:link, .nav a:visited {
+.nav a:link, .nav a:visited,
+.flashed_messages a:link, .flashed_messages a:visited {
 	color: #fff;
 	font-size: 15px;
 	font-weight: 600;
 	padding-left: 3px;
 	text-shadow: 0 0 3px rgba(33, 121, 99, 0.5);
 }
-.nav a:hover, .nav a:active {
+.nav a:hover, .nav a:active,
+.flashed_messages a:hover, .flashed_messages a:active {
 	text-decoration: underline;
 }
 .topic a:link, .topic a:visited {

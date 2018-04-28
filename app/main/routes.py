@@ -2,7 +2,7 @@
 
 from datetime import datetime
 # import os
-from flask import flash, render_template, redirect, request, url_for
+from flask import flash, render_template, redirect, request, url_for, Markup
 from flask_login import login_required
 from wtforms import DecimalField
 from wtforms.validators import NumberRange
@@ -96,7 +96,9 @@ def recommend():
     '''View function to recommend a study topic.'''
     topics = Topic.query.order_by(Topic.last_study_date).limit(10).all()
     topics = sorted(topics, key=lambda x: x.current_skill)
-    flash('You should review {}'.format(topics[0].filename))
+    # flash('You should review {}'.format(topics[0].filename))
+    url = '\"https://github.com/jessicarush/python-examples/blob/master/{}\"'.format(topics[0].filename)
+    flash(Markup('You should review: <a href={}>{}</a>'.format(url, topics[0].filename)))
     return redirect(url_for(
         'main.index', sort_by='date', recommend=topics[0].filename))
 
