@@ -9,12 +9,12 @@ div.topic {
 span.header-group-1 {
     width: auto;
     float: left;
-	padding-left: 20px;
+	padding-left: 15px;
 }
 span.header-group-2 {
     width: auto;
     float: right;
-	padding-right: 20px;
+	padding-right: 15px;
 }
 span.header-group-3 {
 	width: auto;
@@ -31,7 +31,7 @@ h2.form {
 
 /* Design Elements */
 ul.error li {
-	padding-left: 20px;
+	padding-left: 15px;
 }
 
 /* Forms */
