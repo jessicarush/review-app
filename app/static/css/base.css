@@ -5,8 +5,8 @@
 	--main-font-family: 'Nunito', sans-serif;
 	--heading-font-family: 'Nunito', sans-serif;
 	--minor-font-family: 'Nunito', sans-serif;
-	--main-color: rgb(60, 60, 60);
-	--heading-color: rgb(0, 0, 0);
+	--main-color: rgba(26, 37, 37, 0.6);
+	--heading-color: rgba(26, 37, 37, 0.9);
 	--minor-color: rgb(160, 160, 160);
 	--emphasis-color: rgb(54, 199, 167);
 	/* --emphasis-color: rgb(255, 102, 102); */
@@ -32,7 +32,7 @@ body {
     text-align: left;
 }
 div.auth, div.update {
-	width: 240px;
+	width: 325px;
 	margin: 35px auto;
 	text-align: left;
 }
@@ -41,7 +41,7 @@ footer.main {
 	text-align: center;
 }
 footer.auth {
-	margin: 25px 0 25px 0;
+	margin: 0 0 25px 0;
 }
 div.error-page  {
 	width: 400px;
@@ -102,8 +102,9 @@ h1 {
 	font-family: var(--heading-font-family);
 	color: var(--heading-color);
 	font-weight: 300;
-	font-size: 40px;
+	font-size: 50px;
 	margin: 35px 0 10px 0;
+	/* text-align: center; */
 }
 h1.header, h2.header {
 	font-family: var(--heading-font-family);
@@ -160,7 +161,7 @@ p {
 	margin: 0;
 }
 footer.auth p, footer.main p {
-	font-size: 13px;
+	font-size: 16px;
 }
 p.review {
 	font-size: 12.5px;
@@ -199,7 +200,7 @@ a:link, a:visited {
 	font-weight: 700;
 }
 a:hover, a:active {
-	text-decoration: underline;
+	color: var(--emphasis-color);
 }
 .nav a:link, .nav a:visited {
 	font-size: 14px;
@@ -212,15 +213,6 @@ a:hover, a:active {
 	font-size: 13px;
 	font-weight: 400;
 	font-style: italic;
-}
-a.reset:link, a.reset:visited {
-	text-align: left;
-	font-weight: 400;
-	font-size: 18px;
-	padding-left: 5px;
-}
-a.reset:hover, a.reset:active {
-	color: var(--emphasis-color);
 }
 .review-id {
 	display: inline-block;
@@ -362,10 +354,10 @@ form.adj {
 .auth input.single, .update input.single {
 	color: var(--main-color);
 	font-weight: 400;
-	font-size: 18px;
+	font-size: 22px;
 	padding: 0;
 	border-bottom: 1px solid rgb(200, 200, 200);
-	margin: 5px 0 15px 0;
+	margin: 5px 0 10px 0;
 	width: 100%;
 }
 .review-form select {
@@ -407,21 +399,31 @@ select:-moz-focusring {
 	width: 100%;
 }
 .auth input.button, .update input.button {
-	font-weight: 600;
-	font-size: 18px;
+	font-weight: 500;
+	font-size: 22px;
 	color: var(--heading-color);
-	border: 2px solid var(--heading-color);
 	cursor: pointer;
-	margin: 15px 0 0 0;
-	padding: 4px 10px;
+	margin: 35px 0 0 0;
+	width: 100%;
+	padding: 6px 0;
+	border: solid 2px var(--heading-color);
 	border-radius: 3px;
 }
 .auth input.button:hover, .update input.button:hover {
 	color: var(--emphasis-color);
-	border: 2px solid var(--emphasis-color);
+	border: solid 2px var(--emphasis-color);
 }
 p.button {
-	text-align: left;
+	text-align: right;
+}
+a.reset:link, a.reset:visited {
+	/* font-weight: 300; */
+	display: inline-block;
+	float: right;
+}
+p.remember_reset {
+	margin: 0 0 0 0;
+	font-size: 15px;
 }
 .update_label {
 	font-family: var(--main-font-family);
@@ -431,15 +433,10 @@ p.button {
 	line-height: 1.6em;
 	margin: 0;
 }
-p.remember {
-	font-size: 13px;
-}
-input.check{
+input[type=checkbox] {
 	-webkit-appearance: checkbox;
 	-moz-appearance: checkbox;
 	appearance: checkbox;
-	padding: 0;
-	margin: 0;
 }
 span.error {
 	color: var(--emphasis-color);

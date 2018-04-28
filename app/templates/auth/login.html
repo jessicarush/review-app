@@ -4,7 +4,7 @@
 <div class="auth">
     <h1>Welcome</h1>
     <footer class="auth">
-        <p>This sign in is for a personal study tool built with Python & Flask. You can see a <a href="{{ url_for('main.demo', sort_by='name') }}">demo of the project here</a>. Keep in mind some features have been disabled to protect the database. More projects at <a href="">cyanred</a>. Thanks for visting.</p>
+        <p>This sign in is for a personal study tool built with Python & Flask. You can see a <a href="{{ url_for('main.demo', sort_by='name') }}">demo of the project here</a>. Keep in mind some features have been disabled in the demo to protect the database. More projects at <a href="">cyanred</a>. Thanks for visting.</p>
     </footer>
     <form action="" method="post">
         {{ form.hidden_tag() }}
@@ -22,10 +22,12 @@
             {% endfor %}
             {{ form.password(class="single", placeholder="password") }}
             </p>
-        <p class="remember">{{ form.remember_me(class="check", checked="True") }} {{ form.remember_me.label }}</p>
+        <p class="remember_reset">
+            {{ form.remember_me(class="check", checked="True") }} {{ form.remember_me.label }}
+            <a class="reset" href="{{ url_for('auth.reset_password_request') }}">Reset password?</a>
+        </p>
         <p class="button">
             {{ form.submit(class="button") }}
-            <a class="reset" href="{{ url_for('auth.reset_password_request') }}">or reset password.</a>
         </p>
 
     </form>
