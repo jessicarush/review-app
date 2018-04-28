@@ -91,7 +91,7 @@ div.mastery {
 	top: 20;
 	right: 20;
 }
-span.header-group {
+span.header-group-1, span.header-group-2, span.header-group-3 {
 	display: inline-block;
 	width: 235px;
 	padding-left: 5px;
@@ -107,7 +107,7 @@ h1 {
 	margin: 35px 0 10px 0;
 	/* text-align: center; */
 }
-h1.header, h2.header {
+.nav h1, .nav h2 {
 	font-family: var(--heading-font-family);
 	color: rgba(255, 255, 255, 0.9);
 	font-weight: 300;
@@ -208,7 +208,7 @@ a:hover, a:active {
 	font-size: 15px;
 	font-weight: 600;
 	padding-right: 3px;
-	text-shadow: 0 0 3px rgba(33, 121, 99, 0.6);
+	text-shadow: 0 0 3px rgba(33, 121, 99, 0.5);
 }
 .nav a:hover, .nav a:active {
 	text-decoration: underline;

@@ -4,13 +4,24 @@
 
 /* Layout */
 div.topic {
-        margin: 10px 0 0 0;
-}
-span.header-group {
-        width: 300px;
-		padding-left: 40px;
+        margin: 5px 0 0 0;
 }
 
+span.header-group-1 {
+	display: inline-block;
+	float: left;
+	padding-left: 20px;
+}
+span.header-group-2 {
+	display: inline-block;
+    float: right;
+	padding-right: 20px;
+}
+span.header-group-3 {
+	display: inline-block;
+	clear: both;
+	padding-left: 20px;
+}
 /* Typography */
 h1.header, h2.header {
         font-size: 18px;
@@ -27,7 +38,7 @@ h2.form {
 
 /* Design Elements */
 ul.error li {
-	padding-left: 40px;
+	padding-left: 20px;
 }
 
 /* Forms */
