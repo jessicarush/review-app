@@ -36,7 +36,9 @@ $ export FLASK_APP=run.py
 
 ### Create a *.env* file for the rest of your environment variables
 
-If you take a look at the `config.py` file, you'll see many of the variables are set to look for environment variables. This app uses [python-dotenv](https://github.com/theskumar/python-dotenv/blob/master/README.md) which means you can store these variables in a file named `.env` located in the same directory as `config.py`. The .env file can be used for all configuration-time variables, but it can't be used for Flask's FLASK_APP and FLASK_DEBUG environment variables because these are needed very early in the application process, before the app instance and its configuration object exist. Here's an example `.env` for this project:
+If you take a look at the `config.py` file, you'll see many of the variables are set to look for environment variables. This app uses [python-dotenv](https://github.com/theskumar/python-dotenv/blob/master/README.md) which means you can store these variables in a file named `.env` located in the same directory as `config.py`. The .env file can be used for all configuration-time variables, but it can't be used for Flask's FLASK_APP and FLASK_DEBUG environment variables because these are needed very early in the application process, before the app instance and its configuration object exist.
+
+Here's an example `.env` for this project:
 
 ```
 SECRET_KEY=your_supersecretpasswordkey
