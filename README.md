@@ -4,7 +4,7 @@ This is a small Flask app I created to help me track my Python study & review se
 
 I started learning Python in 2017. Though I was keeping good notes, I found that in absorbing so much new information all the time, it was hard to remember what I'd done a weeks ago. This study app, was a way to organize myself in reviewing the topics I had learned. To make it easy, the app recommends what topic I should review next based on the last time it was reviewed and my self-assessed understanding of the topic.
 
-If you would like to use this tool, follow the instructions below. Note that the app is built around reviewing the [Python notes in this repo](https://github.com/jessicarush/python-examples).
+If you would like to use this tool, follow the instructions below. Note that the app is built around reviewing the [Python notes in this repo](https://github.com/jessicarush/python-notes).
 
 ## Installation
 Clone or download:

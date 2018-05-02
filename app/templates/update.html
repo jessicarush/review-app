@@ -9,7 +9,7 @@
         {% for field in form if field.widget.input_type != 'hidden' and field.id != 'submit' %}
 
                 {{ field.label(class="update_label") }}<br>
-                <a href="https://github.com/jessicarush/python-examples/blob/master/{{ field.id }}" target="_blank" class="update">
+                <a href="https://github.com/jessicarush/python-notes/blob/master/{{ field.id }}" target="_blank" class="update">
                     {{ field.id }} on github
                 </a>
                 <p>

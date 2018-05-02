@@ -97,7 +97,7 @@ def recommend():
     topics = Topic.query.order_by(Topic.last_study_date).limit(10).all()
     topics = sorted(topics, key=lambda x: x.current_skill)
     # flash('You should review {}'.format(topics[0].filename))
-    url = '\"https://github.com/jessicarush/python-examples/blob/master/{}\"'.format(topics[0].filename)
+    url = '\"https://github.com/jessicarush/python-notes/blob/master/{}\"'.format(topics[0].filename)
     flash(Markup('You should review: <a href={}>{}</a>'.format(url, topics[0].filename)))
     return redirect(url_for(
         'main.index', sort_by='date', recommend=topics[0].filename))

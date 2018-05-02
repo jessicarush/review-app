@@ -25,4 +25,4 @@ class Config(object):
     ADMINS = [os.environ.get('ADMIN')]
 
     # The url to the repo containing topics (filenames) to be studied:
-    API_URL = 'https://api.github.com/repos/jessicarush/python-examples/contents'
+    API_URL = 'https://api.github.com/repos/jessicarush/python-notes/contents'
