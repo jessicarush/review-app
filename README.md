@@ -28,6 +28,27 @@ $ pip install -r requirements.txt
 $ export FLASK_APP=run.py
 ```
 
+## Create a *.env* file for the rest of your environment variables
+
+If you take a look at the `config.py` file, you'll see many of the variables are set to look for environment variables. This app uses [python-dotenv](https://github.com/theskumar/python-dotenv/blob/master/README.md) which means you can store these variables in a file named `.env` located in the same directory as `config.py`. Here's an example `.env` for this project:
+
+```
+# NOTE: Do not include this .env file in version control. The .env file can
+# be used for all the configuration-time variables, but it cannot be used for
+# Flask's FLASK_APP and FLASK_DEBUG environment variables because these are
+# needed very early in the application process, before the application
+# instance and its configuration object exist.
+
+
+SECRET_KEY=your_supersecretpasswordkey
+MAIL_SERVER=smtp.googlemail.com
+MAIL_PORT=587
+MAIL_USE_TLS=1
+MAIL_USERNAME=your_address@gmail.com
+MAIL_PASSWORD=your_gmail_password
+ADMIN=address@email.com
+```
+
 ## Build the database
 ```
 $ flask db upgrade
