@@ -8,19 +8,19 @@
     </footer>
     <form action="" method="post">
         {{ form.hidden_tag() }}
-            <p>
-            <!-- {{ form.user_or_email.label }} -->
+            <p class="space_between_input_groups">
+            {{ form.user_or_email.label }}
             {% for error in form.user_or_email.errors %}
             <span class="error">{{ error }}</span>
             {% endfor %}
-            {{ form.user_or_email(class="single", placeholder="username or email") }}
+            {{ form.user_or_email(class="single") }}
             </p>
             <p>
-            <!-- {{ form.password.label }} -->
+            {{ form.password.label }}
             {% for error in form.password.errors %}
             <span class="error">{{ error }}</span>
             {% endfor %}
-            {{ form.password(class="single", placeholder="password") }}
+            {{ form.password(class="single") }}
             </p>
         <p class="remember_reset">
             {{ form.remember_me(class="check", checked="True") }} {{ form.remember_me.label }}

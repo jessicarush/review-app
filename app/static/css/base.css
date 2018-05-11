@@ -37,22 +37,15 @@ div.auth, div.update {
 	margin: 35px auto;
 	text-align: left;
 }
-footer.main {
-	margin: 75px 0 10px 0;
-	text-align: center;
-}
-footer.auth {
-	margin: 0 0 25px 0;
-}
 div.error-page  {
 	width: 400px;
 	margin: 25px auto;
 	text-align: center;
 }
-div.flashed_messages {
-}
 div.content {
 	padding-bottom: 100px;
+}
+div.flashed_messages {
 }
 div.nav {
 	background: rgba(54, 199, 167, 0.9);
@@ -61,6 +54,10 @@ div.nav {
 	position: sticky;
 	top: 0;
 	z-index: 5;
+}
+span.header-group-1, span.header-group-2, span.header-group-3 {
+	display: inline-block;
+	padding: 0 10px 0 5px;
 }
 div.forms {
 	background: rgb(55, 60, 72);
@@ -91,10 +88,12 @@ div.mastery {
 	top: 20;
 	right: 20;
 }
-span.header-group-1, span.header-group-2, span.header-group-3 {
-	display: inline-block;
-	width: 235px;
-	padding-left: 5px;
+footer.main {
+    margin: 100px 0 15px 0;
+    text-align: center;
+}
+footer.auth {
+	margin: 0 0 35px 0;
 }
 
 
@@ -104,7 +103,7 @@ h1 {
 	color: var(--heading-color);
 	font-weight: 300;
 	font-size: 50px;
-	margin: 35px 0 10px 0;
+	margin: 35px 0 0 0;
 }
 .nav h1, .nav h2 {
 	font-family: var(--heading-font-family);
@@ -140,9 +139,7 @@ h2.form, p.warning {
 h2.form {
 	margin: 0 0 8px 0;
 }
-p.warning {
-	margin: 0 0 21px 0;
-}
+
 .topic h3 {
 	font-family: var(--heading-font-family);
 	color: var(--minor-color);
@@ -159,9 +156,6 @@ p {
 	font-weight: 400;
 	line-height: 1.6em;
 	margin: 0;
-}
-footer.auth p, footer.main p {
-	font-size: 16px;
 }
 p.review {
 	font-size: 12.5px;
@@ -190,9 +184,43 @@ p.current-skill strong {
 	line-height: 0.8em;
 	padding-left: 3px;
 }
+p.warning {
+	margin: 0 0 21px 0;
+}
 p.warning strong {
 	color: #fff;
 }
+footer.auth p {
+	font-size: 16px;
+}
+footer.main p {
+	font-size: 14px;
+}
+.review-id {
+	display: inline-block;
+	width: 45px;
+	color: var(--minor-color);
+	font-weight: 300;
+}
+.review-date {
+	display: inline-block;
+	width: 110px;
+}
+.review-time {
+	display: inline-block;
+	width: 93px;
+}
+.review-before {
+	display: inline-block;
+	width: 60px;
+}
+.review-after {
+	display: inline-block;
+	width: 40px;
+}
+
+
+/* Links */
 a:link, a:visited {
 	font-family: var(--main-font-family);
 	text-decoration: none;
@@ -219,68 +247,6 @@ a:hover, a:active {
 }
 .topic a:hover, .topic a:active {
 	color: var(--emphasis-color);
-}
-.update a:link, .update a:visited {
-	font-size: 13px;
-	font-weight: 400;
-	font-style: italic;
-}
-.review-id {
-	display: inline-block;
-	width: 45px;
-	color: var(--minor-color);
-	font-weight: 300;
-}
-.review-date {
-	display: inline-block;
-	width: 110px;
-}
-.review-time {
-	display: inline-block;
-	width: 93px;
-}
-.review-before {
-	display: inline-block;
-	width: 60px;
-}
-.review-after {
-	display: inline-block;
-	width: 40px;
-}
-span.topic-id {
-	display: block;
-	position: absolute;
-	top: 18;
-	left: 18;
-	width: 30px;
-	padding-top: 4px;
-	height: 26px;
-	font-family: var(--heading-font-family);
-	color: rgb(255, 255, 255);
-	border-radius: 15px;
-	font-size: 15px;
-	font-weight: 200;
-	text-align: center;
-}
-span.topic-on {
-	background: var(--emphasis-color);
-}
-span.topic-off {
-	background: var(--subheading-color);
-}
-span.star-on {
-	color: var(--emphasis-color);
-}
-span.star-off {
-	color: rgb(210, 210, 210);
-}
-::selection {
-  background: var(--emphasis-color);
-  color: rgb(255, 255, 255);
-}
-::-moz-selection {
-  background: var(--emphasis-color);
-  color: rgb(255, 255, 255);
 }
 
 
@@ -325,6 +291,41 @@ ul.sort_by li {
 	width: 100px;
 	margin: -15px 0 15px 0;
 }
+span.topic-id {
+	display: block;
+	position: absolute;
+	top: 18;
+	left: 18;
+	width: 30px;
+	padding-top: 4px;
+	height: 26px;
+	font-family: var(--heading-font-family);
+	color: rgb(255, 255, 255);
+	border-radius: 15px;
+	font-size: 15px;
+	font-weight: 200;
+	text-align: center;
+}
+span.topic-on {
+	background: var(--emphasis-color);
+}
+span.topic-off {
+	background: var(--subheading-color);
+}
+span.star-on {
+	color: var(--emphasis-color);
+}
+span.star-off {
+	color: rgb(210, 210, 210);
+}
+::selection {
+  background: var(--emphasis-color);
+  color: rgb(255, 255, 255);
+}
+::-moz-selection {
+  background: var(--emphasis-color);
+  color: rgb(255, 255, 255);
+}
 
 
 /* Forms */
@@ -340,13 +341,13 @@ form, input, textarea, select {
 	font-family: inherit;
 	margin: 0;
 }
-form.review-form, div.review-form {
-	width: 210px;
-	margin: 0 35px 0 0;
-	float: left;
-}
 form.adj {
 	padding-left: 5px;
+}
+form.review-form, div.review-form {
+	width: 210px;
+	margin: 0 40px 0 0;
+	float: left;
 }
 .review-form input.single {
 	color: rgba(230, 247, 253, 1);
@@ -363,15 +364,6 @@ form.adj {
 	color: rgb(230, 247, 253);
 	opacity: 0.8;
 }
-.auth input.single, .update input.single {
-	color: var(--main-color);
-	font-weight: 400;
-	font-size: 22px;
-	padding: 0;
-	border-bottom: 1px solid rgb(200, 200, 200);
-	margin: 15px 0 0 0;
-	width: 100%;
-}
 .review-form select {
 	color: rgba(230, 247, 253, 1);
 	font-weight: 200;
@@ -382,6 +374,85 @@ form.adj {
 	border-radius: 3px;
 	margin-bottom: 5px;
 	width: 100%;
+}
+.forms input.button {
+	font-weight: 400;
+	font-size: 15px;
+	color: rgb(230, 247, 253);
+	background: rgba(39, 43, 53, 1);
+	cursor: pointer;
+	margin: 0 0 20px 0;
+	padding: 5px 10px;
+	border-radius: 3px;
+	width: 100%;
+}
+.auth input.single {
+	color: var(--main-color);
+	font-weight: 400;
+	font-size: 18px;
+	padding: 8px;
+	border: 1px solid rgb(200, 200, 200);
+	border-radius: 3px;
+	margin: 0;
+	width: 100%;
+}
+.update input.single {
+	color: var(--heading-color);
+	font-weight: 400;
+	font-size: 18px;
+	margin: 0;
+	width: 100%;
+	border-bottom: 1px solid rgb(200, 200, 200);
+}
+.auth input.button, .update input.button {
+	font-weight: 500;
+	font-size: 22px;
+	color: var(--heading-color);
+	cursor: pointer;
+	margin: 15px 0 0 0;
+	width: 100%;
+	padding: 6px 0;
+	border: solid 2px var(--heading-color);
+	border-radius: 3px;
+}
+.auth input.button:hover, .update input.button:hover {
+	color: var(--emphasis-color);
+	border: solid 2px var(--emphasis-color);
+}
+.auth label {
+	font-weight: 400;
+	color: var(--main-color);
+}
+.space_between_input_groups {
+	margin-bottom: 10px;
+}
+.update p {
+	margin-top: 25px;
+	font-size: 18px;
+}
+.update a {
+	font-size: 18px;
+}
+p.button {
+	text-align: right;
+}
+a.reset:link, a.reset:visited {
+	display: inline-block;
+	float: right;
+}
+p.remember_reset {
+	margin: 15px 0 0 0;
+	font-size: 15px;
+	color: var(--heading-color);
+}
+input[type=checkbox] {
+	-webkit-appearance: checkbox;
+	-moz-appearance: checkbox;
+	appearance: checkbox;
+}
+span.error {
+	color: var(--emphasis-color);
+	font-size: 12px;
 }
 /* prevent <option>s from becoming select color in firefox */
 option:not(:checked) {
@@ -396,63 +467,9 @@ select:-moz-focusring {
 .forms input:focus, .forms select:focus {
 	border: 1px solid rgba(230, 247, 253, 0.8);
 }
-.auth input:focus, .update input:focus {
+.auth input:focus {
+	border: 1px solid var(--emphasis-color);
+}
+.update input:focus {
 	border-bottom: 1px solid var(--heading-color);
-}
-.forms input.button {
-	font-weight: 400;
-	font-size: 15px;
-	color: rgb(230, 247, 253);
-	background: rgba(39, 43, 53, 1);
-	cursor: pointer;
-	margin: 0 0 20px 0;
-	padding: 5px 10px;
-	border-radius: 3px;
-	width: 100%;
-}
-.auth input.button, .update input.button {
-	font-weight: 500;
-	font-size: 22px;
-	color: var(--heading-color);
-	cursor: pointer;
-	margin: 44px 0 0 0;
-	width: 100%;
-	padding: 6px 0;
-	border: solid 2px var(--heading-color);
-	border-radius: 3px;
-}
-.auth input.button:hover, .update input.button:hover {
-	color: var(--emphasis-color);
-	border: solid 2px var(--emphasis-color);
-}
-p.button {
-	text-align: right;
-}
-a.reset:link, a.reset:visited {
-	/* font-weight: 300; */
-	display: inline-block;
-	float: right;
-}
-p.remember_reset {
-	margin: 10px 0 0 0;
-	font-size: 15px;
-	font-weight: 700;
-	color: var(--heading-color);
-}
-.update_label {
-	font-family: var(--main-font-family);
-	color: var(--main-color);
-	font-size: 18px;
-	font-weight: 700;
-	line-height: 1.6em;
-	margin: 0;
-}
-input[type=checkbox] {
-	-webkit-appearance: checkbox;
-	-moz-appearance: checkbox;
-	appearance: checkbox;
-}
-span.error {
-	color: var(--emphasis-color);
-	font-size: 12px;
 }

@@ -85,36 +85,6 @@
         <p class="button">{{ review_form.submit1(class="button") }}</p>
     </form>
 
-    <div class="review-form">
-    <!-- form: delete a review -->
-    <form action="" method="post" class="">
-        <h2 class="form">Delete a Review Session</h2>
-        {{ del_review_form.hidden_tag() }}
-        <p>
-            <!-- {{ del_review_form.review_id.label }} -->
-            {% for error in del_review_form.review_id.errors %}
-            <span class="error">{{ error }}</span>
-            {% endfor %}
-            {{ del_review_form.review_id(class="single", placeholder="review session ID") }}
-        </p>
-        <p class="button">{{ del_review_form.submit2(class="button") }}</p>
-    </form>
-
-    <!-- form: delete a topic -->
-    <form action="" method="post" class="">
-        <h2 class="form">Delete a Topic</h2>
-        {{ del_topic_form.hidden_tag() }}
-        <p>
-            <!-- {{ del_topic_form.filename.label }} -->
-            {% for error in del_topic_form.filename.errors %}
-            <span class="error">{{ error }}</span>
-            {% endfor %}
-            {{ del_topic_form.filename(class="select") }}
-        </p>
-        <p class="button">{{ del_topic_form.submit3(class="button") }}</p>
-    </form>
-    </div>
-
     <!-- form: rename a review -->
     <form action="" method="post" class="review-form">
         <h2 class="form">Rename a Topic</h2>
@@ -138,6 +108,39 @@
         <p class="warning"><strong>Remember: </strong>Double check your entry. These functions are final. There's no going back once you press 'delete'.</p>
 
     </form>
+
+    <div class="review-form">
+    <!-- form: delete a review -->
+    <form action="" method="post" class="">
+        <h2 class="form">Delete a Review Session</h2>
+        {{ del_review_form.hidden_tag() }}
+        <p>
+            <!-- {{ del_review_form.review_id.label }} -->
+            {% for error in del_review_form.review_id.errors %}
+            <span class="error">{{ error }}</span>
+            {% endfor %}
+            {{ del_review_form.review_id(class="single", placeholder="review session ID") }}
+        </p>
+        <p class="button">{{ del_review_form.submit2(class="button") }}</p>
+    </form>
+    </div>
+
+    <div class="review-form">
+    <!-- form: delete a topic -->
+    <form action="" method="post" class="">
+        <h2 class="form">Delete a Topic</h2>
+        {{ del_topic_form.hidden_tag() }}
+        <p>
+            <!-- {{ del_topic_form.filename.label }} -->
+            {% for error in del_topic_form.filename.errors %}
+            <span class="error">{{ error }}</span>
+            {% endfor %}
+            {{ del_topic_form.filename(class="select") }}
+        </p>
+        <p class="button">{{ del_topic_form.submit3(class="button") }}</p>
+    </form>
+    </div>
+
     <hr class="clear">
     </div>
 </div>
