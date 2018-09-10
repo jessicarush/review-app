@@ -147,6 +147,7 @@ def demo(sort_by='name'):
 
     topics = Topic.query.order_by(Topic.filename).all()
     choices = [(t.filename, t.filename) for t in topics]
+    choices.insert(0, ('', '\u25b8  select a topic'))
 
     review_form.filename.choices = choices
     del_topic_form.filename.choices = choices
