@@ -342,10 +342,10 @@ a:active {
 }
 .error {
   background: var(--emphasis-color);
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.7);
   font-family: var(--heading-font);
   font-size: 15px;
-  font-weight: 300;
+  font-weight: 700;
   list-style-type: none;
   margin: 0;
   padding: 8px 0;
@@ -510,11 +510,15 @@ input[type=checkbox] {
   background: var(--emphasis-color);
   color: rgb(255, 255, 255);
 }
-select:-moz-focusring {
+select:-moz-focusring,
+::-moz-focusring {
   color: transparent;
   text-shadow: 0 0 0 rgba(230, 247, 253, 1);
 }
-select:-moz-focus-inner {
+select:-moz-focus-inner,
+::-moz-focus-inner {
+  border: 0;
+} {
   border: 0;
 }
 /* prevent <option>s from becoming select color in firefox */
