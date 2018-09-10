@@ -1,30 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="update">
+<div class="update-page">
     <h1>New Topics!</h1>
-    <form action="" method="post" class="update">
+    <form action="" method="post" class="update-form">
         {{ form.hidden_tag() }}
 
         {% for field in form if field.widget.input_type != 'hidden' and field.id != 'submit' %}
 
-                <p>
+                <p class="space-above">
                 <!-- {{ field.label(class="") }} -->
                 <a href="https://github.com/jessicarush/python-notes/blob/master/{{ field.id }}" target="_blank">
                     {{ field.id }}
                 </a><br>
 
-                {{ field(class="single", placeholder="start skill: 0-5") }}
+                {{ field(class="single", placeholder="enter current skill - a number between 0-5") }}
 
                 {% for error in field.errors %}
-                <span class="error">{{ error }}</span>
+                <span class="form-error">{{ error }}</span>
                 {% endfor %}
 
                 </p>
 
         {% endfor %}
 
-        <p class="button">{{ form.submit(class="button") }}</p>
+        <p class="space-above align-right">{{ form.submit(class="button") }}</p>
     </form>
 
 </div>

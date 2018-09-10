@@ -5,20 +5,20 @@
 {% if current_user.is_anonymous %}
 <div class="nav">
     <div class="container">
-    <span class="header-group-1">
-        <h1 class="header">Python:</h1>
+    <span class="header-group">
+        <h1 class="nav-heading">Review Python:</h1>
         <a href="{{ url_for('main.demo_recommend') }}" class="recommend">recommend topic</a>
     </span>
-    <span class="header-group-2">
-        <h2 class="header">Sort:</h2>
-        <ul class="sort_by">
+    <span class="header-group">
+        <h2 class="nav-heading">Sort order:</h2>
+        <ul class="sort-order">
             <li><a href="{{ url_for('main.demo', sort_by='name') }}">name</a></li>
             <li><a href="{{ url_for('main.demo', sort_by='date') }}">date</a></li>
             <li><a href="{{ url_for('main.demo', sort_by='skill') }}">skill</a></li>
         </ul>
     </span>
-    <span class="header-group-3">
-        <h2 class="header">Demo: </h2>
+    <span class="header-group">
+        <h2 class="nav-heading">Demo: </h2>
         <a href="{{ url_for('auth.login') }}" class="logout">exit</a>
     </span>
     </div>
@@ -27,121 +27,131 @@
 {% else %}
 <div class="nav">
     <div class="container">
-    <span class="header-group-1">
-        <h1 class="header">Python:</h1>
+    <span class="header-group">
+        <h1 class="nav-heading">Review Python:</h1>
         <a href="{{ url_for('main.recommend') }}" class="recommend">recommend topic</a>
     </span>
-    <span class="header-group-2">
-        <h2 class="header">Sort:</h2>
-        <ul class="sort_by">
-            <li><a href="{{ url_for('main.index', sort_by='name') }}">name</a></li>
-            <li><a href="{{ url_for('main.index', sort_by='date') }}">date</a></li>
+    <span class="header-group">
+        <h2 class="nav-heading">Sort order:</h2>
+        <ul class="sort-order">
+            <li><a href="{{ url_for('main.index', sort_by='name') }}">name,</a></li>
+            <li><a href="{{ url_for('main.index', sort_by='date') }}">date,</a></li>
             <li><a href="{{ url_for('main.index', sort_by='skill') }}">skill</a></li>
         </ul>
     </span>
-    <span class="header-group-3">
-        <h2 class="header">{{ current_user.username.title() }}: </h2>
+    <span class="header-group">
+        <h2 class="nav-heading">{{ current_user.username.title() }}: </h2>
         <a href="{{ url_for('auth.logout') }}" class="logout">logout</a>
     </span>
     </div>
 </div>
 {% endif %}
 
+
 <div class="forms">
     <div class="container">
-    <!-- form: log a review -->
-    <form action="" method="post" class="review-form adj">
-        <h2 class="form">Log a Review Session</h2>
-        {{ review_form.hidden_tag() }}
-        <p>
-            <!-- {{ review_form.filename.label }} -->
-            {% for error in review_form.filename.errors %}
-            <span class="error">{{ error }}</span>
-            {% endfor %}
-            {{ review_form.filename(class="select") }}
-        </p>
-        <p>
-            <!-- {{ review_form.time_spent.label }} -->
-            {% for error in review_form.time_spent.errors %}
-            <span class="error">{{ error }}</span>
-            {% endfor %}
-            {{ review_form.time_spent(class="single", placeholder="time: minutes") }}<br>
-        </p>
-        <p>
-            <!-- {{ review_form.skill_before.label }} -->
-            {% for error in review_form.skill_before.errors %}
-            <span class="error">{{ error }}</span>
-            {% endfor %}
-            {{ review_form.skill_before(class="single", placeholder="skill before: 0–5") }}<br>
-        </p>
-        <p>
-            <!-- {{ review_form.skill_after.label }} -->
-            {% for error in review_form.skill_after.errors %}
-            <span class="error">{{ error }}</span>
-            {% endfor %}
-            {{ review_form.skill_after(class="single", placeholder="skill after: 0–5") }}<br>
-        </p>
+        <div class="masonry">
 
-        <p class="button">{{ review_form.submit1(class="button") }}</p>
-    </form>
+            <!-- warning-->
+            <div class="masonry__item">
+                <h2 class="form-heading white">Warning! </h2>
+                <p class="warning">Double check your entry. The delete functions are final. There's no going back once you press 'delete'.</p>
+            </div>
 
-    <!-- form: rename a review -->
-    <form action="" method="post" class="review-form">
-        <h2 class="form">Rename a Topic</h2>
-        <p>
-        {{ rename_form.hidden_tag() }}
-            <!-- {{ rename_form.old_filename.label }} -->
-            {% for error in rename_form.old_filename.errors %}
-            <span class="error">{{ error }}</span>
-            {% endfor %}
-            {{ rename_form.old_filename(class="select") }}
-        </p>
-        <p>
-            <!-- {{ rename_form.new_filename.label }} -->
-            {% for error in rename_form.new_filename.errors %}
-            <span class="error">{{ error }}</span>
-            {% endfor %}
-            {{ rename_form.new_filename(class="single", placeholder="new_filename.py") }}
-        </p>
-        <p class="button">{{ rename_form.submit4(class="button") }}</p>
+            <!-- form: log a review -->
+            <div class="masonry__item">
+                <form action="" method="post" class="review-form">
+                    <h2 class="form-heading">Log a Review Session</h2>
+                    {{ review_form.hidden_tag() }}
+                    <p>
+                        <!-- {{ review_form.filename.label }} -->
+                        {% for error in review_form.filename.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                        {{ review_form.filename(class="select") }}
+                    </p>
+                    <p>
+                        <!-- {{ review_form.time_spent.label }} -->
+                        {% for error in review_form.time_spent.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                        {{ review_form.time_spent(class="single", placeholder="time: minutes") }}<br>
+                    </p>
+                    <p>
+                        <!-- {{ review_form.skill_before.label }} -->
+                        {% for error in review_form.skill_before.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                        {{ review_form.skill_before(class="single", placeholder="skill before: 0–5") }}<br>
+                    </p>
+                    <p>
+                        <!-- {{ review_form.skill_after.label }} -->
+                        {% for error in review_form.skill_after.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                        {{ review_form.skill_after(class="single", placeholder="skill after: 0–5") }}<br>
+                    </p>
 
-        <p class="warning"><strong>Remember: </strong>Double check your entry. These functions are final. There's no going back once you press 'delete'.</p>
+                    <p>{{ review_form.submit1(class="button") }}</p>
+                </form>
+            </div>
 
-    </form>
+            <!-- form: rename a review -->
+            <div class="masonry__item">
+                <form action="" method="post" class="review-form">
+                    <h2 class="form-heading">Rename a Topic</h2>
+                    <p>
+                        {{ rename_form.hidden_tag() }}
+                        <!-- {{ rename_form.old_filename.label }} -->
+                        {% for error in rename_form.old_filename.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                        {{ rename_form.old_filename(class="select") }}
+                    </p>
+                    <p>
+                        <!-- {{ rename_form.new_filename.label }} -->
+                        {% for error in rename_form.new_filename.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                        {{ rename_form.new_filename(class="single", placeholder="new_filename.py") }}
+                    </p>
+                    <p>{{ rename_form.submit4(class="button") }}</p>
+                </form>
+            </div>
 
-    <div class="review-form">
-    <!-- form: delete a review -->
-    <form action="" method="post" class="">
-        <h2 class="form">Delete a Review Session</h2>
-        {{ del_review_form.hidden_tag() }}
-        <p>
-            <!-- {{ del_review_form.review_id.label }} -->
-            {% for error in del_review_form.review_id.errors %}
-            <span class="error">{{ error }}</span>
-            {% endfor %}
-            {{ del_review_form.review_id(class="single", placeholder="review session ID") }}
-        </p>
-        <p class="button">{{ del_review_form.submit2(class="button") }}</p>
-    </form>
-    </div>
+            <!-- form: delete a review -->
+            <div class="masonry__item">
+                <form action="" method="post" class="review-form">
+                    <h2 class="form-heading">Delete a Review Session</h2>
+                    {{ del_review_form.hidden_tag() }}
+                    <p>
+                        <!-- {{ del_review_form.review_id.label }} -->
+                        {% for error in del_review_form.review_id.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                        {{ del_review_form.review_id(class="single", placeholder="review session ID") }}
+                    </p>
+                    <p>{{ del_review_form.submit2(class="button") }}</p>
+                </form>
+            </div>
 
-    <div class="review-form">
-    <!-- form: delete a topic -->
-    <form action="" method="post" class="">
-        <h2 class="form">Delete a Topic</h2>
-        {{ del_topic_form.hidden_tag() }}
-        <p>
-            <!-- {{ del_topic_form.filename.label }} -->
-            {% for error in del_topic_form.filename.errors %}
-            <span class="error">{{ error }}</span>
-            {% endfor %}
-            {{ del_topic_form.filename(class="select") }}
-        </p>
-        <p class="button">{{ del_topic_form.submit3(class="button") }}</p>
-    </form>
-    </div>
+            <!-- form: delete a topic -->
+            <div class="masonry__item">
+                <form action="" method="post" class="review-form">
+                    <h2 class="form-heading">Delete a Topic</h2>
+                    {{ del_topic_form.hidden_tag() }}
+                    <p>
+                        <!-- {{ del_topic_form.filename.label }} -->
+                        {% for error in del_topic_form.filename.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                        {{ del_topic_form.filename(class="select") }}
+                    </p>
+                    <p>{{ del_topic_form.submit3(class="button") }}</p>
+                </form>
+            </div>
 
-    <hr class="clear">
+        </div>
     </div>
 </div>
 
@@ -153,7 +163,7 @@
 <hr class="clear">
 </div>
 
-<footer class="main">
-<p>Jessica Rush, 2018. <a href="mailto:hello@cyan.red">Questions?</a></p>
+<footer class="main-footer">
+<p class="smaller">Jessica Rush, 2018. <a href="mailto:hello@cyan.red">Questions?</a></p>
 </footer>
 {% endblock %}

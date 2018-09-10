@@ -1,10 +1,6 @@
-{% if topic.filename is eq recommend %}
-<div class="topic topic-on">
-{% else %}
-<div class="topic topic-off">
-{% endif %}
+<div class="topic">
 
-    <div class="mastery">
+    <div class="topic__mastery">
     {% if topic.mastery is ge 3 %}
         <span class="star-on">&starf;</span>
         <span class="star-on">&starf;</span>
@@ -25,33 +21,33 @@
     </div>
 
     {% if topic.filename is eq recommend %}
-    <span class="topic-id topic-on">{{ topic.id }}</span>
+        <span class="topic__id topic__id--on">{{ topic.id }}</span>
     {% else %}
-    <span class="topic-id topic-off">{{ topic.id }}</span>
+        <span class="topic__id topic__id--off">{{ topic.id }}</span>
     {% endif %}
 
-    <h2 class="topic">
+    <h2 class="topic__heading">
         <a href="https://github.com/jessicarush/python-notes/blob/master/{{ topic.filename }}" target="_blank">{{ topic.filename }}</a></h2>
 
-    <p class="created-date">Added:
+    <p class="topic__created">Added:
         {{ moment(topic.created_date).format('LL') }}
     </p>
 
-    <p class="current-skill">Current skill:
+    <p class="topic__current-skill">Current skill:
         <strong>{{ topic.current_skill }}</strong>
     </p>
 
-    <hr class="thin">
+    <hr class="clear light-bg">
 
-    <h2 class="reviews">Review sessions:</h2>
-    <h3 class="review-id">id</h3>
-    <h3 class="review-date">date</h3>
-    <h3 class="review-time">time spent</h3>
-    <h3 class="review-before">before</h3>
-    <h3 class="review-after">after</h3>
-    <div class="reviews">
+    <h2 class="topic__review-heading">Review sessions:</h2>
+    <h3 class="topic__review-subhead topic__review-id">id</h3>
+    <h3 class="topic__review-subhead topic__review-date">date</h3>
+    <h3 class="topic__review-subhead topic__review-time">time spent</h3>
+    <h3 class="topic__review-subhead topic__review-before">before</h3>
+    <h3 class="topic__review-subhead topic__review-after">after</h3>
+    <div class="topic__reviews">
         {% for review in topic.reviews %}
-        <p class="review"><span class="review-id">{{ review.id }}</span><span class="review-date">{{ moment(review.review_date).fromNow() }}</span><span class="review-time">{{ review.time_spent }} minutes</span><span class="review-before">{{ review.skill_before }} / 5</span><span class="review-after">{{ review.skill_after }} / 5</span></p>
+        <p class="topic__review-data"><span class="topic__review-id">{{ review.id }}</span><span class="topic__review-date">{{ moment(review.review_date).fromNow() }}</span><span class="topic__review-time">{{ review.time_spent }} mins</span><span class="topic__review-before">{{ review.skill_before }} / 5</span><span class="topic__review-after">{{ review.skill_after }} / 5</span></p>
         {% endfor %}
     </div>
 
