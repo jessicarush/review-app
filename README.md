@@ -6,6 +6,21 @@ I started learning Python in 2017. Though I was keeping good notes, I found that
 
 If you would like to use this tool, follow the instructions below. Note that the app is built around reviewing the [Python notes in this repo](https://github.com/jessicarush/python-notes).
 
+## Table of Contents
+
+<!-- toc -->
+
+- [Installation](#installation)
+- [Usage](#usage)
+  * [Set up a virtual environment](#set-up-a-virtual-environment)
+  * [Install the requirements](#install-the-requirements)
+  * [Set the flask environment variable](#set-the-flask-environment-variable)
+  * [Create a *.env* file for the rest of your environment variables](#create-a-env-file-for-the-rest-of-your-environment-variables)
+  * [Build the database](#build-the-database)
+  * [Run the program](#run-the-program)
+
+<!-- tocstop -->
+
 ## Installation
 Clone or download:
 ```
@@ -78,5 +93,11 @@ The forms in the dark area allow you to add and remove study sessions from your 
 This app is built for an individual: one user per database. Should you add another user via the register endpoint, they will be looking at the same database as you. Over the next year I will look at extending this to allow for multiple users in the same database.
 
 Happy learning!
+
+## Future Version Features
+
+- [ ] UX/UI Redesign
+- [ ] Add new main topic (e.g. javascript)
+- [ ] Add interface to add new main topics
 
 ![Python Review App](/app/static/img/screenshot.png "Python Review App running in Firefox")
