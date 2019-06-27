@@ -1,55 +1,67 @@
 <div class="topic">
 
-    <div class="topic__mastery">
-    {% if topic.mastery is ge 3 %}
-        <span class="star-on">&starf;</span>
-        <span class="star-on">&starf;</span>
-        <span class="star-on">&starf;</span>
-    {% elif topic.mastery is eq 2 %}
-        <span class="star-on">&starf;</span>
-        <span class="star-on">&starf;</span>
-        <span class="star-off">&starf;</span>
-    {% elif topic.mastery is eq 1 %}
-        <span class="star-on">&starf;</span>
-        <span class="star-off">&starf;</span>
-        <span class="star-off">&starf;</span>
-    {% else %}
-        <span class="star-off">&starf;</span>
-        <span class="star-off">&starf;</span>
-        <span class="star-off">&starf;</span>
-    {% endif %}
-    </div>
+  {% if topic.filename is eq recommend %}
+  <span class="topic__id topic__id--on">{{ topic.id }}</span>
+  {% else %}
+  <span class="topic__id topic__id--off">{{ topic.id }}</span>
+  {% endif %}
 
-    {% if topic.filename is eq recommend %}
-        <span class="topic__id topic__id--on">{{ topic.id }}</span>
-    {% else %}
-        <span class="topic__id topic__id--off">{{ topic.id }}</span>
-    {% endif %}
-
+  <div class="topic__heading-group">
     <h2 class="topic__heading">
-        <a href="https://github.com/jessicarush/python-notes/blob/master/{{ topic.filename }}" target="_blank">{{ topic.filename }}</a></h2>
+      <a href="{{ file_url }}{{ topic.filename }}" class="inline inline--dark" target="_blank">{{ topic.filename }}</a>
+    </h2>
+    <h3 class="topic__subheading">added:</h3>
+    <p class="topic__subheading">{{ moment(topic.created_date).format('LL') }}</p>
+  </div>
 
-    <p class="topic__created">Added:
-        {{ moment(topic.created_date).format('LL') }}
-    </p>
+  <div class="topic__mastery">
+    {% if topic.mastery is ge 3 %}
+    <span class="star-on">&starf;</span>
+    <span class="star-on">&starf;</span>
+    <span class="star-on">&starf;</span>
+    {% elif topic.mastery is eq 2 %}
+    <span class="star-on">&starf;</span>
+    <span class="star-on">&starf;</span>
+    <span class="star-off">&starf;</span>
+    {% elif topic.mastery is eq 1 %}
+    <span class="star-on">&starf;</span>
+    <span class="star-off">&starf;</span>
+    <span class="star-off">&starf;</span>
+    {% else %}
+    <span class="star-off">&starf;</span>
+    <span class="star-off">&starf;</span>
+    <span class="star-off">&starf;</span>
+    {% endif %}
 
-    <p class="topic__current-skill">Current skill:
-        <strong>{{ topic.current_skill }}</strong>
-    </p>
+    <h3 class="topic__subheading">current skill:</h3>
+    <p class="topic__subheading"><strong>{{ topic.current_skill }}</strong></p>
+  </div>
 
-    <hr class="clear light-bg">
 
-    <h2 class="topic__review-heading">Review sessions:</h2>
-    <h3 class="topic__review-subhead topic__review-id">id</h3>
-    <h3 class="topic__review-subhead topic__review-date">date</h3>
-    <h3 class="topic__review-subhead topic__review-time">time spent</h3>
-    <h3 class="topic__review-subhead topic__review-before">before</h3>
-    <h3 class="topic__review-subhead topic__review-after">after</h3>
-    <div class="topic__reviews">
-        {% for review in topic.reviews %}
-        <p class="topic__review-data"><span class="topic__review-id">{{ review.id }}</span><span class="topic__review-date">{{ moment(review.review_date).fromNow() }}</span><span class="topic__review-time">{{ review.time_spent }} mins</span><span class="topic__review-before">{{ review.skill_before }} / 5</span><span class="topic__review-after">{{ review.skill_after }} / 5</span></p>
-        {% endfor %}
-    </div>
 
+
+
+  <table class="topic__table">
+    <thead>
+      <tr>
+        <th class="topic__review-heading topic__review-id">id</th>
+        <th class="topic__review-heading topic__review-date">date</th>
+        <th class="topic__review-heading topic__review-time">time spent</th>
+        <th class="topic__review-heading topic__review-before">before skill</th>
+        <th class="topic__review-heading topic__review-after">after skill</th>
+      </tr>
+    </thead>
+    <tbody class="topic__reviews">
+      {% for review in topic.reviews %}
+      <tr class="topic__review-data">
+        <td>{{ review.id }}</td>
+        <td>{{ moment(review.review_date).fromNow() }}</td>
+        <td>{{ review.time_spent }} mins</td>
+        <td>{{ review.skill_before }} / 5</td>
+        <td>{{ review.skill_after }} / 5</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
 </div>

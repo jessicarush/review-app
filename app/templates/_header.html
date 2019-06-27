@@ -1,0 +1,101 @@
+{% include '_messages-main.html' %}
+
+{% if not new_topics %}  <!-- don't display this if the user is coming from /update -->
+
+  <h1 class="secondary-heading">User</h1>
+  <a href="" class="primary primary--active" title="User settings (coming soon)">
+    {{ current_user.username }}
+  </a>
+
+
+  <h1 class="secondary-heading">Repos</h1>
+  {% if repos %}
+  {% for repo in repos %}
+    {% if repo.repository == selected_repo.repository %}
+    <span class="primary primary--disabled truncate-text">{{ repo.repository }}</span><br>
+    {% else %}
+    <a href="{{ url_for('main.index', selected_repo=repo.repository, sort='name') }}" class="primary primary--inactive truncate-text">{{ repo.repository }}</a><br>
+    {% endif %}
+  {% endfor %}
+
+  <div class="relative-container">
+    <button class="js-show-form-s primary primary--inactive">+ add a repository</button>
+
+    <!-- if there are validation errors, make sure the form is visible -->
+    {% if add_repo_form.repository.errors or add_repo_messages %}
+    <form action="" method="post" class="sidebar-form sidebar-form--open padded-lr-reg">
+    {% else %}
+    <form action="" method="post" class="sidebar-form padded-lr-reg">
+    {% endif %}
+      <div class="sidebar-form__container">
+        {{ add_repo_form.hidden_tag() }}
+        {{ add_repo_form.repository.label(class="secondary-heading") }}
+        {% for error in add_repo_form.repository.errors %}
+        <span class="form-error">* {{ error }}</span>
+        {% endfor %}
+        {{ add_repo_form.repository(class="sidebar-form__field", placeholder="username/repository", required="true") }}<br>
+        <p class="sidebar-form__btn">{{ add_repo_form.add_repo_submit(class="btn btn--solid") }}</p>
+      </div>
+    </form>
+  </div>
+  {% else %} <!-- if no repos -->
+  <p class="sidebar-comment">no repositories yet</p>
+  {% endif %}
+
+
+  <h1 class="secondary-heading">Sort order</h1>
+  {% if repos %}
+  <ul class="plain-list plain-list--horizontal">
+    <li><a href="{{ url_for('main.index', sort='name', selected_repo=selected_repo.repository) }}" class="js-name-sort primary primary--inactive">name</a></li>
+    <li><a href="{{ url_for('main.index', sort='date', selected_repo=selected_repo.repository) }}" class="js-date-sort primary primary--inactive">date</a></li>
+    <li><a href="{{ url_for('main.index', sort='skill', selected_repo=selected_repo.repository) }}" class="js-skill-sort primary primary--inactive">skill</a></li>
+  </ul>
+
+  <script type="text/javascript">
+    // selects and highlights the active sort order
+    let sort = {{ sort|tojson }};
+    let current_sort = document.querySelector('.js-' + sort + '-sort');
+    current_sort.classList.remove('primary--inactive');
+    current_sort.classList.add('primary--active');
+  </script>
+
+  {% else %} <!-- if no repos -->
+  <p class="sidebar-comment">no repositories yet</p>
+  {% endif %}
+
+
+  <h1 class="secondary-heading">Study this next</h1>
+  {% if repos %}
+  <a href="{{ url }}{{ recommend }}" class="primary primary--active">{{ recommend }}</a>
+  {% else %} <!-- if no repos -->
+  <p class="sidebar-comment">no repositories yet</p>
+  {% endif %}
+
+
+  {% if repos %}
+  <!-- Review Form -->
+  {% endif %}
+
+
+  <h1 class="secondary-heading">Et Cetera</h1>
+  <ul class="plain-list plain-list--vertical">
+    {% if repos %}
+    <li><button class="primary primary--active">rename a topic</button></li>
+    <li><button class="primary primary--active">delete a topic</button></li>
+    <li><button class="primary primary--active">delete a study session</button></li>
+    {% endif %}
+    <li><a href="" class="primary primary--active">account admin</a></li>
+    <li><a href="{{ url_for('auth.logout') }}" class="primary primary--active">logout</a></li>
+  </ul>
+
+
+{% else %}  <!-- display this if the user is coming from /update -->
+
+  {% if new_repo %}
+  <p class="sidebar-comment">The following files were found in <a href="{{ base_url }}{{ new_repo }}" class="inline inline--light" target="_blank">{{ new_repo }}</a>. To add these to your study list, assign each a comprehension or skill level. In other words, how well do you feel you understand the topic on a scale of 0 to 5, where 0 would be you know nothing, and 5 would be you know the topic very well?</p>
+
+  {% else %}
+  <p class="sidebar-comment">New files have been detected in some of your repos. To add these to your study list, assign each a comprehension or skill level. In other words, how well do you feel you understand the topic on a scale of 0 to 5, where 0 would be you know nothing, and 5 would be you know the topic very well?</p>
+  {% endif %}
+
+{% endif %}

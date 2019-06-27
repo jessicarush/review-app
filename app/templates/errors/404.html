@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "base-auth.html" %}
 
 {% block content %}
-<div class="error-page">
-    <h1>Whoops, it's a 404&hellip;</h1>
-    <img class="error-page__img" src="{{ url_for('static', filename='img/bottle.png' )}}">
-    <p>Page not found. Let's<a href="{{ url_for('main.index', sort_by='name') }}"> move on.</a></p>
+<div class="content--centerd content--1col-wide center">
+    <h1 class="primary-heading">Whoops, it's a 404&hellip;</h1>
+    <img class="icon-large" src="{{ url_for('static', filename='img/bottle.png' )}}">
+    <p>Page not found. Let's<a href="{{ url_for('main.index', sort='name') }}" class="inline inline--dark"> move on.</a></p>
 </div>
 {% endblock %}

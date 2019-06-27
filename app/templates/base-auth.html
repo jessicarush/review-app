@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include '_head.html' %}
+
+<body class="flex-col">
+  <div><!-- for justify-content --></div>
+
+  <main class="flex-col__main">
+    <!-- template inheritance -->
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="flex-col__footer center">
+    {% include '_footer.html' %}
+  </footer>
+
+</body>
+</html>

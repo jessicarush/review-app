@@ -97,7 +97,13 @@ Happy learning!
 ## Future Version Features
 
 - [ ] UX/UI Redesign
-- [ ] Add new main topic (e.g. javascript)
-- [ ] Add interface to add new main topics
+- [ ] Add interface to add new main topics by giving the github username and repo name
+- [ ] Recommend topic take lowest score from from oldest %
+- [ ] Add confirm() to delete options
+- [ ] Replace demo with introduction page
+- [ ] Add heatmap
+- [ ] Add help information
+- [ ] Add 'make default' to repo list
+
 
 ![Python Review App](/app/static/img/screenshot.png "Python Review App running in Firefox")

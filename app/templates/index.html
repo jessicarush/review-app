@@ -1,169 +1,49 @@
-{% extends "base.html" %}
+{% extends 'base-main.html' %}
 
 {% block content %}
 
-{% if current_user.is_anonymous %}
-<div class="nav">
-    <div class="container">
-    <span class="header-group">
-        <h1 class="nav-heading">Review Python:</h1>
-        <a href="{{ url_for('main.demo_recommend') }}" class="recommend">recommend topic</a>
-    </span>
-    <span class="header-group">
-        <h2 class="nav-heading">Sort order:</h2>
-        <ul class="sort-order">
-            <li><a href="{{ url_for('main.demo', sort_by='name') }}">name</a></li>
-            <li><a href="{{ url_for('main.demo', sort_by='date') }}">date</a></li>
-            <li><a href="{{ url_for('main.demo', sort_by='skill') }}">skill</a></li>
-        </ul>
-    </span>
-    <span class="header-group">
-        <h2 class="nav-heading">Demo: </h2>
-        <a href="{{ url_for('auth.login') }}" class="logout">exit</a>
-    </span>
-    </div>
-</div>
+<div class="flex-col flex-col--justified">
 
-{% else %}
-<div class="nav">
-    <div class="container">
-    <span class="header-group">
-        <h1 class="nav-heading">Review Python:</h1>
-        <a href="{{ url_for('main.recommend') }}" class="recommend">recommend topic</a>
-    </span>
-    <span class="header-group">
-        <h2 class="nav-heading">Sort order:</h2>
-        <ul class="sort-order">
-            <li><a href="{{ url_for('main.index', sort_by='name') }}">name,</a></li>
-            <li><a href="{{ url_for('main.index', sort_by='date') }}">date,</a></li>
-            <li><a href="{{ url_for('main.index', sort_by='skill') }}">skill</a></li>
-        </ul>
-    </span>
-    <span class="header-group">
-        <h2 class="nav-heading">{{ current_user.username.title() }}: </h2>
-        <a href="{{ url_for('auth.logout') }}" class="logout">logout</a>
-    </span>
-    </div>
-</div>
+{% if not repos %} <!-- new user -->
+
+  <section class="content--centerd content--1col-wide padded-lr-reg">
+
+    <h1 class="primary-heading">Getting Started</h1>
+
+    <p>
+      To get started, you'll want to add a <a href="https://help.github.com/en/articles/about-repositories" class="inline inline--dark" target="_blank">github repository</a> that contains the notes and topics you want to review. To add it, you'll need to know the <code>username/repository</code>. For example, if you wanted to add <a href="https://github.com/jessicarush/javascript-notes" class="inline inline--dark" target="_blank" title="My JavaScript notes on Github.">this repo</a>, you would need to enter <code>jessicarush/javacript-notes</code> into the field below. Go ahead and give it a try.
+      Keep in mind, only files located in the outermost directory will be added as study topics. Directories, README.md files and hidden files (.dot-files), will be ignored.
+    </p>
+
+    <form action="" method="post" class="auth-form">
+      {{ add_repo_form.hidden_tag() }}
+
+      {{ add_repo_form.repository.label }}
+      {% for error in add_repo_form.repository.errors %}
+      <span class="form-error">* {{ error }}</span>
+      {% endfor %}
+      {{ add_repo_form.repository(class="auth-form__field", placeholder="username/repository", required="true") }}<br>
+
+      <p class="auth-form__btn">{{ add_repo_form.add_repo_submit(class="btn btn--solid") }}</p>
+    </form>
+  </section>
+
+
+{% else %} <!-- existing user -->
+
+  {% if not topics %}
+    <section class="content--centerd content--1col-wide padded-lr-reg">
+      <h1 class="primary-heading">No Topics Found</h1>
+      <p>Looks like the repository <a href="{{ base_url }}{{ selected_repo.repository }}" class="inline inline--dark" target="_blank">{{ selected_repo.repository }}</a> has no topics. Remember, directories, hidden files (.dot-files) and README.md files are ignored. This was a design decision on my part because that's just how I organize my study notes. If any new files are added to the github repository, you'll be prompted to add them here the next time you login.</p>
+    </section>
+  {% else %}
+    <section class="padded-lr-small">
+      {% for topic in topics %}
+      {% include '_topic.html' %}
+      {% endfor %}
+    </section>
+  {% endif %}
+
 {% endif %}
 
-
-<div class="forms">
-    <div class="container">
-        <div class="masonry">
-
-            <!-- warning-->
-            <div class="masonry__item">
-                <h2 class="form-heading white">Warning! </h2>
-                <p class="warning">Double check your entry. The delete functions are final. There's no going back once you press 'delete'.</p>
-            </div>
-
-            <!-- form: log a review -->
-            <div class="masonry__item">
-                <form action="" method="post" class="review-form">
-                    <h2 class="form-heading">Log a Review Session</h2>
-                    {{ review_form.hidden_tag() }}
-                    <p>
-                        <!-- {{ review_form.filename.label }} -->
-                        {% for error in review_form.filename.errors %}
-                        <span class="form-error">{{ error }}</span>
-                        {% endfor %}
-                        {{ review_form.filename(class="select") }}
-                    </p>
-                    <p>
-                        <!-- {{ review_form.time_spent.label }} -->
-                        {% for error in review_form.time_spent.errors %}
-                        <span class="form-error">{{ error }}</span>
-                        {% endfor %}
-                        {{ review_form.time_spent(class="single", placeholder="time: minutes") }}<br>
-                    </p>
-                    <p>
-                        <!-- {{ review_form.skill_before.label }} -->
-                        {% for error in review_form.skill_before.errors %}
-                        <span class="form-error">{{ error }}</span>
-                        {% endfor %}
-                        {{ review_form.skill_before(class="single", placeholder="skill before: 0–5") }}<br>
-                    </p>
-                    <p>
-                        <!-- {{ review_form.skill_after.label }} -->
-                        {% for error in review_form.skill_after.errors %}
-                        <span class="form-error">{{ error }}</span>
-                        {% endfor %}
-                        {{ review_form.skill_after(class="single", placeholder="skill after: 0–5") }}<br>
-                    </p>
-
-                    <p>{{ review_form.submit1(class="button") }}</p>
-                </form>
-            </div>
-
-            <!-- form: rename a review -->
-            <div class="masonry__item">
-                <form action="" method="post" class="review-form">
-                    <h2 class="form-heading">Rename a Topic</h2>
-                    <p>
-                        {{ rename_form.hidden_tag() }}
-                        <!-- {{ rename_form.old_filename.label }} -->
-                        {% for error in rename_form.old_filename.errors %}
-                        <span class="form-error">{{ error }}</span>
-                        {% endfor %}
-                        {{ rename_form.old_filename(class="select") }}
-                    </p>
-                    <p>
-                        <!-- {{ rename_form.new_filename.label }} -->
-                        {% for error in rename_form.new_filename.errors %}
-                        <span class="form-error">{{ error }}</span>
-                        {% endfor %}
-                        {{ rename_form.new_filename(class="single", placeholder="new_filename.py") }}
-                    </p>
-                    <p>{{ rename_form.submit4(class="button") }}</p>
-                </form>
-            </div>
-
-            <!-- form: delete a review -->
-            <div class="masonry__item">
-                <form action="" method="post" class="review-form">
-                    <h2 class="form-heading">Delete a Review Session</h2>
-                    {{ del_review_form.hidden_tag() }}
-                    <p>
-                        <!-- {{ del_review_form.review_id.label }} -->
-                        {% for error in del_review_form.review_id.errors %}
-                        <span class="form-error">{{ error }}</span>
-                        {% endfor %}
-                        {{ del_review_form.review_id(class="single", placeholder="review session ID") }}
-                    </p>
-                    <p>{{ del_review_form.submit2(class="button") }}</p>
-                </form>
-            </div>
-
-            <!-- form: delete a topic -->
-            <div class="masonry__item">
-                <form action="" method="post" class="review-form">
-                    <h2 class="form-heading">Delete a Topic</h2>
-                    {{ del_topic_form.hidden_tag() }}
-                    <p>
-                        <!-- {{ del_topic_form.filename.label }} -->
-                        {% for error in del_topic_form.filename.errors %}
-                        <span class="form-error">{{ error }}</span>
-                        {% endfor %}
-                        {{ del_topic_form.filename(class="select") }}
-                    </p>
-                    <p>{{ del_topic_form.submit3(class="button") }}</p>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-
-<div class="container">
-{% for topic in topics %}
-    {% include '_topic.html' %}
-{% endfor %}
-<hr class="clear">
-</div>
-
-<footer class="main-footer">
-<p class="smaller">Jessica Rush, 2018. <a href="mailto:hello@cyan.red">Questions?</a></p>
-</footer>
 {% endblock %}

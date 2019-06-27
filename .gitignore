@@ -5,5 +5,3 @@ venv
 working_files
 logs
 data.db
-boot.sh
-Dockerfile

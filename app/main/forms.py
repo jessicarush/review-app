@@ -1,8 +1,11 @@
 '''Main forms for modifying the database.'''
 
+import re
+
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField, DecimalField, IntegerField
-from wtforms.validators import DataRequired, NumberRange
+from wtforms import StringField, SubmitField, SelectField
+from wtforms.fields.html5 import IntegerField, DecimalField
+from wtforms.validators import DataRequired, NumberRange, ValidationError
 
 
 class ReviewForm(FlaskForm):
@@ -13,29 +16,49 @@ class ReviewForm(FlaskForm):
         'skill before:', places=1, validators=[NumberRange(min=0, max=5)])
     skill_after = DecimalField(
         'skill after:', places=1, validators=[NumberRange(min=0, max=5)])
-    submit1 = SubmitField('Submit')
+    review_submit = SubmitField('Log review')
 
 
 class DeleteReviewForm(FlaskForm):
     '''Form for a deleting review session.'''
     review_id = IntegerField('Review ID', validators=[DataRequired()])
-    submit2 = SubmitField('Delete')
+    del_review_submit = SubmitField('Delete review')
 
 
 class DeleteTopicForm(FlaskForm):
     '''Form for deleting a topic.'''
     filename = SelectField('Topic:', choices=[], validators=[DataRequired()])
-    submit3 = SubmitField('Delete')
+    del_topic_submit = SubmitField('Delete topic')
 
 
 class RenameTopicForm(FlaskForm):
     '''Form for renaming a topic.'''
     old_filename = SelectField('Old name:', choices=[], validators=[DataRequired()])
     new_filename = StringField('New name:', validators=[DataRequired()])
-    submit4 = SubmitField('Rename')
+    rename_submit = SubmitField('Rename')
 
 
 class AddTopicsForm(FlaskForm):
     '''Form for adding new topics.'''
     # fields are generated dynamically in the /update route
-    submit = SubmitField('Submit')
+    add_topic_submit = SubmitField('Add topics')
+
+
+class AddRepoForm(FlaskForm):
+    '''Form for adding new repositories.'''
+    repository = StringField('Repository', validators=[DataRequired()])
+    add_repo_submit = SubmitField('Add repository')
+
+    def validate_repository(self, repository):
+        '''Check that the repository looks right in terms of format.'''
+        # check that string contains only alphanumeric, hyphen or forwardslash
+        valid = re.match(r'^[-/\w]+$', repository.data) is not None
+        if not valid:
+            raise ValidationError("This should contain only alphanumeric "
+                                  "characters, hyphens and a forward slash")
+        # check that it follows the format: username/repository
+        repo = repository.data.split('/')
+        # if len(str(repository).split('/')) != 2:
+        if len(repo) != 2 or '' in repo:
+            raise ValidationError("Something doesn't look right. "
+                                  "Your entry should look like: username/repository")

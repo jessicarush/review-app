@@ -1,192 +1,244 @@
 '''Main view functions for Review application.'''
 
 from datetime import datetime
-# import os
-from flask import flash, render_template, redirect, request, url_for, Markup
-from flask_login import login_required
-from wtforms import DecimalField
+import re
+
+from flask import current_app, flash, render_template, redirect, request, url_for, Markup
+from flask_login import current_user, login_required
+from wtforms.fields.html5 import DecimalField
 from wtforms.validators import NumberRange
+
 from app import db
 from app.main import bp
 from app.main.forms import ReviewForm, DeleteReviewForm, DeleteTopicForm, \
-    RenameTopicForm, AddTopicsForm
-from app.main.models import Topic, Review
-from app.main.topics import topics_from_repo, topics_from_db
-
-
-@bp.route('/<sort_by>', methods=['GET', 'POST'])
-@login_required
-def index(sort_by='name'):
-    '''View function for the main index page.'''
-    review_form = ReviewForm()
-    del_review_form = DeleteReviewForm()
-    del_topic_form = DeleteTopicForm()
-    rename_form = RenameTopicForm()
-
-    topics = Topic.query.order_by(Topic.filename).all()
-    choices = [(t.filename, t.filename) for t in topics]
-    choices.insert(0, ('', '\u25b8  select a topic'))
-
-    review_form.filename.choices = choices
-    del_topic_form.filename.choices = choices
-    rename_form.old_filename.choices = choices
-
-    if review_form.submit1.data and review_form.validate_on_submit():
-        topic = Topic.query.filter_by(filename=review_form.filename.data).first()
-        review = Review(time_spent=review_form.time_spent.data,
-                        skill_before=review_form.skill_before.data,
-                        skill_after=review_form.skill_after.data,
-                        topic_id=topic.id)
-        topic.current_skill = review_form.skill_after.data
-        topic.last_study_date = datetime.utcnow()
-        if topic.current_skill == int(5):
-            topic.mastery += 1
-        db.session.add(review)
-        db.session.commit()
-        flash('Review logged!')
-        return redirect(url_for('main.index', sort_by='name'))
-
-    if del_review_form.submit2.data and del_review_form.validate_on_submit():
-        review = Review.query.filter_by(id=del_review_form.review_id.data).first()
-        topic = Topic.query.filter_by(id=review.topic_id).first()
-        if review.skill_after == int(5):
-            topic.mastery -= 1
-        Review.query.filter_by(id=del_review_form.review_id.data).delete()
-
-        prev_review = Review.query.filter_by(topic_id=topic.id).order_by(
-            Review.review_date.desc()).first()
-        if prev_review:
-            topic.current_skill = prev_review.skill_after
-            topic.last_study_date = prev_review.review_date
-        else:
-            topic.current_skill = topic.start_skill
-            topic.last_study_date = topic.created_date
-        db.session.commit()
-        flash('Review session deleted.')
-        return redirect(url_for('main.index', sort_by='name'))
-
-    if del_topic_form.submit3.data and del_topic_form.validate_on_submit():
-        Topic.query.filter_by(filename=del_topic_form.filename.data).delete()
-        db.session.commit()
-        flash('Topic deleted.')
-        return redirect(url_for('main.index', sort_by='name'))
-
-    if rename_form.submit4.data and rename_form.validate_on_submit():
-        topic = Topic.query.filter_by(filename=rename_form.old_filename.data).first()
-        topic.filename = rename_form.new_filename.data
-        db.session.commit()
-        flash('Topic renamed!')
-        return redirect(url_for('main.index', sort_by='name'))
-
-    if sort_by == 'skill':
-        topics = Topic.query.order_by(Topic.current_skill).all()
-    elif sort_by == 'date':
-        topics = Topic.query.order_by(Topic.last_study_date).all()
-    else:
-        topics = Topic.query.order_by(Topic.filename).all()
-    return render_template(
-        'index.html', topics=topics, review_form=review_form,
-        del_review_form=del_review_form, del_topic_form=del_topic_form,
-        rename_form=rename_form, recommend=request.args.get('recommend'))
-
-
-@bp.route('/recommend')
-@login_required
-def recommend():
-    '''View function to recommend a study topic.'''
-    topics = Topic.query.order_by(Topic.last_study_date).limit(10).all()
-    topics = sorted(topics, key=lambda x: x.current_skill)
-    # flash('You should review {}'.format(topics[0].filename))
-    url = '\"https://github.com/jessicarush/python-notes/blob/master/{}\"'.format(topics[0].filename)
-    flash(Markup('You should review: <a href={} target="_blank">{}</a>'.format(url, topics[0].filename)))
-    return redirect(url_for(
-        'main.index', sort_by='date', recommend=topics[0].filename))
+    RenameTopicForm, AddTopicsForm, AddRepoForm
+from app.main.models import User, Repo, Topic, Review
+from app.main.topics import topics_from_repo, topics_from_database
 
 
 @bp.route('/update', methods=['GET', 'POST'])
 @login_required
 def update():
-    '''View for adding new topics.'''
-    repo_filenames = set(topics_from_repo())
-    db_filenames = set(topics_from_db())
-    new_filenames = list(repo_filenames.difference(db_filenames))
-    # new_field_names = [os.path.splitext(n)[0] for n in new_filenames]
-    if not new_filenames:
-        return redirect(url_for('main.index', sort_by='name'))
+    '''View for checking for and adding new topics.'''
 
     class F(AddTopicsForm):
-        '''Subclass to allow for dynamic number of form fields.'''
+        '''Subclass to allow for dynamic form fields.'''
         pass
 
-    for field_name in new_filenames:
-        setattr(F, field_name, DecimalField(field_name, places=1, \
-                validators=[NumberRange(min=0, max=5)]))
+    base_url = current_app.config['URL_START']
+    repos = current_user.repos.all()
+    # check to see if coming from "add a repository":
+    new_repo = request.args.get('new_repo')
+    new_topics = None
+    file_count = 0
+
+    # If the user has no existing repos (a new user), send them back to index:
+    if not repos:
+        return redirect(url_for('main.index', sort='name'))
+
+    # If the user just added a repo:
+    elif new_repo:
+        new_topics = topics_from_repo(new_repo)
+        if not new_topics:
+            return redirect(url_for('main.index', sort='name'))
+        else:
+            for t in new_topics:
+                t_count = t + '_' + str(file_count)
+                setattr(F, t_count, DecimalField(t, description=new_repo))
+                file_count += 1
+
+    # Otherwise run a check to see if there are any new topics in any repo:
+    else:
+        # get a list of the users repositories:
+        repositories = [r.repository for r in repos]
+        # for each repo get the topics from github and compare to the database:
+        for r in repositories:
+            repo = Repo.query.filter(Repo.repository == r,
+                                     Repo.user_id == current_user.id).first()
+            github_topics = topics_from_repo(repo.repository)
+            database_topics = topics_from_database(repo.id)
+            new_topics = set(github_topics).difference(set(database_topics))
+            # if there are new topics, add these to the dynamic form
+            if new_topics:
+                # in case two or more topics from different repos have
+                # the same name, append a number (which will be removed
+                # when we receive the form data.
+                for t in new_topics:
+                    t_count = t + '_' + str(file_count)
+                    setattr(F, t_count, DecimalField(t, description=repo.repository))
+                    file_count += 1
+
+        # if no new_topics, procedd to main.index
+        if not new_topics:
+            return redirect(url_for('main.index', sort='name'))
 
     form = F()
 
+    # process forms:
     if form.validate_on_submit():
         for field in form:
-            if field.widget.input_type != 'hidden' and field.id != 'submit':
-                print(field.id, field.data)
-                topic = Topic(filename=field.id, start_skill=field.data,
-                              current_skill=field.data)
+            if field.widget.input_type != 'hidden' and field.id != 'add_topic_submit':
+                # print(field.id, field.data, field.description)
+                repo = Repo.query.filter(Repo.repository == field.description,
+                                         Repo.user_id == current_user.id).first()
+
+                # remove the file_count off of the field.id
+                filename = re.sub(r'_\d*\b', '', field.id)
+
+                topic = Topic(filename=filename, start_skill=field.data,
+                              current_skill=field.data, repo_id=repo.id)
                 db.session.add(topic)
         db.session.commit()
-        flash('New topic(s) added.')
-        return redirect(url_for('main.index', sort_by='name'))
-    return render_template('update.html', title='New Topics', form=form)
+        flash('New topic(s) added.', category='main-success')
+        return redirect(url_for('main.index', selected_repo=repo.repository, sort='name'))
+
+    return render_template('update.html', title='New Topics', form=form,
+                           new_repo=new_repo, base_url=base_url, new_topics=new_topics)
 
 
-@bp.route('/demo/<sort_by>', methods=['GET', 'POST'])
-def demo(sort_by='name'):
-    '''View function for a DEMO of the main index page.'''
-    review_form = ReviewForm()
-    del_review_form = DeleteReviewForm()
-    del_topic_form = DeleteTopicForm()
-    rename_form = RenameTopicForm()
+@bp.route('/<sort>', methods=['GET', 'POST'])
+@login_required
+def index(sort='name'):
+    '''View function for the main index page.'''
 
-    topics = Topic.query.order_by(Topic.filename).all()
-    choices = [(t.filename, t.filename) for t in topics]
-    choices.insert(0, ('', '\u25b8  select a topic'))
+    add_repo_form = AddRepoForm()
 
-    review_form.filename.choices = choices
-    del_topic_form.filename.choices = choices
-    rename_form.old_filename.choices = choices
+    repos = current_user.repos.all()
+    topics = None
+    recommend = None
+    base_url = None
+    add_repo_messages = None
+    selected_repo = Repo.query.filter(
+        Repo.repository == request.args.get('selected_repo'),
+        Repo.user_id == current_user.id).first()
 
-    if review_form.submit1.data and review_form.validate_on_submit():
-        flash("Sorry, 'Log a Study Session' has been disabled for this demo.")
-        return redirect(url_for('main.demo', sort_by='name'))
+    # if there are repos but none has been selected, default to the first:
+    if repos and not selected_repo:
+        selected_repo = Repo.query.filter_by(user_id=current_user.id).first()
 
-    if del_review_form.submit2.data and del_review_form.validate_on_submit():
-        flash("Sorry, 'Delete a Study Session' has been disabled for this demo.")
-        return redirect(url_for('main.demo', sort_by='name'))
+    if selected_repo:
+        # build the base url to link to files:
+        base_url = current_app.config['URL_START']
+        url_end = current_app.config['URL_END']
+        file_url = f'{base_url}{selected_repo.repository}{url_end}'
 
-    if del_topic_form.submit3.data and del_topic_form.validate_on_submit():
-        flash("Sorry, 'Delete a Topic' has been disabled for this demo.")
-        return redirect(url_for('main.demo', sort_by='name'))
+        # get the topics:
+        if sort == 'skill':
+            topics = Topic.query.filter_by(repo_id=selected_repo.id).order_by(Topic.current_skill).all()
+        elif sort == 'date':
+            topics = Topic.query.filter_by(repo_id=selected_repo.id).order_by(Topic.last_study_date).all()
+        else:
+            topics = Topic.query.filter_by(repo_id=selected_repo.id).order_by(Topic.filename).all()
 
-    if rename_form.submit4.data and rename_form.validate_on_submit():
-        flash("Sorry, 'Rename a Topic' has been disabled for this demo.")
-        return redirect(url_for('main.demo', sort_by='name'))
-
-    if sort_by == 'skill':
-        topics = Topic.query.order_by(Topic.current_skill).all()
-    elif sort_by == 'date':
-        topics = Topic.query.order_by(Topic.last_study_date).all()
-    else:
-        topics = Topic.query.order_by(Topic.filename).all()
-    return render_template(
-        'index.html', topics=topics, review_form=review_form,
-        del_review_form=del_review_form, del_topic_form=del_topic_form,
-        rename_form=rename_form, recommend=request.args.get('recommend'))
+        # recommend a topic:
+        recommend = 'recommended.py'
 
 
-@bp.route('/demo_recommend')
-def demo_recommend():
-    '''View function to recommend a study topic on the DEMO route.'''
-    topics = Topic.query.order_by(Topic.last_study_date).limit(10).all()
-    topics = sorted(topics, key=lambda x: x.current_skill)
-    url = '\"https://github.com/jessicarush/python-notes/blob/master/{}\"'.format(topics[0].filename)
-    flash(Markup('You should review: <a href={} target="_blank">{}</a>'.format(url, topics[0].filename)))
-    return redirect(url_for(
-        'main.demo', sort_by='date', recommend=topics[0].filename))
+    # process forms
+    if add_repo_form.add_repo_submit.data and add_repo_form.validate_on_submit():
+        # check that the repo exists on github and hasn't already beed added:
+        reponame = add_repo_form.repository.data
+        ping = Repo.ping_repo(reponame)
+        repo = Repo.query.filter(Repo.repository == reponame, Repo.user_id == current_user.id).first()
+
+        if not ping:
+            flash("I couldn't find that repository on Github", category='main-fail')
+            add_repo_messages = True
+        elif repo:
+            flash("You've added that one already", category='main-fail')
+            add_repo_messages = True
+        else:
+            repo = Repo(repository=reponame, user_id=current_user.id)
+            db.session.add(repo)
+            db.session.commit()
+            flash('New repository sucessfully added!', category='main-success')
+            # direct to add update
+            return redirect(url_for('main.update', new_repo=reponame))
+
+
+
+
+
+
+
+
+    # review_form = ReviewForm()
+    # del_review_form = DeleteReviewForm()
+    # del_topic_form = DeleteTopicForm()
+    # rename_form = RenameTopicForm()
+    #
+    # topics = Topic.query.order_by(Topic.filename).all()
+    # choices = [(t.filename, t.filename) for t in topics]
+    # choices.insert(0, ('', '\u25b8  select a topic'))
+    #
+    # review_form.filename.choices = choices
+    # del_topic_form.filename.choices = choices
+    # rename_form.old_filename.choices = choices
+    #
+    # if review_form.submit1.data and review_form.validate_on_submit():
+    #     topic = Topic.query.filter_by(filename=review_form.filename.data).first()
+    #     review = Review(time_spent=review_form.time_spent.data,
+    #                     skill_before=review_form.skill_before.data,
+    #                     skill_after=review_form.skill_after.data,
+    #                     topic_id=topic.id)
+    #     topic.current_skill = review_form.skill_after.data
+    #     topic.last_study_date = datetime.utcnow()
+    #     if topic.current_skill == int(5):
+    #         topic.mastery += 1
+    #     db.session.add(review)
+    #     db.session.commit()
+    #     flash('Review logged!')
+    #     return redirect(url_for('main.index', sort='name'))
+    #
+    # if del_review_form.submit2.data and del_review_form.validate_on_submit():
+    #     review = Review.query.filter_by(id=del_review_form.review_id.data).first()
+    #     topic = Topic.query.filter_by(id=review.topic_id).first()
+    #     if review.skill_after == int(5):
+    #         topic.mastery -= 1
+    #     Review.query.filter_by(id=del_review_form.review_id.data).delete()
+    #
+    #     prev_review = Review.query.filter_by(topic_id=topic.id).order_by(
+    #         Review.review_date.desc()).first()
+    #     if prev_review:
+    #         topic.current_skill = prev_review.skill_after
+    #         topic.last_study_date = prev_review.review_date
+    #     else:
+    #         topic.current_skill = topic.start_skill
+    #         topic.last_study_date = topic.created_date
+    #     db.session.commit()
+    #     flash('Review session deleted.')
+    #     return redirect(url_for('main.index', sort='name'))
+    #
+    # if del_topic_form.submit3.data and del_topic_form.validate_on_submit():
+    #     Topic.query.filter_by(filename=del_topic_form.filename.data).delete()
+    #     db.session.commit()
+    #     flash('Topic deleted.')
+    #     return redirect(url_for('main.index', sort='name'))
+    #
+    # if rename_form.submit4.data and rename_form.validate_on_submit():
+    #     topic = Topic.query.filter_by(filename=rename_form.old_filename.data).first()
+    #     topic.filename = rename_form.new_filename.data
+    #     db.session.commit()
+    #     flash('Topic renamed!')
+    #     return redirect(url_for('main.index', sort='name'))
+    #
+
+    # return render_template(
+    #     'index.html', topics=topics, review_form=review_form,
+    #     del_review_form=del_review_form, del_topic_form=del_topic_form,
+    #     rename_form=rename_form, recommend=request.args.get('recommend'))
+    return render_template('index.html', repos=repos, selected_repo=selected_repo,
+                           sort=sort, recommend=recommend, topics=topics,
+                           add_repo_form=add_repo_form, base_url=base_url, file_url=file_url,
+                           add_repo_messages=add_repo_messages)
+
+
+# @bp.route('/recommend')
+# def recommend():
+#     '''View function to recommend a study topic.'''
+#     topics = Topic.query.order_by(Topic.last_study_date).limit(10).all()
+#     topics = sorted(topics, key=lambda x: x.current_skill)
+#     url = '\"https://github.com/jessicarush/python-notes/blob/master/{}\"'.format(topics[0].filename)
+#
+#     return redirect(url_for(
+#         'main.index', sort='date', recommend=topics[0].filename))

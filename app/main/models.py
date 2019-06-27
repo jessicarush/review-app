@@ -1,11 +1,14 @@
 '''Models for Review app database tables.'''
 
 from datetime import datetime
+import requests
 from time import time
+
 from flask import current_app
-from flask_login import UserMixin
+from flask_login import UserMixin, current_user
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
+
 from app import db, login
 
 
@@ -16,6 +19,8 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+    # one to many relationship:
+    repos = db.relationship('Repo', backref='user', lazy='dynamic')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -51,20 +56,37 @@ def load_user(id):
     return User.query.get(int(id))
 
 
+class Repo(db.Model):
+    '''Model for the main topic (a github repo)'''
+    id = db.Column(db.Integer, primary_key=True)
+    repository = db.Column(db.String(128))
+    # many to one relationship:
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    # one to many relationship:
+    topics = db.relationship('Topic', backref='repo', lazy='dynamic')
+
+    @staticmethod
+    def ping_repo(repo):
+        '''Verifies the that a repo exists on github.'''
+        url = current_app.config['API_START'] + repo + current_app.config['API_END']
+        response = requests.get(url)
+        if response.status_code == 200:
+            return True
+
+
 class Topic(db.Model):
     '''Model for study topic'''
     id = db.Column(db.Integer, primary_key=True)
-    filename = db.Column(db.String(64), index=True, unique=True)
+    filename = db.Column(db.String(64), index=True)
     created_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     last_study_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     start_skill = db.Column(db.Float, default=0)
     current_skill = db.Column(db.Float, index=True)
     mastery = db.Column(db.Integer, default=0)
-    # one to many relationships:
+    # many to one relationship:
+    repo_id = db.Column(db.Integer, db.ForeignKey('repo.id'))
+    # one to many relationship:
     reviews = db.relationship('Review', backref='topic', lazy='dynamic')
-
-    def __repr__(self):
-        return '<Topic {}>'.format(self.filename)
 
 
 class Review(db.Model):
@@ -74,8 +96,5 @@ class Review(db.Model):
     time_spent = db.Column(db.Integer)
     skill_before = db.Column(db.Float)
     skill_after = db.Column(db.Float)
-    # one to many relationship:
+    # many to one relationship:
     topic_id = db.Column(db.Integer, db.ForeignKey('topic.id'))
-
-    def __repr__(self):
-        return '<Topic {}>'.format(self.filename)

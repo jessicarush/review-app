@@ -8,7 +8,7 @@ from app.main.models import User
 
 class LoginForm(FlaskForm):
     '''The login form.'''
-    user_or_email = StringField('Username or email', validators=[DataRequired()])
+    user_or_email = StringField('Username or Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember me')
     submit = SubmitField('Sign in')
@@ -23,8 +23,6 @@ class ResetPasswordRequestForm(FlaskForm):
 class ResetPasswordForm(FlaskForm):
     '''The reset password form.'''
     password = PasswordField('New Password', validators=[DataRequired()])
-    password2 = PasswordField(
-        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Save password')
 
 
@@ -33,9 +31,7 @@ class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
-    password2 = PasswordField(
-        'Repeat password', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Sign up')
+    submit = SubmitField('Register')
 
     def validate_username(self, username):
         '''Check that the username does't already exist.'''

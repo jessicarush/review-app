@@ -1,31 +1,39 @@
-{% extends "base.html" %}
+{% extends 'base-main.html' %}
 
 {% block content %}
-<div class="update-page">
-    <h1>New Topics!</h1>
+
+  <section class="content--centerd content--1col-wide padded-lr-reg">
+
+    {% if new_repo %}
+    <h1 class="primary-heading">New Repository Topics</h1>
+    {% else %}
+    <h1 class="primary-heading">New repository topics found!</h1>
+    {% endif %}
+
     <form action="" method="post" class="update-form">
-        {{ form.hidden_tag() }}
+      {{ form.hidden_tag() }}
 
-        {% for field in form if field.widget.input_type != 'hidden' and field.id != 'submit' %}
+      <table class="update-form__table">
+        <thead>
+          <tr>
+            <th class="update-form__header">repository</th>
+            <th class="update-form__header">filename</th>
+            <th class="update-form__header update-form__fixed-width-col align-right">skill 0–5</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for field in form if field.widget.input_type != 'hidden' and field.id != 'add_topic_submit' %}
+          <tr>
+            <td><span class="update-form__description">{{ field.description }}</span></td>
+            <td>{{ field.label(class="update-form__label") }}</td>
+            <td class="align-right">{{ field(class="update-form__field", placeholder="0", min="0", max="5", step=".5",  required="true") }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
 
-                <p class="space-above">
-                <!-- {{ field.label(class="") }} -->
-                <a href="https://github.com/jessicarush/python-notes/blob/master/{{ field.id }}" target="_blank">
-                    {{ field.id }}
-                </a><br>
-
-                {{ field(class="single", placeholder="enter current skill - a number between 0-5") }}
-
-                {% for error in field.errors %}
-                <span class="form-error">{{ error }}</span>
-                {% endfor %}
-
-                </p>
-
-        {% endfor %}
-
-        <p class="space-above align-right">{{ form.submit(class="button") }}</p>
+      <p class="update-form__btn">{{ form.add_topic_submit(class="btn btn--solid") }}</p>
     </form>
+  </section>
 
-</div>
 {% endblock %}

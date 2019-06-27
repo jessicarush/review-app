@@ -1,15 +1,18 @@
-'''Config file for Review application.'''
+'''Config file for application.'''
 
 import os
 from dotenv import load_dotenv
 
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.env'))
 
-class Config(object):
-    '''Config class for review application.'''
+
+class Config():
+    '''Config class for application.'''
+
     PROJECT_NAME = 'Review'
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'password'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'garbleygook'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'data.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -24,5 +27,19 @@ class Config(object):
     # For receiving emailed error log:
     ADMINS = [os.environ.get('ADMIN')]
 
-    # The url to the repo containing topics (filenames) to be studied:
-    API_URL = 'https://api.github.com/repos/jessicarush/python-notes/contents'
+    # The api url for a github repo containing files to be studied:
+    API_START = 'https://api.github.com/repos/'
+    API_END = '/contents'
+
+    # The url for particular file in a repo:
+    URL_START = 'https://github.com/'
+    URL_END = '/blob/master/'
+
+    # Repo API url should look like:
+    # https://api.github.com/repos/jessicarush/python-notes/contents
+
+    # Repo urls look like:
+    # https://github.com/jessicarush/python-notes
+
+    # File urls look like:
+    # https://github.com/jessicarush/python-notes/blob/master/{{ topic.filename }}

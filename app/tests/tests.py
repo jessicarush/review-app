@@ -28,12 +28,6 @@ class UserModelCase(unittest.TestCase):
         self.assertFalse(u.check_password('dog'))
         self.assertTrue(u.check_password('cat'))
 
-    def test_avatar(self):
-        u = User(username='john', email='john@example.com')
-        url = ('https://www.gravatar.com/avatar/d4c74594d841139328695756648b6bd6'
-               '?s=100&d=http%3A%2F%2Fcyan.red%2Fimages%2Fmystery_avatar.png')
-        self.assertEqual(u.avatar(100), url)
-
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
