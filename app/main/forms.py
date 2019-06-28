@@ -7,15 +7,17 @@ from wtforms import StringField, SubmitField, SelectField
 from wtforms.fields.html5 import IntegerField, DecimalField
 from wtforms.validators import DataRequired, NumberRange, ValidationError
 
+# NOTE: NumberRange validators don't seem to be working. Added manually.
+
 
 class ReviewForm(FlaskForm):
     '''Form for entering review session data.'''
-    filename = SelectField('Topic:', choices=[])
-    time_spent = IntegerField('Time spent:', validators=[DataRequired()])
+    filename = SelectField('Log a study session', choices=[])
+    time_spent = IntegerField('For how long (mins)?', validators=[DataRequired()])
     skill_before = DecimalField(
-        'skill before:', places=1, validators=[NumberRange(min=0, max=5)])
+        'Skill before', places=1, validators=[NumberRange(min=0, max=5)])
     skill_after = DecimalField(
-        'skill after:', places=1, validators=[NumberRange(min=0, max=5)])
+        'Skill after', places=1, validators=[NumberRange(min=0, max=5)])
     review_submit = SubmitField('Log review')
 
 
@@ -46,7 +48,7 @@ class AddTopicsForm(FlaskForm):
 
 class AddRepoForm(FlaskForm):
     '''Form for adding new repositories.'''
-    repository = StringField('Repository', validators=[DataRequired()])
+    repository = StringField('Add repository', validators=[DataRequired()])
     add_repo_submit = SubmitField('Add repository')
 
     def validate_repository(self, repository):

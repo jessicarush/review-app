@@ -102,6 +102,10 @@ def index(sort='name'):
     '''View function for the main index page.'''
 
     add_repo_form = AddRepoForm()
+    review_form = ReviewForm()
+    del_review_form = DeleteReviewForm()
+    del_topic_form = DeleteTopicForm()
+    rename_topic_form = RenameTopicForm()
 
     repos = current_user.repos.all()
     topics = None
@@ -122,13 +126,22 @@ def index(sort='name'):
         url_end = current_app.config['URL_END']
         file_url = f'{base_url}{selected_repo.repository}{url_end}'
 
-        # get the topics:
+        # get the topics for display:
         if sort == 'skill':
             topics = Topic.query.filter_by(repo_id=selected_repo.id).order_by(Topic.current_skill).all()
         elif sort == 'date':
             topics = Topic.query.filter_by(repo_id=selected_repo.id).order_by(Topic.last_study_date).all()
         else:
             topics = Topic.query.filter_by(repo_id=selected_repo.id).order_by(Topic.filename).all()
+
+        # build select menus for forms:
+        form_topics = Topic.query.filter_by(repo_id=selected_repo.id).order_by(Topic.filename).all()
+        choices = [(t.filename, t.filename) for t in form_topics]
+        choices.insert(0, ('', ''))
+
+        review_form.filename.choices = choices
+        del_topic_form.filename.choices = choices
+        rename_topic_form.old_filename.choices = choices
 
         # recommend a topic:
         recommend = 'recommended.py'
@@ -155,6 +168,21 @@ def index(sort='name'):
             # direct to add update
             return redirect(url_for('main.update', new_repo=reponame))
 
+    if review_form.review_submit.data and review_form.validate_on_submit():
+        topic = Topic.query.filter(Topic.filename == review_form.filename.data,
+                                   Topic.repo_id == selected_repo.id).first()
+        review = Review(time_spent=review_form.time_spent.data,
+                        skill_before=review_form.skill_before.data,
+                        skill_after=review_form.skill_after.data,
+                        topic_id=topic.id)
+        topic.current_skill = review_form.skill_after.data
+        topic.last_study_date = datetime.utcnow()
+        if topic.current_skill == 5:
+            topic.mastery += 1
+        db.session.add(review)
+        db.session.commit()
+        flash('Review logged!')
+        return redirect(url_for('main.index', sort='name'))
 
 
 
@@ -162,33 +190,11 @@ def index(sort='name'):
 
 
 
-    # review_form = ReviewForm()
-    # del_review_form = DeleteReviewForm()
-    # del_topic_form = DeleteTopicForm()
-    # rename_form = RenameTopicForm()
-    #
-    # topics = Topic.query.order_by(Topic.filename).all()
-    # choices = [(t.filename, t.filename) for t in topics]
-    # choices.insert(0, ('', '\u25b8  select a topic'))
-    #
-    # review_form.filename.choices = choices
-    # del_topic_form.filename.choices = choices
-    # rename_form.old_filename.choices = choices
-    #
-    # if review_form.submit1.data and review_form.validate_on_submit():
-    #     topic = Topic.query.filter_by(filename=review_form.filename.data).first()
-    #     review = Review(time_spent=review_form.time_spent.data,
-    #                     skill_before=review_form.skill_before.data,
-    #                     skill_after=review_form.skill_after.data,
-    #                     topic_id=topic.id)
-    #     topic.current_skill = review_form.skill_after.data
-    #     topic.last_study_date = datetime.utcnow()
-    #     if topic.current_skill == int(5):
-    #         topic.mastery += 1
-    #     db.session.add(review)
-    #     db.session.commit()
-    #     flash('Review logged!')
-    #     return redirect(url_for('main.index', sort='name'))
+
+
+
+
+
     #
     # if del_review_form.submit2.data and del_review_form.validate_on_submit():
     #     review = Review.query.filter_by(id=del_review_form.review_id.data).first()
@@ -230,7 +236,7 @@ def index(sort='name'):
     return render_template('index.html', repos=repos, selected_repo=selected_repo,
                            sort=sort, recommend=recommend, topics=topics,
                            add_repo_form=add_repo_form, base_url=base_url, file_url=file_url,
-                           add_repo_messages=add_repo_messages)
+                           add_repo_messages=add_repo_messages, review_form=review_form)
 
 
 # @bp.route('/recommend')

@@ -261,7 +261,7 @@ td {
 .flex-col {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100%;
 }
 
 .flex-col--justified {
@@ -423,7 +423,7 @@ td {
 .topic__subheading {
   font-family: var(--main-font);
   font-weight: 400;
-  color: var(--minor-color);
+  color: var(--main-color);
   font-size: .8rem;
   line-height: 2.2em;
   margin: 0;
@@ -439,10 +439,10 @@ td {
 .topic__review-heading {
   color: var(--minor-color);
   font-family: var(--main-font);
-  font-size: .8rem;
-  font-weight: 400;
+  font-size: .65rem;
+  font-weight: 600;
   margin: 0 0 2px 0;
-  /* text-transform: uppercase; */
+  text-transform: uppercase;
 }
 
 .topic__table {
@@ -452,11 +452,23 @@ td {
 
 .topic__table thead {
   border-bottom: solid 1px rgb(230,230,230);
+  border-top: solid 1px rgb(230,230,230);
   text-align: left;
 }
 
+.topic__table thead tr {
+  display: block;  /* for scrolling tbody to work */
+}
+
+.topic__table tbody {
+  height: 100px;
+  overflow: auto;
+  width: 100%;
+  display: block;
+}
+
 .topic__review-id {
-  width: 28px;
+  width: 40px;
 }
 
 .topic__review-date {
@@ -464,30 +476,26 @@ td {
 }
 
 .topic__review-time {
-  /* width: 70px; */
+  width: 75px;
 }
 
 .topic__review-before {
-  /* width: 55px; */
+  width: 55px;
 }
 
 .topic__review-after {
-  /* width: 50px; */
-}
-
-.topic__reviews {
-  height: 87px;
-  overflow: auto;
-  padding-top: 5px;
-  display: block;
+  width: 45px;
 }
 
 .topic__review-data {
-  border-bottom: dotted 1px rgb(230,230,230);
-  font-size: .9rem;
+  border-bottom: solid 1px rgb(230,230,230);
+  height: 1em;
   line-height: 1.8em;
+  color: var(--main-color);
+  font-family: var(--main-font);
+  font-size: .8rem;
+  font-weight: 400;
 }
-
 
 
 
@@ -558,12 +566,12 @@ td {
   left: -35px;
   width: 100%;
   max-height: 0;
-  transition: all .7s;
+  transition: all .8s;
   overflow: hidden;
 }
 
 .sidebar-form--open {
-  max-height: 275px;  /* should match values  */
+  max-height: 310px;  /* should match values  */
   margin-top: 20px;   /* in showSidebarForm() */
 }
 
@@ -571,7 +579,17 @@ td {
   padding: 25px 0;
 }
 
-.sidebar-form__field {
+.sidebar-form__field-group {
+  display: flex;
+  flex-direction: row;
+}
+
+.sidebar-form__field-group div:first-child {
+  margin-right: 35px;
+}
+
+.sidebar-form__field,
+.sidebar-form__select {
   border-bottom: 1px solid var(--minor-color);
   box-sizing: border-box;
   color: #fff;
@@ -582,7 +600,22 @@ td {
   width: 100%;
 }
 
-.sidebar-form__field:focus {
+.sidebar-form__select {
+  display: block;
+  width: 100%;
+}
+
+.sidebar-form__select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #fff;
+}
+
+.sidebar-form__select option {
+  color: var(--sidebar-color-dark);
+}
+
+.sidebar-form__field:focus,
+.sidebar-form__select:focus {
   border-bottom: 2px solid #fff;
   padding: 10px 0 9px 0;
 }

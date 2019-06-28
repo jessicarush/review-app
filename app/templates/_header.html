@@ -73,7 +73,44 @@
 
 
   {% if repos %}
-  <!-- Review Form -->
+  <div class="relative-container">
+    <form action="" method="post" class="sidebar-form sidebar-form--open padded-lr-reg">
+      <div class="sidebar-form__container">
+        {{ review_form.hidden_tag() }}
+
+          {{ review_form.filename.label(class="secondary-heading") }}
+          {% for error in review_form.filename.errors %}
+          <span class="form-error">* {{ error }}</span>
+          {% endfor %}
+          {{ review_form.filename(class="js-select-menu sidebar-form__select") }}
+
+          {{ review_form.time_spent.label(class="secondary-heading") }}
+          {% for error in review_form.time_spent.errors %}
+          <span class="form-error">{{ error }}</span>
+          {% endfor %}
+          {{ review_form.time_spent(class="sidebar-form__field", placeholder="minutes") }}<br>
+
+          <div class="sidebar-form__field-group">
+            <div>
+          {{ review_form.skill_before.label(class="secondary-heading") }}
+          {% for error in review_form.skill_before.errors %}
+          <span class="form-error">{{ error }}</span>
+          {% endfor %}
+          {{ review_form.skill_before(class="sidebar-form__field", min="0", max="5", step="0.5", placeholder="0–5") }}<br>
+            </div>
+            <div>
+          {{ review_form.skill_after.label(class="secondary-heading") }}
+          {% for error in review_form.skill_after.errors %}
+          <span class="form-error">{{ error }}</span>
+          {% endfor %}
+          {{ review_form.skill_after(class="sidebar-form__field", min="0", max="5", step="0.5", placeholder="0–5") }}<br>
+            </div>
+          </div>
+
+        <p class="sidebar-form__btn">{{ review_form.review_submit(class="btn btn--solid") }}</p>
+      </div>
+    </form>
+  </div>
   {% endif %}
 
 
