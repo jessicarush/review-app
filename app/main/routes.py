@@ -157,7 +157,8 @@ def index(sort='name'):
         # check that the repo exists on github and hasn't already beed added:
         reponame = add_repo_form.repository.data
         ping = Repo.ping_repo(reponame)
-        repo = Repo.query.filter(Repo.repository == reponame, Repo.user_id == current_user.id).first()
+        repo = Repo.query.filter(Repo.repository == reponame,
+                                 Repo.user_id == current_user.id).first()
 
         if not ping:
             flash("I couldn't find that repository on Github", category='main-fail')
@@ -174,8 +175,8 @@ def index(sort='name'):
             return redirect(url_for('main.update', new_repo=reponame))
 
     if review_form.review_submit.data and review_form.validate_on_submit():
-        topic = Topic.query.filter(Topic.filename == review_form.filename.data,
-                                   Topic.repo_id == selected_repo.id).first()
+        topic = Topic.query.filter(Topic.repo_id == selected_repo.id,
+                                   Topic.filename == review_form.filename.data).first()
         review = Review(time_spent=review_form.time_spent.data,
                         skill_before=review_form.skill_before.data,
                         skill_after=review_form.skill_after.data,
@@ -192,10 +193,20 @@ def index(sort='name'):
                                 selected_repo=selected_repo.repository))
 
     if del_topic_form.del_topic_submit.data and del_topic_form.validate_on_submit():
-        Topic.query.filter(Topic.filename == del_topic_form.filename.data,
-                           Topic.repo_id == selected_repo.id).delete()
+        Topic.query.filter(Topic.repo_id == selected_repo.id,
+                           Topic.filename == del_topic_form.filename.data).delete()
         db.session.commit()
         flash('Topic deleted.', category='main-success')
+        return redirect(url_for('main.index',
+                                sort='name',
+                                selected_repo=selected_repo.repository))
+
+    if rename_topic_form.rename_submit.data and rename_topic_form.validate_on_submit():
+        topic = Topic.query.filter(Topic.repo_id == selected_repo.id,
+                                   Topic.filename == rename_topic_form.old_filename.data).first()
+        topic.filename = rename_topic_form.new_filename.data
+        db.session.commit()
+        flash('Topic renamed!', category='main-success')
         return redirect(url_for('main.index',
                                 sort='name',
                                 selected_repo=selected_repo.repository))
@@ -232,14 +243,6 @@ def index(sort='name'):
     #     return redirect(url_for('main.index', sort='name'))
     #
 
-    #
-    # if rename_form.submit4.data and rename_form.validate_on_submit():
-    #     topic = Topic.query.filter_by(filename=rename_form.old_filename.data).first()
-    #     topic.filename = rename_form.new_filename.data
-    #     db.session.commit()
-    #     flash('Topic renamed!')
-    #     return redirect(url_for('main.index', sort='name'))
-    #
 
     # return render_template(
     #     'index.html', topics=topics, review_form=review_form,

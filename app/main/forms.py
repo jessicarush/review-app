@@ -37,7 +37,7 @@ class RenameTopicForm(FlaskForm):
     '''Form for renaming a topic.'''
     old_filename = SelectField('Rename a topic', choices=[], validators=[DataRequired()])
     new_filename = StringField('New name', validators=[DataRequired()])
-    rename_submit = SubmitField('Rename')
+    rename_submit = SubmitField('Rename topic')
 
 
 class AddTopicsForm(FlaskForm):

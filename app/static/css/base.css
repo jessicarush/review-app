@@ -522,10 +522,15 @@ td {
   height: 12px;
   transform: rotate(45deg);
   position: absolute;
-  bottom: 20px;
-  right: 3px;
+  bottom: 18px;
+  right: 2px;
   z-index: 2;
   pointer-events: none;
+}
+
+select:focus + .menu-arrow {
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
 }
 
 .auth-form__field {
