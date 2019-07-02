@@ -7,6 +7,7 @@ from time import time
 from flask import current_app
 from flask_login import UserMixin, current_user
 import jwt
+from sqlalchemy import extract
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import db, login
@@ -87,6 +88,33 @@ class Topic(db.Model):
     repo_id = db.Column(db.Integer, db.ForeignKey('repo.id'))
     # one to many relationship:
     reviews = db.relationship('Review', backref='topic', lazy='dynamic')
+
+    @staticmethod
+    def recommend_study_topic(selected_repo):
+        '''Recommend a study topic from a repo.'''
+        # How many topics are 20% (rounded)
+        count = Topic.query.filter_by(repo_id=selected_repo.id).count()
+        count = round(count * .2) if round(count * .2) else 1
+
+        # Get the (count) oldest topics
+        topics = Topic.query.filter_by(repo_id=selected_repo.id) \
+                            .order_by(Topic.last_study_date) \
+                            .limit(count).all()
+
+        # Check if a search by the oldest date yields a greater count:
+        y = topics[0].last_study_date.year
+        m = topics[0].last_study_date.month
+        d = topics[0].last_study_date.day
+        t = Topic.query.filter(Topic.repo_id == selected_repo.id,
+                               extract('year', Topic.last_study_date) == y,
+                               extract('month', Topic.last_study_date) == m,
+                               extract('day', Topic.last_study_date) == d).all()
+        if len(t) > count:
+            topics = t
+
+        # sort by current_skill
+        topics = sorted(topics, key=lambda x: x.current_skill)
+        return topics[0].filename
 
 
 class Review(db.Model):

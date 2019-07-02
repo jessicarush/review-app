@@ -145,36 +145,7 @@ def index(sort='name'):
         rename_topic_form.old_filename.choices = choices
 
         # recommend a topic:
-        def recommend_study_topic():
-            '''Recommend a study topic from a repo.'''
-            # How many topics are 20% (rounded)
-            count = Topic.query.filter_by(repo_id=selected_repo.id).count()
-            count = round(count * .2) if round(count * .2) else 1
-
-            # Get the (count) oldest topics
-            topics = Topic.query.filter_by(repo_id=selected_repo.id) \
-                                .order_by(Topic.last_study_date) \
-                                .limit(count).all()
-
-            # Check if a search by the oldest date yields a greater count:
-            y = topics[0].last_study_date.year
-            m = topics[0].last_study_date.month
-            d = topics[0].last_study_date.day
-            t = Topic.query.filter(Topic.repo_id == selected_repo.id,
-                                   extract('year', Topic.last_study_date) == y,
-                                   extract('month', Topic.last_study_date) == m,
-                                   extract('day', Topic.last_study_date) == d).all()
-            if len(t) > count:
-                topics = t
-
-            # sort by current_skill
-            topics = sorted(topics, key=lambda x: x.current_skill)
-            return topics[0].filename
-
-        # recommend = 'test.md'
-        recommend = recommend_study_topic()
-
-
+        recommend = Topic.recommend_study_topic(selected_repo)
 
     # process forms
     if add_repo_form.add_repo_submit.data and add_repo_form.validate_on_submit():
