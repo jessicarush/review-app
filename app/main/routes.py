@@ -28,7 +28,6 @@ def update():
 
     base_url = current_app.config['URL_START']
     repos = current_user.repos.all()
-    # check to see if coming from "add a repository":
     new_repo = request.args.get('new_repo')
     new_topics = None
     file_count = 0
@@ -37,7 +36,7 @@ def update():
     if not repos:
         return redirect(url_for('main.index', sort='name'))
 
-    # If the user just added a repo:
+    # If the user just added a new repo:
     elif new_repo:
         new_topics = topics_from_repo(new_repo)
         if not new_topics:
@@ -69,7 +68,7 @@ def update():
                     setattr(F, t_count, DecimalField(t, description=repo.repository))
                     file_count += 1
 
-        # if no new_topics, procedd to main.index
+        # if there are no new topics, proceed to main.index
         if not new_topics:
             return redirect(url_for('main.index', sort='name'))
 
@@ -91,10 +90,16 @@ def update():
                 db.session.add(topic)
         db.session.commit()
         flash('New topic(s) added.', category='main-success')
-        return redirect(url_for('main.index', selected_repo=repo.repository, sort='name'))
+        return redirect(url_for('main.index',
+                                selected_repo=repo.repository,
+                                sort='name'))
 
-    return render_template('update.html', title='New Topics', form=form,
-                           new_repo=new_repo, base_url=base_url, new_topics=new_topics)
+    return render_template('update.html',
+                           title='New Topics',
+                           form=form,
+                           new_repo=new_repo,
+                           base_url=base_url,
+                           new_topics=new_topics)
 
 
 @bp.route('/<sort>', methods=['GET', 'POST'])
@@ -182,7 +187,18 @@ def index(sort='name'):
         db.session.add(review)
         db.session.commit()
         flash('Review logged!', category='main-success')
-        return redirect(url_for('main.index', sort='name', selected_repo=selected_repo.repository))
+        return redirect(url_for('main.index',
+                                sort='name',
+                                selected_repo=selected_repo.repository))
+
+    if del_topic_form.del_topic_submit.data and del_topic_form.validate_on_submit():
+        Topic.query.filter(Topic.filename == del_topic_form.filename.data,
+                           Topic.repo_id == selected_repo.id).delete()
+        db.session.commit()
+        flash('Topic deleted.', category='main-success')
+        return redirect(url_for('main.index',
+                                sort='name',
+                                selected_repo=selected_repo.repository))
 
 
 
@@ -215,11 +231,7 @@ def index(sort='name'):
     #     flash('Review session deleted.')
     #     return redirect(url_for('main.index', sort='name'))
     #
-    # if del_topic_form.submit3.data and del_topic_form.validate_on_submit():
-    #     Topic.query.filter_by(filename=del_topic_form.filename.data).delete()
-    #     db.session.commit()
-    #     flash('Topic deleted.')
-    #     return redirect(url_for('main.index', sort='name'))
+
     #
     # if rename_form.submit4.data and rename_form.validate_on_submit():
     #     topic = Topic.query.filter_by(filename=rename_form.old_filename.data).first()
@@ -233,7 +245,16 @@ def index(sort='name'):
     #     'index.html', topics=topics, review_form=review_form,
     #     del_review_form=del_review_form, del_topic_form=del_topic_form,
     #     rename_form=rename_form, recommend=request.args.get('recommend'))
-    return render_template('index.html', repos=repos, selected_repo=selected_repo,
-                           sort=sort, recommend=recommend, topics=topics,
-                           add_repo_form=add_repo_form, base_url=base_url, file_url=file_url,
-                           add_repo_messages=add_repo_messages, review_form=review_form)
+    return render_template('index.html',
+                           sort=sort,
+                           repos=repos,
+                           topics=topics,
+                           selected_repo=selected_repo,
+                           recommend=recommend,
+                           base_url=base_url, file_url=file_url,
+                           add_repo_messages=add_repo_messages,
+                           add_repo_form=add_repo_form,
+                           review_form=review_form,
+                           del_review_form=del_review_form,
+                           del_topic_form=del_topic_form,
+                           rename_topic_form=rename_topic_form)

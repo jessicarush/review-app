@@ -99,7 +99,7 @@ Happy learning!
 - [ ] UX/UI Redesign
 - [ ] Add interface to add new main topics by giving the github username and repo name
 - [ ] Recommend topic take lowest score from from oldest %
-- [ ] Add confirm() to delete options
+- [ ] Add a custom confirm() to delete options
 - [ ] Replace demo with introduction page
 - [ ] Add heatmap
 - [ ] Add help information

@@ -19,7 +19,7 @@
   {% endfor %}
 
   <div class="relative-container">
-    <button class="js-show-form-s primary primary--inactive">+ add a repository</button>
+    <button class="js-show-form primary primary--inactive">+ add a repository</button>
 
     <!-- if there are validation errors, make sure the form is visible -->
     {% if add_repo_form.repository.errors or add_repo_messages %}
@@ -74,7 +74,6 @@
 
   {% if repos %}
   <div class="relative-container">
-    <div class="arrow"></div>
     <form action="" method="post" class="sidebar-form sidebar-form--open padded-lr-reg">
       <div class="sidebar-form__container">
         {{ review_form.hidden_tag() }}
@@ -83,7 +82,10 @@
           {% for error in review_form.filename.errors %}
           <span class="form-error">* {{ error }}</span>
           {% endfor %}
-          {{ review_form.filename(class="js-select-menu sidebar-form__select") }}
+          <div class="relative-container">
+            <div class="menu-arrow"></div>
+            {{ review_form.filename(class="js-select-menu sidebar-form__select") }}
+          </div>
 
           {{ review_form.time_spent.label(class="secondary-heading") }}
           {% for error in review_form.time_spent.errors %}
@@ -118,10 +120,35 @@
   <h1 class="secondary-heading">Et Cetera</h1>
   <ul class="plain-list plain-list--vertical">
     {% if repos %}
-    <li><button class="primary primary--active">delete a study session</button></li>
-    <li><button class="primary primary--active">delete a topic</button></li>
-    <li><button class="primary primary--active">delete a repository</button></li>
-    <li><button class="primary primary--active">rename a topic</button></li>
+    <li>
+      <button class="primary primary--active">delete a study session</button>
+    </li>
+
+    <li>
+      <div class="relative-container">
+        <button class="js-show-form primary primary--active">delete a topic</button>
+        <form action="" method="post" onSubmit="return confirm('Are you sure you want to delete this topic and all of its study sessions?')" class="sidebar-form padded-lr-reg">
+          <div class="arrow"></div>
+          <div class="sidebar-form__container">
+            {{ del_topic_form.hidden_tag() }}
+            {{ del_topic_form.filename.label(class="secondary-heading") }}
+            <div class="relative-container">
+              <div class="menu-arrow"></div>
+              {{ del_topic_form.filename(class="js-select-menu sidebar-form__select") }}
+            </div>
+            <p class="sidebar-form__btn">{{ del_topic_form.del_topic_submit(class="btn btn--solid") }}</p>
+          </div>
+        </form>
+      </div>
+    </li>
+
+    <li>
+      <button class="primary primary--active">delete a repository</button>
+    </li>
+
+    <li>
+      <button class="primary primary--active">rename a topic</button>
+    </li>
     {% endif %}
     <li><a href="" class="primary primary--active">account admin</a></li>
     <li><a href="{{ url_for('auth.logout') }}" class="primary primary--active">logout</a></li>

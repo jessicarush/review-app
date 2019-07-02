@@ -515,6 +515,19 @@ td {
   font-family: var(--main-font);
 }
 
+.menu-arrow {
+  border-right: 1px solid var(--subheading-color);
+  border-bottom: 1px solid var(--subheading-color);
+  width: 12px;
+  height: 12px;
+  transform: rotate(45deg);
+  position: absolute;
+  bottom: 20px;
+  right: 3px;
+  z-index: 2;
+  pointer-events: none;
+}
+
 .auth-form__field {
   border-bottom: 1px solid var(--minor-color);
   box-sizing: border-box;
@@ -724,19 +737,6 @@ td {
 
 .space_above {
   padding-top: 25px;
-}
-
-.arrow {
-  border-right: 1px solid var(--subheading-color);
-  border-bottom: 1px solid var(--subheading-color);
-  width: 12px;
-  height: 12px;
-  transform: rotate(45deg);
-  position: absolute;
-  top: 55px;
-  right: 3px;
-  z-index: 2;
-  pointer-events: none;
 }
 
 

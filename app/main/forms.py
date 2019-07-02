@@ -23,20 +23,20 @@ class ReviewForm(FlaskForm):
 
 class DeleteReviewForm(FlaskForm):
     '''Form for a deleting review session.'''
-    review_id = IntegerField('Review ID', validators=[DataRequired()])
-    del_review_submit = SubmitField('Delete review')
+    review_id = IntegerField('Delete a study session', validators=[DataRequired()])
+    del_review_submit = SubmitField('Delete session')
 
 
 class DeleteTopicForm(FlaskForm):
     '''Form for deleting a topic.'''
-    filename = SelectField('Topic:', choices=[], validators=[DataRequired()])
+    filename = SelectField('Delete a topic', choices=[], validators=[DataRequired()])
     del_topic_submit = SubmitField('Delete topic')
 
 
 class RenameTopicForm(FlaskForm):
     '''Form for renaming a topic.'''
-    old_filename = SelectField('Old name:', choices=[], validators=[DataRequired()])
-    new_filename = StringField('New name:', validators=[DataRequired()])
+    old_filename = SelectField('Rename a topic', choices=[], validators=[DataRequired()])
+    new_filename = StringField('New name', validators=[DataRequired()])
     rename_submit = SubmitField('Rename')
 
 

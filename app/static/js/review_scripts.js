@@ -9,10 +9,12 @@ function reviewSauce() {
     const formEl = e.target.nextElementSibling;
     if (!formEl.style.maxHeight || formEl.style.maxHeight == '0px') {
       formEl.style.setProperty('max-height', height);
-      formEl.style.setProperty('margin-top', '20px');
+      formEl.style.setProperty('margin-top', '10px');
+      formEl.style.setProperty('margin-bottom', '10px');
     } else {
       formEl.style.setProperty('max-height', '0');
       formEl.style.setProperty('margin-top', '0');
+      formEl.style.setProperty('margin-bottom', '0');
     }
   }
 
@@ -40,7 +42,7 @@ function reviewSauce() {
 
 
   window.addEventListener('click', function(e) {
-    if (e.target.matches('.js-show-form-s')) {
+    if (e.target.matches('.js-show-form')) {
       showSidebarForm(e, '310px');
     }
   });
