@@ -264,6 +264,12 @@ td {
   min-height: 100%;
 }
 
+.flex-col-vh {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .flex-col--justified {
   justify-content: space-between;
 }
@@ -718,6 +724,19 @@ td {
 
 .space_above {
   padding-top: 25px;
+}
+
+.arrow {
+  border-right: 1px solid var(--subheading-color);
+  border-bottom: 1px solid var(--subheading-color);
+  width: 12px;
+  height: 12px;
+  transform: rotate(45deg);
+  position: absolute;
+  top: 55px;
+  right: 3px;
+  z-index: 2;
+  pointer-events: none;
 }
 
 

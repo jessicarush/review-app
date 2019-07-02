@@ -53,7 +53,8 @@
 
   <script type="text/javascript">
     // selects and highlights the active sort order
-    let sort = {{ sort|tojson }};
+    let sort = {{ sort|tojson }} ? {{ sort|tojson }} : 'name';
+    console.log(sort);
     let current_sort = document.querySelector('.js-' + sort + '-sort');
     current_sort.classList.remove('primary--inactive');
     current_sort.classList.add('primary--active');
@@ -66,14 +67,14 @@
 
   <h1 class="secondary-heading">Study this next</h1>
   {% if repos %}
-  <a href="{{ url }}{{ recommend }}" class="primary primary--active">{{ recommend }}</a>
+  <a href="{{ file_url }}{{ recommend }}" class="primary primary--active">{{ recommend }}</a>
   {% else %} <!-- if no repos -->
   <p class="sidebar-comment">no repositories yet</p>
   {% endif %}
 
-
   {% if repos %}
   <div class="relative-container">
+    <div class="arrow"></div>
     <form action="" method="post" class="sidebar-form sidebar-form--open padded-lr-reg">
       <div class="sidebar-form__container">
         {{ review_form.hidden_tag() }}
@@ -88,7 +89,7 @@
           {% for error in review_form.time_spent.errors %}
           <span class="form-error">{{ error }}</span>
           {% endfor %}
-          {{ review_form.time_spent(class="sidebar-form__field", placeholder="minutes") }}<br>
+          {{ review_form.time_spent(class="sidebar-form__field") }}<br>
 
           <div class="sidebar-form__field-group">
             <div>
@@ -96,14 +97,14 @@
           {% for error in review_form.skill_before.errors %}
           <span class="form-error">{{ error }}</span>
           {% endfor %}
-          {{ review_form.skill_before(class="sidebar-form__field", min="0", max="5", step="0.5", placeholder="0–5") }}<br>
+          {{ review_form.skill_before(class="sidebar-form__field", min="0", max="5", step="0.5") }}<br>
             </div>
             <div>
           {{ review_form.skill_after.label(class="secondary-heading") }}
           {% for error in review_form.skill_after.errors %}
           <span class="form-error">{{ error }}</span>
           {% endfor %}
-          {{ review_form.skill_after(class="sidebar-form__field", min="0", max="5", step="0.5", placeholder="0–5") }}<br>
+          {{ review_form.skill_after(class="sidebar-form__field", min="0", max="5", step="0.5") }}<br>
             </div>
           </div>
 
@@ -117,9 +118,10 @@
   <h1 class="secondary-heading">Et Cetera</h1>
   <ul class="plain-list plain-list--vertical">
     {% if repos %}
-    <li><button class="primary primary--active">rename a topic</button></li>
-    <li><button class="primary primary--active">delete a topic</button></li>
     <li><button class="primary primary--active">delete a study session</button></li>
+    <li><button class="primary primary--active">delete a topic</button></li>
+    <li><button class="primary primary--active">delete a repository</button></li>
+    <li><button class="primary primary--active">rename a topic</button></li>
     {% endif %}
     <li><a href="" class="primary primary--active">account admin</a></li>
     <li><a href="{{ url_for('auth.logout') }}" class="primary primary--active">logout</a></li>

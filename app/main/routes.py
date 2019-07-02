@@ -5,6 +5,7 @@ import re
 
 from flask import current_app, flash, render_template, redirect, request, url_for, Markup
 from flask_login import current_user, login_required
+from sqlalchemy import extract
 from wtforms.fields.html5 import DecimalField
 from wtforms.validators import NumberRange
 
@@ -144,7 +145,35 @@ def index(sort='name'):
         rename_topic_form.old_filename.choices = choices
 
         # recommend a topic:
-        recommend = 'recommended.py'
+        def recommend_study_topic():
+            '''Recommend a study topic from a repo.'''
+            # How many topics are 20% (rounded)
+            count = Topic.query.filter_by(repo_id=selected_repo.id).count()
+            count = round(count * .2) if round(count * .2) else 1
+
+            # Get the (count) oldest topics
+            topics = Topic.query.filter_by(repo_id=selected_repo.id) \
+                                .order_by(Topic.last_study_date) \
+                                .limit(count).all()
+
+            # Check if a search by the oldest date yields a greater count:
+            y = topics[0].last_study_date.year
+            m = topics[0].last_study_date.month
+            d = topics[0].last_study_date.day
+            t = Topic.query.filter(Topic.repo_id == selected_repo.id,
+                                   extract('year', Topic.last_study_date) == y,
+                                   extract('month', Topic.last_study_date) == m,
+                                   extract('day', Topic.last_study_date) == d).all()
+            if len(t) > count:
+                topics = t
+
+            # sort by current_skill
+            topics = sorted(topics, key=lambda x: x.current_skill)
+            return topics[0].filename
+
+        # recommend = 'test.md'
+        recommend = recommend_study_topic()
+
 
 
     # process forms
@@ -181,8 +210,8 @@ def index(sort='name'):
             topic.mastery += 1
         db.session.add(review)
         db.session.commit()
-        flash('Review logged!')
-        return redirect(url_for('main.index', sort='name'))
+        flash('Review logged!', category='main-success')
+        return redirect(url_for('main.index', sort='name', selected_repo=selected_repo.repository))
 
 
 
@@ -237,14 +266,3 @@ def index(sort='name'):
                            sort=sort, recommend=recommend, topics=topics,
                            add_repo_form=add_repo_form, base_url=base_url, file_url=file_url,
                            add_repo_messages=add_repo_messages, review_form=review_form)
-
-
-# @bp.route('/recommend')
-# def recommend():
-#     '''View function to recommend a study topic.'''
-#     topics = Topic.query.order_by(Topic.last_study_date).limit(10).all()
-#     topics = sorted(topics, key=lambda x: x.current_skill)
-#     url = '\"https://github.com/jessicarush/python-notes/blob/master/{}\"'.format(topics[0].filename)
-#
-#     return redirect(url_for(
-#         'main.index', sort='date', recommend=topics[0].filename))
