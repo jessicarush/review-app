@@ -143,11 +143,12 @@ td {
 }
 
 .truncate-text {
-  display: inline-block;
+  display: block;
+  padding: 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  width: 240px;  /* sidebar width */
+  width: 225px;  /* sidebar width */
 }
 
 .comment {
@@ -362,7 +363,7 @@ td {
   margin: 10px 5px 0 5px;
   padding: 60px 20px 20px 20px;
   position: relative;
-  width: 350px;
+  width: 345px;
 }
 
 @media screen and (max-width: 730px) {
@@ -482,11 +483,11 @@ td {
 }
 
 .topic__review-time {
-  width: 75px;
+  width: 73px;
 }
 
 .topic__review-before {
-  width: 55px;
+  width: 52px;
 }
 
 .topic__review-after {
@@ -583,6 +584,22 @@ select:focus + .menu-arrow {
   text-shadow: 0 0 3px rgba(0,0,0,.1);
 }
 
+.auth-form__password-icon {
+  color: var(--minor-color);
+  cursor: pointer;
+  float: right;
+  padding: 5px;
+  position: absolute;
+  right: -3px;
+  bottom: 15px;
+  transition: color .2s;
+  z-index: 2;
+}
+
+.auth-form__password-icon:hover {
+  color: var(--heading-color);
+}
+
 .sidebar-form {
   background: var(--sidebar-color-dark);
   position: relative;
@@ -590,13 +607,14 @@ select:focus + .menu-arrow {
   left: -35px;
   width: 100%;
   max-height: 0;
-  transition: all .8s;
+  transition: all 1s;
   overflow: hidden;
 }
 
 .sidebar-form--open {
-  max-height: 310px;  /* should match values  */
-  margin-top: 20px;   /* in showSidebarForm() */
+  max-height: 350px;  /* should match values  */
+  margin-top: 10px;   /* in showSidebarForm() */
+  margin-bottom: 10px;
 }
 
 .sidebar-form__container {

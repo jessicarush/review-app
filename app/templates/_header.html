@@ -10,34 +10,55 @@
 
   <h1 class="secondary-heading">Repos</h1>
   {% if repos %}
-  {% for repo in repos %}
-    {% if repo.repository == selected_repo.repository %}
-    <span class="primary primary--disabled truncate-text">{{ repo.repository }}</span><br>
-    {% else %}
-    <a href="{{ url_for('main.index', selected_repo=repo.repository, sort='name') }}" class="primary primary--inactive truncate-text">{{ repo.repository }}</a><br>
-    {% endif %}
-  {% endfor %}
+  <ul class="plain-list plain-list--vertical">
+    {% for repo in repos %}
+      {% if repo.repository == selected_repo.repository %}
+      <li><span class="primary primary--disabled truncate-text">{{ repo.repository }}</span></li>
+      {% else %}
+      <li><a href="{{ url_for('main.index', selected_repo=repo.repository, sort='name') }}" class="primary primary--inactive">{{ repo.repository }}</a></li>
+      {% endif %}
+    {% endfor %}
 
-  <div class="relative-container">
-    <button class="js-show-form primary primary--inactive">+ add a repository</button>
-
-    <!-- if there are validation errors, make sure the form is visible -->
-    {% if add_repo_form.repository.errors or add_repo_messages %}
-    <form action="" method="post" class="sidebar-form sidebar-form--open padded-lr-reg">
-    {% else %}
-    <form action="" method="post" class="sidebar-form padded-lr-reg">
-    {% endif %}
-      <div class="sidebar-form__container">
-        {{ add_repo_form.hidden_tag() }}
-        {{ add_repo_form.repository.label(class="secondary-heading") }}
-        {% for error in add_repo_form.repository.errors %}
-        <span class="form-error">* {{ error }}</span>
-        {% endfor %}
-        {{ add_repo_form.repository(class="sidebar-form__field", placeholder="username/repository", required="true") }}<br>
-        <p class="sidebar-form__btn">{{ add_repo_form.add_repo_submit(class="btn btn--solid") }}</p>
+    <li>
+      <div class="relative-container">
+        <button class="js-show-form primary primary--inactive">+ add repo</button>
+        <!-- if there are validation errors, make sure the form is visible -->
+        {% if add_repo_form.repository.errors or add_repo_messages %}
+        <form action="" method="post" class="sidebar-form sidebar-form--open padded-lr-reg">
+        {% else %}
+        <form action="" method="post" class="sidebar-form padded-lr-reg">
+        {% endif %}
+          <div class="sidebar-form__container">
+            {{ add_repo_form.hidden_tag() }}
+            {{ add_repo_form.repository.label(class="secondary-heading") }}
+            {% for error in add_repo_form.repository.errors %}
+            <span class="form-error">* {{ error }}</span>
+            {% endfor %}
+            {{ add_repo_form.repository(class="sidebar-form__field", placeholder="username/repository", required="true") }}<br>
+            <p class="sidebar-form__btn">{{ add_repo_form.add_repo_submit(class="btn btn--solid") }}</p>
+          </div>
+        </form>
       </div>
-    </form>
-  </div>
+    </li>
+
+    <li>
+      <div class="relative-container">
+        <button class="js-show-form primary primary--inactive">- delete repo</button>
+        <form action="" method="post" class="sidebar-form padded-lr-reg" onSubmit="return confirm('Are you sure you want to delete this repository and all of its topics & study sessions?')" >
+          <div class="sidebar-form__container">
+            {{ del_repo_form.hidden_tag() }}
+            {{ del_repo_form.repository.label(class="secondary-heading") }}
+            <div class="relative-container">
+              {{ del_repo_form.repository(class="js-select-menu sidebar-form__select") }}
+              <div class="menu-arrow"></div>
+            </div>
+            <p class="sidebar-form__btn">{{ del_repo_form.del_repo_submit(class="btn btn--solid") }}</p>
+          </div>
+        </form>
+      </div>
+    </li>
+  </ul>
+
   {% else %} <!-- if no repos -->
   <p class="sidebar-comment">no repositories yet</p>
   {% endif %}
@@ -66,10 +87,12 @@
 
 
   <h1 class="secondary-heading">Study this next</h1>
-  {% if repos %}
+  {% if repos and recommend %}
   <a href="{{ file_url }}{{ recommend }}" class="primary primary--active">{{ recommend }}</a>
-  {% else %} <!-- if no repos -->
-  <p class="sidebar-comment">no repositories yet</p>
+  {% elif repos %} <!-- repo but no topics -->
+  <p class="sidebar-comment">no topics</p>
+  {% else %} <!-- no repos -->
+  <p class="sidebar-comment">no repositories</p>
   {% endif %}
 
   {% if repos %}
@@ -89,7 +112,7 @@
 
           {{ review_form.time_spent.label(class="secondary-heading") }}
           {% for error in review_form.time_spent.errors %}
-          <span class="form-error">{{ error }}</span>
+          <span class="form-error">* {{ error }}</span>
           {% endfor %}
           {{ review_form.time_spent(class="sidebar-form__field") }}<br>
 
@@ -97,14 +120,14 @@
             <div>
           {{ review_form.skill_before.label(class="secondary-heading") }}
           {% for error in review_form.skill_before.errors %}
-          <span class="form-error">{{ error }}</span>
+          <span class="form-error">* {{ error }}</span>
           {% endfor %}
           {{ review_form.skill_before(class="sidebar-form__field", min="0", max="5", step="0.5") }}<br>
             </div>
             <div>
           {{ review_form.skill_after.label(class="secondary-heading") }}
           {% for error in review_form.skill_after.errors %}
-          <span class="form-error">{{ error }}</span>
+          <span class="form-error">* {{ error }}</span>
           {% endfor %}
           {{ review_form.skill_after(class="sidebar-form__field", min="0", max="5", step="0.5") }}<br>
             </div>
@@ -127,7 +150,7 @@
     <li>
       <div class="relative-container">
         <button class="js-show-form primary primary--active">delete a topic</button>
-        <form action="" method="post" onSubmit="return confirm('Are you sure you want to delete this topic and all of its study sessions?')" class="sidebar-form padded-lr-reg">
+        <form action="" method="post" class="sidebar-form padded-lr-reg" onSubmit="return confirm('Are you sure you want to delete this topic and all of its study sessions?')">
           <div class="sidebar-form__container">
             {{ del_topic_form.hidden_tag() }}
             {{ del_topic_form.filename.label(class="secondary-heading") }}
@@ -142,13 +165,14 @@
     </li>
 
     <li>
-      <button class="primary primary--active">delete a repository</button>
-    </li>
-
-    <li>
       <div class="relative-container">
         <button class="js-show-form primary primary--active">rename a topic</button>
+        <!-- if there are validation errors, make sure the form is visible -->
+        {% if rename_topic_form.new_filename.errors %}
+        <form action="" method="post" class="sidebar-form sidebar-form--open padded-lr-reg">
+        {% else %}
         <form action="" method="post" class="sidebar-form padded-lr-reg">
+        {% endif %}
           <div class="sidebar-form__container">
             {{ rename_topic_form.hidden_tag() }}
             {{ rename_topic_form.old_filename.label(class="secondary-heading") }}
@@ -157,6 +181,9 @@
               <div class="menu-arrow"></div>
             </div>
             {{ rename_topic_form.new_filename.label(class="secondary-heading") }}
+            {% for error in rename_topic_form.new_filename.errors %}
+            <span class="form-error">* {{ error }}</span>
+            {% endfor %}
             {{ rename_topic_form.new_filename(class="sidebar-form__field") }}
             <p class="sidebar-form__btn">{{ rename_topic_form.rename_submit(class="btn btn--solid") }}</p>
           </div>

@@ -104,6 +104,7 @@ Happy learning!
 - [ ] Add heatmap
 - [ ] Add help information
 - [ ] Add 'make default' to repo list
+- [ ] Add a dark theme
 
 
 ![Python Review App](/app/static/img/screenshot.png "Python Review App running in Firefox")

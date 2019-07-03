@@ -3,7 +3,8 @@
 from datetime import datetime
 import re
 
-from flask import current_app, flash, render_template, redirect, request, url_for, Markup
+from flask import current_app, flash, render_template, redirect, request, \
+    url_for, Markup
 from flask_login import current_user, login_required
 from sqlalchemy import extract
 from wtforms.fields.html5 import DecimalField
@@ -12,7 +13,7 @@ from wtforms.validators import NumberRange
 from app import db
 from app.main import bp
 from app.main.forms import ReviewForm, DeleteReviewForm, DeleteTopicForm, \
-    RenameTopicForm, AddTopicsForm, AddRepoForm
+    RenameTopicForm, AddTopicsForm, AddRepoForm, DeleteRepoForm
 from app.main.models import User, Repo, Topic, Review
 from app.main.topics import topics_from_repo, topics_from_database
 
@@ -112,11 +113,13 @@ def index(sort='name'):
     del_review_form = DeleteReviewForm()
     del_topic_form = DeleteTopicForm()
     rename_topic_form = RenameTopicForm()
+    del_repo_form = DeleteRepoForm()
 
     repos = current_user.repos.all()
     topics = None
     recommend = None
     base_url = None
+    file_url = None
     add_repo_messages = None
     selected_repo = Repo.query.filter(
         Repo.repository == request.args.get('selected_repo'),
@@ -142,12 +145,15 @@ def index(sort='name'):
 
         # build select menus for forms:
         form_topics = Topic.query.filter_by(repo_id=selected_repo.id).order_by(Topic.filename).all()
-        choices = [(t.filename, t.filename) for t in form_topics]
-        choices.insert(0, ('', ''))
+        topic_choices = [(t.filename, t.filename) for t in form_topics]
+        topic_choices.insert(0, ('', ''))
+        repo_choices = [(r.repository, r.repository) for r in repos]
+        repo_choices.insert(0, ('', ''))
 
-        review_form.filename.choices = choices
-        del_topic_form.filename.choices = choices
-        rename_topic_form.old_filename.choices = choices
+        review_form.filename.choices = topic_choices
+        del_topic_form.filename.choices = topic_choices
+        rename_topic_form.old_filename.choices = topic_choices
+        del_repo_form.repository.choices = repo_choices
 
         # recommend a topic:
         recommend = Topic.recommend_study_topic(selected_repo)
@@ -193,8 +199,10 @@ def index(sort='name'):
                                 selected_repo=selected_repo.repository))
 
     if del_topic_form.del_topic_submit.data and del_topic_form.validate_on_submit():
-        Topic.query.filter(Topic.repo_id == selected_repo.id,
-                           Topic.filename == del_topic_form.filename.data).delete()
+        topic = Topic.query.filter(Topic.repo_id == selected_repo.id,
+                                   Topic.filename == del_topic_form.filename.data).first()
+        topic.reviews.delete()    # for query delete
+        db.session.delete(topic)  # for single query result
         db.session.commit()
         flash('Topic deleted.', category='main-success')
         return redirect(url_for('main.index',
@@ -207,6 +215,19 @@ def index(sort='name'):
         topic.filename = rename_topic_form.new_filename.data
         db.session.commit()
         flash('Topic renamed!', category='main-success')
+        return redirect(url_for('main.index',
+                                sort='name',
+                                selected_repo=selected_repo.repository))
+
+    if del_repo_form.del_repo_submit.data and del_repo_form.validate_on_submit():
+        repo = Repo.query.filter(Repo.user_id == current_user.id,
+                                 Repo.repository == del_repo_form.repository.data).first()
+        for t in repo.topics.all():
+            t.reviews.delete()
+        repo.topics.delete()
+        db.session.delete(repo)
+        db.session.commit()
+        flash('Repo deleted', category='main-success')
         return redirect(url_for('main.index',
                                 sort='name',
                                 selected_repo=selected_repo.repository))
@@ -254,10 +275,12 @@ def index(sort='name'):
                            topics=topics,
                            selected_repo=selected_repo,
                            recommend=recommend,
-                           base_url=base_url, file_url=file_url,
+                           base_url=base_url,
+                           file_url=file_url,
                            add_repo_messages=add_repo_messages,
                            add_repo_form=add_repo_form,
                            review_form=review_form,
                            del_review_form=del_review_form,
                            del_topic_form=del_topic_form,
-                           rename_topic_form=rename_topic_form)
+                           rename_topic_form=rename_topic_form,
+                           del_repo_form=del_repo_form)

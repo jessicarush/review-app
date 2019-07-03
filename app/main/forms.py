@@ -23,21 +23,36 @@ class ReviewForm(FlaskForm):
 
 class DeleteReviewForm(FlaskForm):
     '''Form for a deleting review session.'''
-    review_id = IntegerField('Delete a study session', validators=[DataRequired()])
+    review_id = IntegerField('Delete study session', validators=[DataRequired()])
     del_review_submit = SubmitField('Delete session')
 
 
 class DeleteTopicForm(FlaskForm):
     '''Form for deleting a topic.'''
-    filename = SelectField('Delete a topic', choices=[], validators=[DataRequired()])
+    filename = SelectField('Delete topic', choices=[], validators=[DataRequired()])
     del_topic_submit = SubmitField('Delete topic')
+
+
+class DeleteRepoForm(FlaskForm):
+    '''Form for deleting a repository.'''
+    repository = SelectField('Delete repository', choices=[], validators=[DataRequired()])
+    del_repo_submit = SubmitField('Delete repository')
 
 
 class RenameTopicForm(FlaskForm):
     '''Form for renaming a topic.'''
-    old_filename = SelectField('Rename a topic', choices=[], validators=[DataRequired()])
+    old_filename = SelectField('Rename topic', choices=[], validators=[DataRequired()])
     new_filename = StringField('New name', validators=[DataRequired()])
     rename_submit = SubmitField('Rename topic')
+
+    def validate_new_filename(self, new_filename):
+        '''Check that the repository looks right in terms of format.'''
+        # check that string contains only
+        # alphanumeric, hyphen, underscore or period
+        valid = re.match(r'^[-._\w]+$', new_filename.data) is not None
+        if not valid:
+            raise ValidationError("Names can contain alphanumeric, "
+                                  "hyphens, underscores and periods.")
 
 
 class AddTopicsForm(FlaskForm):

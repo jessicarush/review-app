@@ -20,11 +20,16 @@
     {% endfor %}
     {{ form.user_or_email(class="auth-form__field") }}
 
+    <div class="relative-container">
     {{ form.password.label }}
     {% for error in form.password.errors %}
     <span class="form-error">* {{ error }}</span>
     {% endfor %}
     {{ form.password(class="auth-form__field") }}
+
+    <!-- show/hide icon must be nextElementSibling to password field -->
+    <i aria-hidden class="js-showhide-password fas fa-eye auth-form__password-icon" title="show/hide password" onlick=""></i>
+    </div>
 
     <a href="{{ url_for('auth.reset_password_request') }}" class="inline inline--dark">Forgot password?</a>
     <div class="float-right">
