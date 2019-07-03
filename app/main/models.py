@@ -20,7 +20,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
-    # review_count = db.Column(db.Integer)
+    review_count = db.Column(db.Integer, default=1)
     # one to many relationship:
     repos = db.relationship('Repo', backref='user', lazy='dynamic')
 
@@ -126,6 +126,7 @@ class Topic(db.Model):
 class Review(db.Model):
     '''Model for review session'''
     id = db.Column(db.Integer, primary_key=True)
+    count = db.Column(db.Integer)
     review_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     time_spent = db.Column(db.Integer)
     skill_before = db.Column(db.Float)

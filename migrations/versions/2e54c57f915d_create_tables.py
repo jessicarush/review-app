@@ -1,8 +1,8 @@
 """create tables
 
-Revision ID: 73b50b15c2df
+Revision ID: 2e54c57f915d
 Revises: 
-Create Date: 2019-06-26 15:16:27.935573
+Create Date: 2019-07-03 14:07:35.022724
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '73b50b15c2df'
+revision = '2e54c57f915d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,6 +23,7 @@ def upgrade():
     sa.Column('username', sa.String(length=64), nullable=True),
     sa.Column('email', sa.String(length=120), nullable=True),
     sa.Column('password_hash', sa.String(length=128), nullable=True),
+    sa.Column('review_count', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_users_email'), 'users', ['email'], unique=True)
@@ -52,6 +53,7 @@ def upgrade():
     op.create_index(op.f('ix_topic_last_study_date'), 'topic', ['last_study_date'], unique=False)
     op.create_table('review',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('count', sa.Integer(), nullable=True),
     sa.Column('review_date', sa.DateTime(), nullable=True),
     sa.Column('time_spent', sa.Integer(), nullable=True),
     sa.Column('skill_before', sa.Float(), nullable=True),

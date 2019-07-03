@@ -137,17 +137,21 @@ def index(sort='name'):
 
         # get the topics for display:
         if sort == 'skill':
-            topics = Topic.query.filter_by(repo_id=selected_repo.id).order_by(Topic.current_skill).all()
+            topics = Topic.query.filter_by(repo_id=selected_repo.id) \
+                                .order_by(Topic.current_skill).all()
         elif sort == 'date':
-            topics = Topic.query.filter_by(repo_id=selected_repo.id).order_by(Topic.last_study_date).all()
+            topics = Topic.query.filter_by(repo_id=selected_repo.id) \
+                                .order_by(Topic.last_study_date).all()
         else:
-            topics = Topic.query.filter_by(repo_id=selected_repo.id).order_by(Topic.filename).all()
+            topics = Topic.query.filter_by(repo_id=selected_repo.id) \
+                                .order_by(Topic.filename).all()
 
         # build select menus for forms:
-        form_topics = Topic.query.filter_by(repo_id=selected_repo.id).order_by(Topic.filename).all()
+        form_topics = Topic.query.filter_by(repo_id=selected_repo.id) \
+                                 .order_by(Topic.filename).all()
         topic_choices = [(t.filename, t.filename) for t in form_topics]
-        topic_choices.insert(0, ('', ''))
         repo_choices = [(r.repository, r.repository) for r in repos]
+        topic_choices.insert(0, ('', ''))
         repo_choices.insert(0, ('', ''))
 
         review_form.filename.choices = topic_choices
@@ -183,7 +187,8 @@ def index(sort='name'):
     if review_form.review_submit.data and review_form.validate_on_submit():
         topic = Topic.query.filter(Topic.repo_id == selected_repo.id,
                                    Topic.filename == review_form.filename.data).first()
-        review = Review(time_spent=review_form.time_spent.data,
+        review = Review(count=current_user.review_count,
+                        time_spent=review_form.time_spent.data,
                         skill_before=review_form.skill_before.data,
                         skill_after=review_form.skill_after.data,
                         topic_id=topic.id)
@@ -191,6 +196,7 @@ def index(sort='name'):
         topic.last_study_date = datetime.utcnow()
         if topic.current_skill == 5:
             topic.mastery += 1
+        current_user.review_count += 1
         db.session.add(review)
         db.session.commit()
         flash('Review logged!', category='main-success')
