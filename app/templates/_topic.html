@@ -1,9 +1,9 @@
 <div class="topic">
 
   {% if topic.filename is eq recommend %}
-  <span class="topic__id topic__id--on">{{ topic.id }}</span>
+  <span class="topic__id topic__id--on">{{ topicloop.index }}</span>
   {% else %}
-  <span class="topic__id topic__id--off">{{ topic.id }}</span>
+  <span class="topic__id topic__id--off">{{ topicloop.index }}</span>
   {% endif %}
 
   <div class="topic__heading-group">

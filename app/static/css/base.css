@@ -617,6 +617,12 @@ select:focus + .menu-arrow {
   margin-bottom: 10px;
 }
 
+.sidebar-form--always-open {
+  max-height: 350px;
+  margin-top: 25px;
+}
+
+
 .sidebar-form__container {
   padding: 25px 0;
 }

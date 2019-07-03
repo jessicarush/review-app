@@ -39,7 +39,8 @@
   {% else %}
     <section class="padded-lr-small">
       {% for topic in topics %}
-      {% include '_topic.html' %}
+        {% set topicloop = loop %} <!-- to access the loop variable in _topic.html -->
+        {% include '_topic.html' %}
       {% endfor %}
     </section>
   {% endif %}
