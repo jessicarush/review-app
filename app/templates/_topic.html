@@ -51,7 +51,7 @@
     <tbody class="topic__reviews">
       {% for review in topic.reviews %}
       <tr class="topic__review-data">
-        <td class="topic__review-id">{{ review.id }}</td>
+        <td class="topic__review-id">{{ review.count }}</td>
         <td class="topic__review-date">{{ moment(review.review_date).fromNow() }}</td>
         <td class="topic__review-time">{{ review.time_spent }} mins</td>
         <td class="topic__review-before">{{ review.skill_before }} / 5</td>

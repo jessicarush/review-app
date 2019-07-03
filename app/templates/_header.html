@@ -144,7 +144,25 @@
   <ul class="plain-list plain-list--vertical">
     {% if repos %}
     <li>
-      <button class="primary primary--active">delete a study session</button>
+      <div class="relative-container">
+        <button class="js-show-form primary primary--active">delete a study session</button>
+        <!-- if there are validation errors, make sure the form is visible -->
+        {% if del_review_form.review_number.errors %}
+        <form action="" method="post" class="sidebar-form sidebar-form--open padded-lr-reg" onSubmit="return confirm('Are you sure you want to delete this study session?')">
+        {% else %}
+        <form action="" method="post" class="sidebar-form padded-lr-reg" onSubmit="return confirm('Are you sure you want to delete this study session?')">
+        {% endif %}
+          <div class="sidebar-form__container">
+            {{ del_review_form.hidden_tag() }}
+            {{ del_review_form.review_number.label(class="secondary-heading") }}
+            {% for error in del_review_form.review_number.errors %}
+            <span class="form-error">* {{ error }}</span>
+            {% endfor %}
+            {{ del_review_form.review_number(class="sidebar-form__field", min="1", placeholder="enter study session No.") }}
+            <p class="sidebar-form__btn">{{ del_review_form.del_review_submit(class="btn btn--solid") }}</p>
+          </div>
+        </form>
+      </div>
     </li>
 
     <li>

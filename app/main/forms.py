@@ -23,7 +23,7 @@ class ReviewForm(FlaskForm):
 
 class DeleteReviewForm(FlaskForm):
     '''Form for a deleting review session.'''
-    review_id = IntegerField('Delete study session', validators=[DataRequired()])
+    review_number = IntegerField('Delete study session', validators=[DataRequired()])
     del_review_submit = SubmitField('Delete session')
 
 

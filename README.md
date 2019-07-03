@@ -96,15 +96,11 @@ Happy learning!
 
 ## Future Version Features
 
-- [ ] UX/UI Redesign
-- [ ] Add interface to add new main topics by giving the github username and repo name
-- [ ] Recommend topic take lowest score from from oldest %
-- [ ] Add a custom confirm() to delete options
-- [ ] Replace demo with introduction page
 - [ ] Add heatmap
 - [ ] Add help information
 - [ ] Add 'make default' to repo list
 - [ ] Add a dark theme
+- [ ] remove .0 decimals from skill number
 
 
 ![Python Review App](/app/static/img/screenshot.png "Python Review App running in Firefox")

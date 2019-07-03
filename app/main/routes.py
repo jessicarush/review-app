@@ -200,8 +200,7 @@ def index(sort='name'):
         db.session.add(review)
         db.session.commit()
         flash('Review logged!', category='main-success')
-        return redirect(url_for('main.index',
-                                sort='name',
+        return redirect(url_for('main.index', sort='name',
                                 selected_repo=selected_repo.repository))
 
     if del_topic_form.del_topic_submit.data and del_topic_form.validate_on_submit():
@@ -211,8 +210,7 @@ def index(sort='name'):
         db.session.delete(topic)  # for single query result
         db.session.commit()
         flash('Topic deleted.', category='main-success')
-        return redirect(url_for('main.index',
-                                sort='name',
+        return redirect(url_for('main.index', sort='name',
                                 selected_repo=selected_repo.repository))
 
     if rename_topic_form.rename_submit.data and rename_topic_form.validate_on_submit():
@@ -221,8 +219,7 @@ def index(sort='name'):
         topic.filename = rename_topic_form.new_filename.data
         db.session.commit()
         flash('Topic renamed!', category='main-success')
-        return redirect(url_for('main.index',
-                                sort='name',
+        return redirect(url_for('main.index', sort='name',
                                 selected_repo=selected_repo.repository))
 
     if del_repo_form.del_repo_submit.data and del_repo_form.validate_on_submit():
@@ -234,47 +231,36 @@ def index(sort='name'):
         db.session.delete(repo)
         db.session.commit()
         flash('Repo deleted', category='main-success')
-        return redirect(url_for('main.index',
-                                sort='name',
+        return redirect(url_for('main.index', sort='name',
                                 selected_repo=selected_repo.repository))
 
+    if del_review_form.del_review_submit.data and del_review_form.validate_on_submit():
+        review = Review.query.join(Topic).join(Repo).join(User) \
+                             .add_columns(Review.id, Review.skill_after, Review.topic_id) \
+                             .filter(Review.count == del_review_form.review_number.data,
+                                     User.id == current_user.id).first()
+        if not review:
+            flash(f"You don't have a review No. {del_review_form.review_number.data}",
+                  category='main-fail')
+        else:
+            Review.query.filter_by(id=review.id).delete()
+            topic = Topic.query.filter_by(id=review.topic_id).first()
+            prev_review = Review.query.filter_by(topic_id=topic.id) \
+                                      .order_by(Review.review_date.desc()).first()
+            if prev_review:
+                topic.current_skill = prev_review.skill_after
+                topic.last_study_date = prev_review.review_date
+            else:
+                topic.current_skill = topic.start_skill
+                topic.last_study_date = topic.created_date
+            if review.skill_after == int(5):
+                topic.mastery -= 1
 
+            db.session.commit()
+            flash('Review session deleted.', category='main-success')
+            return redirect(url_for('main.index', sort='name',
+                                    selected_repo=selected_repo.repository))
 
-
-
-
-
-
-
-
-
-
-    #
-    # if del_review_form.submit2.data and del_review_form.validate_on_submit():
-    #     review = Review.query.filter_by(id=del_review_form.review_id.data).first()
-    #     topic = Topic.query.filter_by(id=review.topic_id).first()
-    #     if review.skill_after == int(5):
-    #         topic.mastery -= 1
-    #     Review.query.filter_by(id=del_review_form.review_id.data).delete()
-    #
-    #     prev_review = Review.query.filter_by(topic_id=topic.id).order_by(
-    #         Review.review_date.desc()).first()
-    #     if prev_review:
-    #         topic.current_skill = prev_review.skill_after
-    #         topic.last_study_date = prev_review.review_date
-    #     else:
-    #         topic.current_skill = topic.start_skill
-    #         topic.last_study_date = topic.created_date
-    #     db.session.commit()
-    #     flash('Review session deleted.')
-    #     return redirect(url_for('main.index', sort='name'))
-    #
-
-
-    # return render_template(
-    #     'index.html', topics=topics, review_form=review_form,
-    #     del_review_form=del_review_form, del_topic_form=del_topic_form,
-    #     rename_form=rename_form, recommend=request.args.get('recommend'))
     return render_template('index.html',
                            sort=sort,
                            repos=repos,
