@@ -650,7 +650,7 @@ select:focus + .menu-arrow {
 
 .sidebar-form__select {
   display: block;
-  width: 100%;
+  padding-right: 25px;
 }
 
 .sidebar-form__select:-moz-focusring {
@@ -665,7 +665,8 @@ select:focus + .menu-arrow {
 .sidebar-form__field:focus,
 .sidebar-form__select:focus {
   border-bottom: 2px solid #fff;
-  padding: 10px 0 9px 0;
+  padding-top: 10px;
+  padding-bottom: 9px;
 }
 
 .sidebar-form__btn {

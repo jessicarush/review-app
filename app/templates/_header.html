@@ -49,7 +49,7 @@
             {{ del_repo_form.hidden_tag() }}
             {{ del_repo_form.repository.label(class="secondary-heading") }}
             <div class="relative-container">
-              {{ del_repo_form.repository(class="js-select-menu sidebar-form__select") }}
+              {{ del_repo_form.repository(class="js-select-menu sidebar-form__select truncate-text") }}
               <div class="menu-arrow"></div>
             </div>
             <p class="sidebar-form__btn">{{ del_repo_form.del_repo_submit(class="btn btn--solid") }}</p>
@@ -106,7 +106,7 @@
         <span class="form-error">* {{ error }}</span>
         {% endfor %}
         <div class="relative-container">
-          {{ review_form.filename(class="js-select-menu sidebar-form__select") }}
+          {{ review_form.filename(class="js-select-menu sidebar-form__select truncate-text") }}
           <div class="menu-arrow"></div>
         </div>
 
@@ -173,7 +173,7 @@
             {{ del_topic_form.hidden_tag() }}
             {{ del_topic_form.filename.label(class="secondary-heading") }}
             <div class="relative-container">
-              {{ del_topic_form.filename(class="js-select-menu sidebar-form__select") }}
+              {{ del_topic_form.filename(class="js-select-menu sidebar-form__select truncate-text") }}
               <div class="menu-arrow"></div>
             </div>
             <p class="sidebar-form__btn">{{ del_topic_form.del_topic_submit(class="btn btn--solid") }}</p>
@@ -195,7 +195,7 @@
             {{ rename_topic_form.hidden_tag() }}
             {{ rename_topic_form.old_filename.label(class="secondary-heading") }}
             <div class="relative-container">
-              {{ rename_topic_form.old_filename(class="js-select-menu sidebar-form__select") }}
+              {{ rename_topic_form.old_filename(class="js-select-menu sidebar-form__select truncate-text") }}
               <div class="menu-arrow"></div>
             </div>
             {{ rename_topic_form.new_filename.label(class="secondary-heading") }}
