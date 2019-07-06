@@ -51,6 +51,15 @@ class User(UserMixin, db.Model):
             return None
         return User.query.get(id)
 
+    def delete_data(self):
+        repos = Repo.query.filter_by(user_id=self.id).all()
+        for r in repos:
+            topics = Topic.query.filter_by(repo_id=r.id).all()
+            for t in topics:
+                reviews = Review.query.filter_by(topic_id=t.id).delete()
+            Topic.query.filter_by(repo_id=r.id).delete()
+        Repo.query.filter_by(user_id=self.id).delete()
+
 
 @login.user_loader
 def load_user(id):

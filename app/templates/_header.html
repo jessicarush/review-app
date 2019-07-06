@@ -210,7 +210,7 @@
     </li>
     {% endif %}
 
-    <li><a href="" class="primary primary--active">account admin</a></li>
+    <li><a href="{{ url_for('main.admin') }}" class="primary primary--active">account admin</a></li>
     <li><a href="{{ url_for('auth.logout') }}" class="primary primary--active">logout</a></li>
   </ul>
 

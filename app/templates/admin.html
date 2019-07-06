@@ -1,0 +1,100 @@
+{% extends "base-auth.html" %}
+
+{% block content %}
+
+<div class="content--centerd content--3col">
+
+  <section class="keep-together">
+  <h1 class="primary-heading break">Change your login</h1>
+
+  <p>Be sure the email you enter is correct. We don't send any confirmation links.</p>
+
+  {% include '_messages-admin-info.html' %}
+
+  <form class="auth-form" action="" method="post">
+    {{ profile_form.hidden_tag() }}
+
+    {{ profile_form.username.label }}
+    {% for error in profile_form.username.errors %}
+    <span class="form__error">* {{ error }}</span>
+    {% endfor %}
+    {{ profile_form.username(class="auth-form__field") }}
+
+    {{ profile_form.email.label }}
+    {% for error in profile_form.email.errors %}
+    <span class="form__error">* {{ error }}</span>
+    {% endfor %}
+    {{ profile_form.email(class="auth-form__field") }}
+
+    <p class="auth-form__btn">{{ profile_form.profile_submit(class="btn btn--solid") }}</p>
+  </form>
+  </section>
+
+
+  <section class="keep-together">
+  <h1 class="primary-heading break">Update password</h1>
+
+  <p>If you can't remember your old password, <a class="inline inline--dark" href="{{ url_for('auth.reset_password_request') }}">request a password reset</a>.</p>
+
+  {% include '_messages-admin-password.html' %}
+
+  <form class="auth-form" action="" method="post">
+    {{ password_form.hidden_tag() }}
+
+    <div class="relative-container">
+      {{ password_form.old_password.label }}
+      {% for error in password_form.old_password.errors %}
+      <span class="form__error">* {{ error }}</span>
+      {% endfor %}
+      {{ password_form.old_password(class="auth-form__field") }}
+
+      <!-- show/hide icon must be nextElementSibling to password field -->
+      <i aria-hidden class="js-showhide-password fas fa-eye auth-form__password-icon" title="show/hide password" onlick=""></i>
+    </div>
+
+    <div class="relative-container">
+      {{ password_form.new_password.label }}
+      {% for error in password_form.new_password.errors %}
+      <span class="form__error">* {{ error }}</span>
+      {% endfor %}
+      {{ password_form.new_password(class="auth-form__field") }}
+
+      <!-- show/hide icon must be nextElementSibling to password field -->
+      <i aria-hidden class="js-showhide-password fas fa-eye auth-form__password-icon" title="show/hide password" onlick=""></i>
+    </div>
+
+    <p class="auth-form__btn">{{ password_form.password_submit(class="btn btn--solid") }}</p>
+  </form>
+  </section>
+
+
+  <section class="keep-together">
+  <h1 class="primary-heading break">Delete account</h1>
+
+  <p>Your account and all related data will be deleted immediately. This action cannot be undone.</p>
+
+  {% include '_messages-admin-delete.html' %}
+
+  <form class="auth-form" action="" method="post" onSubmit="return confirm('Are you sure you want to delete your account and all of its data?')">
+    {{ delete_form.hidden_tag() }}
+
+    <div class="relative-container">
+      {{ delete_form.password.label }}
+      {% for error in delete_form.password.errors %}
+      <span class="form__error">* {{ error }}</span>
+      {% endfor %}
+      {{ delete_form.password(class="auth-form__field") }}
+
+      <!-- show/hide icon must be nextElementSibling to password field -->
+      <i aria-hidden class="js-showhide-password fas fa-eye auth-form__password-icon" title="show/hide password" onlick=""></i>
+    </div>
+
+    <p class="auth-form__btn">{{ delete_form.delete_submit(class="btn btn--solid") }}</p>
+  </form>
+  </section>
+
+  <p class="align-right"><a href="{{ url_for('main.index', sort='name' )}}" class="inline inline--dark">Done here? Go back to review.</a></p>
+
+</div>
+
+{% endblock %}

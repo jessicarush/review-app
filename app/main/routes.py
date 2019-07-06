@@ -12,6 +12,7 @@ from wtforms.validators import NumberRange
 
 from app import db
 from app.main import bp
+from app.auth.forms import EditLoginForm, ChangePasswordForm, DeleteAccountForm
 from app.main.forms import ReviewForm, DeleteReviewForm, DeleteTopicForm, \
     RenameTopicForm, AddTopicsForm, AddRepoForm, DeleteRepoForm
 from app.main.models import User, Repo, Topic, Review
@@ -276,3 +277,50 @@ def index(sort='name'):
                            del_topic_form=del_topic_form,
                            rename_topic_form=rename_topic_form,
                            del_repo_form=del_repo_form)
+
+@bp.route('/admin', methods=['GET', 'POST'])
+@login_required
+def admin():
+    '''View function for the user admin page.'''
+    profile_form = EditLoginForm(current_user.username, current_user.email)
+    password_form = ChangePasswordForm()
+    delete_form = DeleteAccountForm()
+
+    if profile_form.profile_submit.data and profile_form.validate_on_submit():
+        current_user.username = profile_form.username.data
+        current_user.email = profile_form.email.data
+        db.session.commit()
+        flash('Your changes have been saved.', 'profile-success')
+        return redirect(url_for('main.admin'))
+
+    if password_form.password_submit.data and password_form.validate_on_submit():
+        user = User.query.filter_by(email=current_user.email).first()
+        if user and not user.check_password(password_form.old_password.data):
+            flash('Old password is incorrect.', category='password-fail')
+            return redirect(url_for('main.admin'))
+        # all is well:
+        user.set_password(password_form.new_password.data)
+        db.session.commit()
+        flash('Your password has been updated.', category='password-success')
+        return redirect(url_for('main.admin'))
+
+    if delete_form.delete_submit.data:
+        user = User.query.filter_by(email=current_user.email).first()
+        if user and not user.check_password(delete_form.password.data):
+            flash('Incorrect password.', category='delete-fail')
+            return redirect(url_for('main.admin'))
+        # otherwise, all is well:
+        user.delete_data()
+        db.session.delete(user)
+        db.session.commit()
+        flash('Your account has been deleted.', category='auth-success')
+        return redirect(url_for('auth.login'))
+
+    elif request.method == 'GET':
+        profile_form.username.data = current_user.username
+        profile_form.email.data = current_user.email
+
+    return render_template('admin.html', title='Admin',
+                           profile_form=profile_form,
+                           delete_form=delete_form,
+                           password_form=password_form)

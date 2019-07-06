@@ -64,7 +64,8 @@ def logout():
 def reset_password_request():
     '''View for requesting a password reset.'''
     if current_user.is_authenticated:
-        return redirect(url_for('main.index', sort='name'))
+        logout_user()
+
     form = ResetPasswordRequestForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()

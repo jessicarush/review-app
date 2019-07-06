@@ -1,0 +1,12 @@
+<div>
+  <!-- display flashed success messages from routes -->
+  {% with messages = get_flashed_messages(category_filter=['profile-success']) %}
+    {% if messages %}
+      <ul class="error-msg error-msg--success">
+      {% for message in messages %}
+        <li class="error-msg__item animate-up">{{ message }}</li>
+      {%  endfor %}
+      </ul>
+    {%  endif %}
+  {%  endwith %}
+</div>

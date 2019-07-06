@@ -1,0 +1,12 @@
+<div>
+  <!-- display flashed failure messages from routes -->
+  {% with messages = get_flashed_messages(category_filter=['delete-fail']) %}
+    {% if messages %}
+      <ul class="error-msg error-msg--fail">
+      {% for message in messages %}
+        <li class="error-msg__item animate-up">{{ message }}</li>
+      {%  endfor %}
+      </ul>
+    {%  endif %}
+  {%  endwith %}
+</div>

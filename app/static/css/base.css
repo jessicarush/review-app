@@ -276,7 +276,7 @@ td {
 }
 
 .flex-col__main {
-  margin: 100px 0 0 0;
+  margin: 25px 0 0 0;  /* changes via javascript (js-top-margin) */
 }
 
 .flex-col__footer {
@@ -305,9 +305,22 @@ td {
   column-gap: 80px;
 }
 
-.break {
-  /* Note firefox doesn't yet support break-before */
-  break-before: column;
+.content--3col {
+  width: 1000px;
+  column-count: 3;
+  column-gap: 80px;
+}
+
+@media screen and (max-width: 1030px) {
+  .content--3col {
+    width: 280px;
+    column-count: 1;
+  }
+}
+
+.keep-together {
+  break-inside: avoid;
+  margin-bottom: 50px;
 }
 
 .sidebar {
@@ -674,10 +687,8 @@ select:focus + .menu-arrow {
   margin: 15px 0 0 0;
 }
 
-@media screen and (max-width: 1090px) {
-  .update-form__table {
-    width: 100%;
-  }
+.update-form__table {
+  width: 100%;
 }
 
 @media screen and (min-width: 1091px) {
@@ -742,10 +753,6 @@ select:focus + .menu-arrow {
 
 
 /* COSMETIC & UTILITY ----------------------------------------------------- */
-
-.white {
-  color: #fff;
-}
 
 .align-right {
   text-align: right;

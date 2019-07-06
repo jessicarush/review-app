@@ -59,8 +59,22 @@ function reviewSauce() {
         setupSelectMenu(menuEls[i]);
       }
     }
+    if (document.body.clientHeight < 680) {
+      let el = document.querySelector('.js-top-margin');
+      el.style.setProperty('margin-top', '75px');
+    }
+    console.log('scrollHeight', document.body.scrollHeight);
+    console.log('clientHeight', document.body.clientHeight);
   });
 
+  window.addEventListener('resize', function() {
+    let el = document.querySelector('.js-top-margin');
+    if (document.body.clientHeight < 680) {
+      el.style.setProperty('margin-top', '75px');
+    } else {
+      el.style.setProperty('margin-top', '25px');
+    }
+  });
 
   window.addEventListener('click', function(e) {
     if (e.target.matches('.js-show-form')) {

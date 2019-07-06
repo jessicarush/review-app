@@ -3,13 +3,17 @@
 {% block content %}
 <div class="content--centerd content--2col">
 
+  <section class="keep-together">
   <h1 class="primary-heading">Hey there,</h1>
 
   {% include '_intro.html' %}
 
   <p><a href="{{ url_for('auth.register') }}" class="inline inline--dark">Register here</a> if you'd like to check it out.</p>
+  </section>
 
-  <h1 class="primary-heading break">Login</h1>
+
+  <section class="keep-together">
+  <h1 class="primary-heading">Login</h1>
 
   <form action="" method="post" class="auth-form">
     {{ form.hidden_tag() }}
@@ -41,6 +45,8 @@
   </form>
 
   {% include '_messages-auth.html' %}
+
+  </section>
 
 </div>
 {% endblock %}

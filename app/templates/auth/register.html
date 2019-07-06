@@ -3,14 +3,16 @@
 {% block content %}
 <div class="content--centerd content--2col">
 
+  <section class="keep-together">
   <h1 class="primary-heading">Hey there,</h1>
 
   {% include '_intro.html' %}
 
   <p>Already registered? <a href="{{ url_for('auth.login') }}" class="inline inline--dark">Log in here</a>.</p>
+  </section>
 
-  <p class="white"><!-- firefox doesn't yet support CSS column breaks -->...</p>
 
+  <section class="keep-together">
   <h1 class="primary-heading break">Register</h1>
 
   <form action="" method="post" class="auth-form">
@@ -44,6 +46,7 @@
   </form>
 
   {% include '_messages-auth.html' %}
+  </section>
 
 </div>
 {% endblock %}
