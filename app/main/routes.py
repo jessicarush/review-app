@@ -241,7 +241,7 @@ def index(sort='name'):
                              .filter(Review.count == del_review_form.review_number.data,
                                      User.id == current_user.id).first()
         if not review:
-            flash(f"You don't have a review No. {del_review_form.review_number.data}",
+            flash("You don't have a review No. {}".format(del_review_form.review_number.data),
                   category='main-fail')
         else:
             Review.query.filter_by(id=review.id).delete()
