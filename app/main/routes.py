@@ -278,6 +278,7 @@ def index(sort='name'):
                            rename_topic_form=rename_topic_form,
                            del_repo_form=del_repo_form)
 
+
 @bp.route('/admin', methods=['GET', 'POST'])
 @login_required
 def admin():
