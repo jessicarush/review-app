@@ -12,7 +12,7 @@ class Config():
     '''Config class for application.'''
 
     PROJECT_NAME = 'Review'
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'garbleygook'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'supersecretkey'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'data.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -42,4 +42,4 @@ class Config():
     # https://github.com/jessicarush/python-notes
 
     # File urls look like:
-    # https://github.com/jessicarush/python-notes/blob/master/{{ topic.filename }}
+    # https://github.com/jessicarush/python-notes/blob/master/classes.py
