@@ -92,6 +92,10 @@ table {
 
 td {
   vertical-align: top;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
 }
 
 
@@ -259,6 +263,12 @@ td {
   flex-direction: row;
 }
 
+@media screen and (max-width: 690px) {
+  .flex-row {
+    flex-direction: column;
+  }
+}
+
 .flex-col {
   display: flex;
   flex-direction: column;
@@ -305,6 +315,13 @@ td {
   column-gap: 80px;
 }
 
+@media screen and (max-width: 730px) {
+  .content--2col {
+    width: 320px;
+    column-count: 1;
+  }
+}
+
 .content--3col {
   width: 1000px;
   column-count: 3;
@@ -329,6 +346,12 @@ td {
   box-sizing: border-box;
   padding: 35px;
   min-height: 100vh;
+}
+
+@media screen and (max-width: 690px) {
+  .sidebar {
+    width: 100%;
+  }
 }
 
 .padded-lr-reg {
@@ -370,7 +393,7 @@ td {
 
 
 .topic {
-  background: rgba(255,255,255,.65);
+  background: #fff;
   border: solid 1px rgb(230,230,230);
   float: left;
   margin: 10px 5px 0 5px;
@@ -379,9 +402,11 @@ td {
   width: 345px;
 }
 
-@media screen and (max-width: 730px) {
+@media screen and (max-width: 690px) {
   .topic {
+    box-sizing: border-box;
     margin: 5px 0 0 0;
+    width: 100%;
   }
 }
 
@@ -390,9 +415,9 @@ td {
   border-radius: 50%;
   color: #fff;
   display: flex;
-  height: 1.5rem;
+  height: 1.7rem;
   justify-content: center;
-  width: 1.5rem;
+  width: 1.7rem;
   font-family: var(--main-font);
   font-size: .6rem;
   font-weight: 800;
@@ -430,7 +455,7 @@ td {
 .topic__heading-group {
   position: absolute;
   top: 20px;
-  left: 50px;
+  left: 63px;
 }
 
 .topic__heading {
@@ -444,8 +469,8 @@ td {
   font-family: var(--main-font);
   font-weight: 400;
   color: var(--main-color);
-  font-size: .8rem;
-  line-height: 2.2em;
+  font-size: .75rem;
+  line-height: 2.5em;
   margin: 0;
   display: inline-block;
 }
@@ -460,56 +485,14 @@ td {
   color: var(--minor-color);
   font-family: var(--main-font);
   font-size: .65rem;
-  font-weight: 600;
-  margin: 0 0 2px 0;
+  font-weight: 400;
+  padding: 0 0 3px 0;
   text-transform: uppercase;
 }
 
-.topic__table {
-  width: 100%;
-  margin-top: 10px;
-}
-
-.topic__table thead {
-  border-bottom: solid 1px rgb(230,230,230);
-  border-top: solid 1px rgb(230,230,230);
-  text-align: left;
-}
-
-.topic__table thead tr {
-  display: block;  /* for scrolling tbody to work */
-}
-
-.topic__table tbody {
-  height: 100px;
-  overflow: auto;
-  width: 100%;
-  display: block;
-}
-
-.topic__review-id {
-  width: 40px;
-}
-
-.topic__review-date {
-  width: 110px;
-}
-
-.topic__review-time {
-  width: 73px;
-}
-
-.topic__review-before {
-  width: 52px;
-}
-
-.topic__review-after {
-  width: 45px;
-}
-
 .topic__review-data {
-  border-bottom: solid 1px rgb(230,230,230);
-  height: 1em;
+  border-bottom: solid 1px rgb(235,235,235);
+  padding: 3px 0;
   line-height: 1.8em;
   color: var(--main-color);
   font-family: var(--main-font);
@@ -517,6 +500,47 @@ td {
   font-weight: 400;
 }
 
+.topic__table {
+  width: 100%;
+}
+
+.topic__table thead {
+  text-align: left;
+  background: #fff;
+  box-shadow: 0 0 3px rgba(200,200,200,.8);
+}
+
+.topic__review-id {
+  width: 12%;
+}
+
+.topic__review-date {
+  width: 28%;
+}
+
+.topic__review-time {
+  width: 20%;
+}
+
+.topic__review-before {
+  width: 20%;
+}
+
+.topic__review-after {
+  width: 20%;
+}
+
+.scroll-table {
+  width: 100%;
+  height: 120px;
+  overflow-y: scroll;
+  margin-top: 15px;
+}
+
+.scroll-table thead {
+  position: sticky;
+  top: 0;
+}
 
 
 

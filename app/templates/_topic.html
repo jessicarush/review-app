@@ -38,27 +38,29 @@
   </div>
 
 
+  <div class="scroll-table">
   <table class="topic__table">
     <thead>
       <tr>
         <th class="topic__review-heading topic__review-id">No.</th>
         <th class="topic__review-heading topic__review-date">date</th>
-        <th class="topic__review-heading topic__review-time">time spent</th>
+        <th class="topic__review-heading topic__review-time">duration</th>
         <th class="topic__review-heading topic__review-before">before</th>
         <th class="topic__review-heading topic__review-after">after</th>
       </tr>
     </thead>
     <tbody class="topic__reviews">
       {% for review in topic.reviews %}
-      <tr class="topic__review-data">
-        <td class="topic__review-id">{{ review.count }}</td>
-        <td class="topic__review-date">{{ moment(review.review_date).fromNow() }}</td>
-        <td class="topic__review-time">{{ review.time_spent }} mins</td>
-        <td class="topic__review-before">{{ review.skill_before }} / 5</td>
-        <td class="topic__review-after">{{ review.skill_after }} / 5</td>
+      <tr">
+        <td class="topic__review-data topic__review-id">{{ review.count }}</td>
+        <td class="topic__review-data topic__review-date">{{ moment(review.review_date).fromNow() }}</td>
+        <td class="topic__review-data topic__review-time">{{ review.time_spent }} mins</td>
+        <td class="topic__review-data topic__review-before">{{ review.skill_before }} / 5</td>
+        <td class="topic__review-data topic__review-after">{{ review.skill_after }} / 5</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
+  </div>
 
 </div>
