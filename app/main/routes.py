@@ -134,7 +134,7 @@ def index(sort='name'):
         # build the base url to link to files:
         base_url = current_app.config['URL_START']
         url_end = current_app.config['URL_END']
-        file_url = f'{base_url}{selected_repo.repository}{url_end}'
+        file_url = base_url + selected_repo.repository + url_end
 
         # get the topics for display:
         if sort == 'skill':
