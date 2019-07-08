@@ -1,10 +1,10 @@
-# Python Review App
+# Review App
 
-This is a small Flask app I created to help me track my Python study & review sessions.
+This is a small study tool built in Python & Flask that I created to help track and encourage study & review sessions. It is built to work with any number of github repositories containing files (topics) you want to study.
 
-I started learning Python in 2017. Though I was keeping good notes, I found that in absorbing so much new information all the time, it was hard to remember what I'd done a weeks ago. This study app, was a way to organize myself in reviewing the topics I had learned. To make it easy, the app recommends what topic I should review next based on the last time it was reviewed and my self-assessed understanding of the topic.
+I started learning Python in 2017. Though I was keeping good notes in a github repo, I found that in absorbing so much new information everyday, it was hard to remember what I'd learned a week ago. This app was a way to organize and encourage myself to review the the notes I had written. To make it easier, the app recommends what topic I should review next based on the last time it was studied and my self-assessed comprehension of the topic.
 
-If you would like to use this tool, follow the instructions below. Note that the app is built around reviewing the [Python notes in this repo](https://github.com/jessicarush/python-notes).
+If you would like to use this tool, you can use the [live version here at review.zebro.id](https://review.zebro.id/register) or you can instantiate your own copy of the application by following the instructions below.
 
 ## Table of Contents
 
@@ -24,12 +24,12 @@ If you would like to use this tool, follow the instructions below. Note that the
 ## Installation
 Clone or download:
 ```
-$ git clone https://github.com/jessicarush/review.git
+$ git clone https://github.com/jessicarush/review-app.git
 ```
 
 ## Usage
 Once you've got a copy of the application on your local machine, navigate to the the topmost `review/` directory.
-This app requires [Python 3.5 or higher](https://www.python.org/downloads/).
+This app requires [Python 3.6 or higher](https://www.python.org/downloads/).
 
 ### Set up a virtual environment
 In the `review/` directory:
@@ -78,23 +78,19 @@ $ python run.py
 ```
 
 Initially there will be no users, so go to:
-<http://127.0.0.1:5003/register> to register yourself.
+<http://127.0.0.1:5000/register> to register yourself.
 
->Note: Once you've created an account, you can block the registration endpoint by uncommenting `@login_required` at line 14 of app/auth/routes.py
+The app is designed to work with github, where a repository contains notes (files) on the topics you want to study. Ideally, the files we be named to reflect the topic like in [this repo on python](https://github.com/jessicarush/python-notes) or [this one on javascript](https://github.com/jessicarush/javascript-notes).
 
-Once registered, you'll be directed to sign in.
+When you add a repository to the app and on login, it will check for any new topics (files from the repo). In adding a new topic it will want to know what you think your comprehension is on a scale of 0-5. Depending on the size of the repository, this initial set-up may feel tedious but any numbers you provide here will help the study recommendations.
 
-This next part is going to require some patience. On login, the app is designed to check for any newly added topics (files from the python repo noted above). In adding a new topic it will want to know what you think your comprehension is on a scale of 0-5. The topics are links so you can check it out if you want but I would suggest just going with your gut. At the time of this writing there were 91 topics. So that means 91 questions to answer. I timed myself on this and it took approximately 15 minutes. If you'd rather start with a clean slate just tab 0's all the way down.
+Once you submit you should see a page showing you all the topics in the added repo. You can sort these topics by name, date-last-reviewed, or current skill. The *recommend* feature will suggest a topic for you to review next based on these three things.
 
-Once you submit you should see a page showing you all the topics. You can sort the topics by name, date-last-reviewed, or skill. The *recommend* feature will suggest a topic for you to review based on these three things.
+The forms in the dark area allow you to add and remove study sessions, delete and rename topics. Note though, if you delete topics here, they will get added again next time you login unless they get removed from the repository.
 
-The forms in the dark area allow you to add and remove study sessions from your database. Note though, if you delete topics here, they will get added again next time you login unless they get removed from the master repo.
+This app has helped me to review and retain the things that I've learned. If it helps you too, let me know. Happy learning!
 
-This app is built for an individual: one user per database. Should you add another user via the register endpoint, they will be looking at the same database as you. Over the next year I will look at extending this to allow for multiple users in the same database.
-
-Happy learning!
-
-## Future Version Features
+## Future Features
 
 - [ ] Add heatmap
 - [ ] Add help information
