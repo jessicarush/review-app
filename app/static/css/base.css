@@ -396,10 +396,10 @@ td {
   background: #fff;
   border: solid 1px rgb(230,230,230);
   float: left;
-  margin: 10px 5px 0 5px;
+  margin: 8px 4px 0 4px;
   padding: 60px 20px 20px 20px;
   position: relative;
-  width: 345px;
+  width: 335px;
 }
 
 @media screen and (max-width: 690px) {
