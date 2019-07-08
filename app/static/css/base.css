@@ -515,7 +515,7 @@ td {
 }
 
 .topic__review-date {
-  width: 28%;
+  width: 34%;
 }
 
 .topic__review-time {
@@ -523,11 +523,11 @@ td {
 }
 
 .topic__review-before {
-  width: 20%;
+  width: 18%;
 }
 
 .topic__review-after {
-  width: 20%;
+  width: 18%;
 }
 
 .scroll-table {
