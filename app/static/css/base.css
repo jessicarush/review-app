@@ -492,7 +492,7 @@ td {
 
 .topic__review-data {
   border-bottom: solid 1px rgb(235,235,235);
-  padding: 3px 0;
+  padding: 2px 0;
   line-height: 1.8em;
   color: var(--main-color);
   font-family: var(--main-font);
