@@ -62,11 +62,13 @@ code {
 
 button {
   padding: 0;
+  margin: 0;
   border: none;
   font: inherit;
   color: inherit;
   background-color: transparent;
   cursor: pointer;
+  display: inline-block;
 }
 
 input,
@@ -286,7 +288,13 @@ td {
 }
 
 .flex-col__main {
-  margin: 25px 0 0 0;  /* changes via javascript (js-top-margin) */
+  margin-top: 100px;
+}
+
+@media screen and (max-width: 730px) {
+  .flex-col__main {
+    margin-top: 0;
+  }
 }
 
 .flex-col__footer {
@@ -330,14 +338,14 @@ td {
 
 @media screen and (max-width: 1030px) {
   .content--3col {
-    width: 280px;
+    width: 320px;
     column-count: 1;
   }
 }
 
 .keep-together {
   break-inside: avoid;
-  margin-bottom: 50px;
+  margin-bottom: 60px;
 }
 
 .sidebar {
@@ -579,7 +587,7 @@ select:focus + .menu-arrow {
   font-weight: 700;
   margin: 0 0 10px 0;
   padding: 10px 0;
-  width: 100%;
+  width: 90%;
 }
 
 .auth-form__field:focus {
@@ -667,6 +675,7 @@ select:focus + .menu-arrow {
 .sidebar-form__field-group {
   display: flex;
   flex-direction: row;
+  border: solid 1px red;
 }
 
 .sidebar-form__field-group div:first-child {

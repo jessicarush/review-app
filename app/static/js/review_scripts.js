@@ -59,19 +59,6 @@ function reviewSauce() {
         setupSelectMenu(menuEls[i]);
       }
     }
-    if (document.body.clientHeight > 680) {
-      let el = document.querySelector('.js-top-margin');
-      el.style.setProperty('margin-top', '100px');
-    }
-  });
-
-  window.addEventListener('resize', function() {
-    let el = document.querySelector('.js-top-margin');
-    if (document.body.clientHeight > 680) {
-      el.style.setProperty('margin-top', '100px');
-    } else {
-      el.style.setProperty('margin-top', '25px');
-    }
   });
 
   window.addEventListener('click', function(e) {
