@@ -587,7 +587,7 @@ select:focus + .menu-arrow {
   font-weight: 700;
   margin: 0 0 10px 0;
   padding: 10px 0;
-  width: 90%;
+  width: 100%;
 }
 
 .auth-form__field:focus {
@@ -667,7 +667,6 @@ select:focus + .menu-arrow {
   margin-top: 25px;
 }
 
-
 .sidebar-form__container {
   padding: 25px 0;
 }
@@ -675,7 +674,10 @@ select:focus + .menu-arrow {
 .sidebar-form__field-group {
   display: flex;
   flex-direction: row;
-  border: solid 1px red;
+}
+
+.sidebar-form__field-group div {
+  flex-grow: 1;
 }
 
 .sidebar-form__field-group div:first-child {
