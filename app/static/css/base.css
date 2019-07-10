@@ -13,6 +13,7 @@ see my github notes at https://github.com/jessicarush/css-notes */
 
 :root {
   --heading-font: 'Nunito', sans-serif;
+  --subheading-font: 'Nunito Sans', sans-serif;
   --main-font: 'Nunito', sans-serif;
   --emphasis-color: rgb(54,199,167);
   --emphasis-color-dark: rgb(69,175,150);
@@ -115,7 +116,7 @@ td {
 
 .secondary-heading {
   color: var(--subheading-color);
-  font-family: var(--heading-font);
+  font-family: var(--subheading-font);
   font-size: .7rem;
   font-weight: 400;
   line-height: 1em;
