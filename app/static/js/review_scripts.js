@@ -69,6 +69,12 @@ function reviewSauce() {
       showHidePassword(e);
     }
   });
+
+  window.addEventListener('touchstart', function(e) {
+    if (e.target.matches('.js-showhide-password')) {
+      showHidePassword(e);
+    }
+  });
 }
 
 
