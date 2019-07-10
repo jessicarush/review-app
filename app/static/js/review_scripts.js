@@ -59,7 +59,7 @@ function reviewSauce() {
         setupSelectMenu(menuEls[i]);
       }
     }
-  });
+  }, false);
 
   window.addEventListener('click', function(e) {
     if (e.target.matches('.js-show-form')) {
@@ -68,13 +68,13 @@ function reviewSauce() {
     if (e.target.matches('.js-showhide-password')) {
       showHidePassword(e);
     }
-  });
+  }, false);
 
   window.addEventListener('touchstart', function(e) {
     if (e.target.matches('.js-showhide-password')) {
       showHidePassword(e);
     }
-  });
+  }, false);
 }
 
 
