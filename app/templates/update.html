@@ -24,8 +24,8 @@
         <tbody>
           {% for field in form if field.widget.input_type != 'hidden' and field.id != 'add_topic_submit' %}
           <tr>
-            <td><span class="update-form__description">{{ field.description }}</span></td>
-            <td>{{ field.label(class="update-form__label") }}</td>
+            <td class="update-form__description">{{ field.description }}</td>
+            <td class="update-form__label">{{ field.label }}</td>
             <td class="align-right">{{ field(class="update-form__field", placeholder="0", min="0", max="5", step=".5",  required="true") }}</td>
           </tr>
           {% endfor %}

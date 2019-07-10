@@ -317,6 +317,13 @@ td {
   max-width: 720px;
 }
 
+@media screen and (max-width: 690px) {
+  .content--1col-wide {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
 .content--2col {
   width: 720px;
   column-count: 2;
@@ -359,6 +366,7 @@ td {
 @media screen and (max-width: 690px) {
   .sidebar {
     width: 100%;
+    min-height: auto;
   }
 }
 
@@ -722,6 +730,10 @@ select:focus + .menu-arrow {
   margin: 15px 0 0 0;
 }
 
+.update-form {
+  width: 100%;
+}
+
 .update-form__table {
   width: 100%;
 }
@@ -737,7 +749,8 @@ select:focus + .menu-arrow {
 }
 
 .update-form__table td {
-  padding: .5em 0;
+  padding-top: .5em;
+  padding-bottom: .5em;
 }
 
 .update-form__fixed-width-col {
@@ -759,11 +772,13 @@ select:focus + .menu-arrow {
   font-family: var(--main-font);
   color: var(--main-color);
   padding-right: 2em;
+  word-break: break-all;
 }
 
 .update-form__label {
   color: var(--heading-color);
   padding-right: .8em;
+  word-break: break-all;
 }
 
 .update-form__field {
