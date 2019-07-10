@@ -640,13 +640,12 @@ select:focus + .menu-arrow {
 .auth-form__password-icon {
   color: var(--minor-color);
   cursor: pointer;
-  float: right;
   padding: 5px;
-  position: absolute;
-  right: -3px;
-  bottom: 15px;
+  /* position: absolute; */
+  /* right: -3px; */
+  /* bottom: 15px; */
   transition: color .2s;
-  z-index: 2;
+  /* z-index: 2; */
 }
 
 .auth-form__password-icon:hover {
