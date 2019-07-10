@@ -640,6 +640,7 @@ select:focus + .menu-arrow {
 .auth-form__password-icon {
   color: var(--minor-color);
   cursor: pointer;
+  display: block;
   padding: 5px;
   /* position: absolute; */
   /* right: -3px; */
