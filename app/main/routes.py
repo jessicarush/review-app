@@ -71,7 +71,7 @@ def update():
                     file_count += 1
 
         # if there are no new topics, proceed to main.index
-        if not new_topics:
+        if new_topics is None:
             return redirect(url_for('main.index', sort='name'))
 
     form = F()
