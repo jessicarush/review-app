@@ -1,6 +1,15 @@
 {% include '_messages-main.html' %}
 
-{% if not new_topics %}  <!-- don't display this if the user is coming from /update -->
+{% if new_topics %}  <!-- display this if the user is coming from /update -->
+
+  {% if new_repo %}
+  <p class="sidebar-comment">The following files were found in <a href="{{ base_url }}{{ new_repo }}" class="inline inline--light" target="_blank">{{ new_repo }}</a>. To add these to your study list, assign each a comprehension or skill level. In other words, how well do you feel you understand the topic on a scale of 0 to 5, where 0 would be you know nothing, and 5 would be you know the topic very well?</p>
+
+  {% else %}
+  <p class="sidebar-comment">New files have been detected in some of your repos. To add these to your study list, assign each a comprehension or skill level. In other words, how well do you feel you understand the topic on a scale of 0 to 5, where 0 would be you know nothing, and 5 would be you know the topic very well?</p>
+  {% endif %}
+
+{% else %}  <!-- the user is NOT coming from /update -->
 
   <h1 class="secondary-heading">User</h1>
   <a href="" class="primary primary--active" title="User settings (coming soon)">
@@ -214,14 +223,5 @@
     <li><a href="{{ url_for('auth.logout') }}" class="primary primary--active">logout</a></li>
   </ul>
 
-
-{% else %}  <!-- display this if the user is coming from /update -->
-
-  {% if new_repo %}
-  <p class="sidebar-comment">The following files were found in <a href="{{ base_url }}{{ new_repo }}" class="inline inline--light" target="_blank">{{ new_repo }}</a>. To add these to your study list, assign each a comprehension or skill level. In other words, how well do you feel you understand the topic on a scale of 0 to 5, where 0 would be you know nothing, and 5 would be you know the topic very well?</p>
-
-  {% else %}
-  <p class="sidebar-comment">New files have been detected in some of your repos. To add these to your study list, assign each a comprehension or skill level. In other words, how well do you feel you understand the topic on a scale of 0 to 5, where 0 would be you know nothing, and 5 would be you know the topic very well?</p>
-  {% endif %}
 
 {% endif %}
