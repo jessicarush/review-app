@@ -69,9 +69,8 @@ def update():
                     t_count = t + '_' + str(file_count)
                     setattr(F, t_count, DecimalField(t, description=repo.repository))
                     file_count += 1
-
-        # if there are no new topics, proceed to main.index
-        if new_topics is None:
+        # if there are no new topics (an empy set or None), proceed to index
+        if not new_topics or new_topics is None:
             return redirect(url_for('main.index', sort='name'))
 
     form = F()

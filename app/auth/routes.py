@@ -31,7 +31,7 @@ def login():
     '''View for logging in a user.'''
 
     if current_user.is_authenticated:
-        return redirect(url_for('main.index', sort='name'))
+        return redirect(url_for('main.update'))
     form = LoginForm()
     if form.validate_on_submit():
         # check if field is an existing username:
