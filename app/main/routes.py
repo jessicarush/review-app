@@ -31,7 +31,8 @@ def update():
     base_url = current_app.config['URL_START']
     repos = current_user.repos.all()
     new_repo = request.args.get('new_repo')
-    new_topics = None
+    adding_topics = False
+    updating_repos = set()
     file_count = 0
 
     # If the user has no existing repos (a new user), send them back to index:
@@ -44,6 +45,7 @@ def update():
         if not new_topics:
             return redirect(url_for('main.index', sort='name'))
         else:
+            adding_topics = True
             for t in new_topics:
                 t_count = t + '_' + str(file_count)
                 setattr(F, t_count, DecimalField(t, description=new_repo))
@@ -62,6 +64,8 @@ def update():
             new_topics = set(github_topics).difference(set(database_topics))
             # if there are new topics, add these to the dynamic form
             if new_topics:
+                adding_topics = True
+                updating_repos.add(repo.repository)
                 # in case two or more topics from different repos have
                 # the same name, append a number (which will be removed
                 # when we receive the form data.
@@ -69,8 +73,8 @@ def update():
                     t_count = t + '_' + str(file_count)
                     setattr(F, t_count, DecimalField(t, description=repo.repository))
                     file_count += 1
-        # if there are no new topics (an empy set or None), proceed to index
-        if not new_topics or new_topics is None:
+        # if we are not adding topics, proceed to index
+        if not adding_topics:
             return redirect(url_for('main.index', sort='name'))
 
     form = F()
@@ -100,7 +104,8 @@ def update():
                            form=form,
                            new_repo=new_repo,
                            base_url=base_url,
-                           new_topics=new_topics)
+                           adding_topics=adding_topics,
+                           updating_repos=updating_repos)
 
 
 @bp.route('/<sort>', methods=['GET', 'POST'])
