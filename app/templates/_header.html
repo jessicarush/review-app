@@ -103,7 +103,7 @@
 
   <h1 class="secondary-heading">Study this next</h1>
   {% if repos and recommend %}
-  <a href="{{ file_url }}{{ recommend }}" class="primary primary--active" target="_blank">{{ recommend }}</a>
+  <a href="{{ file_url }}{{ recommend }}" class="primary primary--active truncate-text" target="_blank">{{ recommend }}</a>
   {% elif repos %} <!-- repo but no topics -->
   <p class="sidebar-comment">no topics</p>
   {% else %} <!-- no repos -->
