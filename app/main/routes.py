@@ -87,11 +87,8 @@ def update():
                 repo = Repo.query.filter(Repo.repository == field.description,
                                          Repo.user_id == current_user.id).first()
 
-                if new_repo:
-                    filename = field.id
-                else:
-                    # remove the file_count off of the field.id
-                    filename = re.sub(r'_\d*\b', '', field.id)
+                # remove the file_count off of the field.id
+                filename = re.sub(r'_\d*\b$', '', field.id)
 
                 topic = Topic(filename=filename, start_skill=field.data,
                               current_skill=field.data, repo_id=repo.id)
