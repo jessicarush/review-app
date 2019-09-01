@@ -17,6 +17,10 @@ class Config():
         'sqlite:///' + os.path.join(basedir, 'data.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    # Extend csrf token expirey to 1 week
+    # Note: If set to None, the CSRF token is valid for the life of the session
+    WTF_CSRF_TIME_LIMIT = 3600 * 24 * 7
+
     # For sending emails:
     MAIL_SERVER = os.environ.get('MAIL_SERVER')
     MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
