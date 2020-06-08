@@ -358,16 +358,32 @@ td {
 
 .sidebar {
   background: var(--sidebar-color);
+  scrollbar-color: rgba(230,230,255,.3) var(--sidebar-color-dark);
   width: 340px;
   box-sizing: border-box;
   padding: 35px;
-  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: auto;
+}
+
+.sidebar > :last-child {
+  margin-bottom: 50px;
+}
+
+.main-content {
+  margin-left: 340px; /*  sidebar width */
 }
 
 @media screen and (max-width: 690px) {
   .sidebar {
+    position: static;
     width: 100%;
-    min-height: auto;
+  }
+  .main-content {
+    margin-left: 0;
   }
 }
 

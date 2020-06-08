@@ -3,13 +3,13 @@
 
 {% include '_head.html' %}
 
-<body class="flex-row">
+<body>
 
   <header class="sidebar">
     {% include '_header.html' %}
   </header>
 
-  <div class="flex-col flex-col--justified">
+  <div class="main-content flex-col flex-col--justified">
 
     <!-- template inheritance -->
     {% block content %}{% endblock %}
@@ -17,9 +17,8 @@
     <div><!-- for justified content --> </div>
 
     <footer class="padded-lr-reg">
-    {% include '_footer.html' %}
+      {% include '_footer.html' %}
     </footer>
-
   </div>
 
 </body>
