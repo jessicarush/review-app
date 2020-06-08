@@ -28,7 +28,7 @@ class Config():
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
 
-    # For receiving emailed error log:
+    # For receiving emailed error log, contact emails:
     ADMINS = [os.environ.get('ADMIN')]
 
     # The api url for a github repo containing files to be studied:

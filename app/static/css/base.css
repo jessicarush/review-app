@@ -155,7 +155,7 @@ td {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  width: 225px;  /* sidebar width */
+  width: 250px;  /* sidebar width */
 }
 
 .comment {
@@ -358,7 +358,7 @@ td {
 
 .sidebar {
   background: var(--sidebar-color);
-  width: 320px;
+  width: 340px;
   box-sizing: border-box;
   padding: 35px;
   min-height: 100vh;
