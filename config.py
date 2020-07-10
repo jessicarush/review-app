@@ -21,6 +21,10 @@ class Config():
     # Note: If set to None, the CSRF token is valid for the life of the session
     WTF_CSRF_TIME_LIMIT = 3600 * 24 * 7
 
+    # To address cookie security
+    SESSION_COOKIE_SECURE = True
+    REMEMBER_COOKIE_SECURE = True
+
     # For sending emails:
     MAIL_SERVER = os.environ.get('MAIL_SERVER')
     MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
