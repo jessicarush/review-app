@@ -176,7 +176,7 @@ def index(sort='name'):
                                  Repo.user_id == current_user.id).first()
 
         if not ping:
-            flash("I couldn't find that repository on Github", category='main-fail')
+            flash("I couldn't find that repository on Github. Check your spelling.", category='main-fail')
             add_repo_messages = True
         elif repo:
             flash("You've added that one already", category='main-fail')
