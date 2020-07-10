@@ -30,7 +30,7 @@
       {% if repo.repository == selected_repo.repository %}
       <li><span class="primary primary--disabled truncate-text">{{ repo.repository }}</span></li>
       {% else %}
-      <li><a href="{{ url_for('main.index', selected_repo=repo.repository, sort='name') }}" class="primary primary--inactive">{{ repo.repository }}</a></li>
+      <li><a href="{{ url_for('main.index', selected_repo=repo.repository, sort='name') }}" class="primary primary--inactive truncate-text">{{ repo.repository }}</a></li>
       {% endif %}
     {% endfor %}
 

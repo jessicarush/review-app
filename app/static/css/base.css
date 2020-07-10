@@ -155,7 +155,6 @@ td {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  width: 250px;  /* sidebar width */
 }
 
 .comment {
@@ -164,6 +163,7 @@ td {
 
 .sidebar-comment {
   color: rgb(155,163,182);
+  overflow-wrap: break-word;
 }
 
 
@@ -496,6 +496,7 @@ td {
   font-size: 1rem;
   line-height: 1rem;
   margin: 0;
+  width: 225px; /* to allow truncate-text to do its job */
 }
 
 .topic__subheading {
