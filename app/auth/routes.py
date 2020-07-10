@@ -25,6 +25,7 @@ def register():
         return redirect(url_for('main.update'))
     return render_template('auth/register.html', title='Register', form=form)
 
+
 @bp.route('/', methods=['GET', 'POST'])
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
