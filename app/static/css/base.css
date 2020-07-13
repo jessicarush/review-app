@@ -613,13 +613,13 @@ select:focus + .menu-arrow {
   font-size: 1rem;
   font-weight: 700;
   margin: 0 0 10px 0;
-  padding: 10px 0 10px 0;
+  padding: 10px 25px 10px 0;
   width: 100%;
 }
 
 .auth-form__field:focus {
   border-bottom: 2px solid var(--heading-color);
-  padding: 10px 0 9px 0;
+  padding: 10px 25px 9px 0;
 }
 
 .auth-form label {
@@ -660,7 +660,7 @@ select:focus + .menu-arrow {
   padding: 5px;
   position: absolute;
   right: -3px;
-  bottom: 15px;
+  bottom: 10px;
   transition: color .2s;
   z-index: 2;
 }
