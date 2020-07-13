@@ -607,12 +607,13 @@ select:focus + .menu-arrow {
 
 .auth-form__field {
   border-bottom: 1px solid var(--minor-color);
+  display: block;
   box-sizing: border-box;
   color: var(--heading-color);
   font-size: 1rem;
   font-weight: 700;
   margin: 0 0 10px 0;
-  padding: 10px 0;
+  padding: 10px 0 10px 0;
   width: 100%;
 }
 
@@ -638,21 +639,19 @@ select:focus + .menu-arrow {
 }
 
 .auth-form__check + label::before {
-  color: var(--emphasis-color-dark);
-  content: '\f00c';
+  color: var(--error-color);
+  content: '\f00d';
   cursor: pointer;
   display: inline-block;
   font-family: 'Font Awesome 5 Free';
-  font-size: .8rem;
+  font-size: .9rem;
   font-weight: 900;
-  opacity: .2;
   width: 1.4em;
 }
 
 .auth-form__check:checked + label::before {
+  color: var(--emphasis-color-dark);
   content: '\f00c';
-  opacity: 1;
-  text-shadow: 0 0 3px rgba(0,0,0,.1);
 }
 
 .auth-form__password-icon {

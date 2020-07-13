@@ -4,47 +4,47 @@
 <div class="content--centerd content--2col">
 
   <section class="keep-together">
-  <h1 class="primary-heading">Hey there,</h1>
+    <h1 class="primary-heading">Hey there,</h1>
 
-  {% include '_intro.html' %}
+    {% include '_intro.html' %}
 
-  <p><a href="{{ url_for('auth.register') }}" class="inline inline--dark">Register here</a> if you'd like to check it out.</p>
+    <p><a href="{{ url_for('auth.register') }}" class="inline inline--dark">Register here</a> if you'd like to check it out.</p>
   </section>
 
 
   <section class="keep-together">
-  <h1 class="primary-heading">Login</h1>
+    <h1 class="primary-heading">Login</h1>
 
-  <form action="" method="post" class="auth-form">
-    {{ form.hidden_tag() }}
+    <form action="" method="post" class="auth-form">
+      {{ form.hidden_tag() }}
 
-    {{ form.user_or_email.label }}
-    {% for error in form.user_or_email.errors %}
-    <span class="form-error">* {{ error }}</span>
-    {% endfor %}
-    {{ form.user_or_email(class="auth-form__field") }}
-
-    <div class="relative-container">
-      {{ form.password.label }}
-      {% for error in form.password.errors %}
+      {{ form.email.label }}
+      {% for error in form.email.errors %}
       <span class="form-error">* {{ error }}</span>
       {% endfor %}
-      {{ form.password(class="auth-form__field") }}
+      {{ form.email(class="auth-form__field") }}
 
-      <!-- show/hide icon must be nextElementSibling to password field -->
-      <i aria-hidden class="js-showhide-password fas fa-eye auth-form__password-icon" title="show/hide password" onlick=""></i>
-    </div>
+      <div class="relative-container">
+        {{ form.password.label }}
+        {% for error in form.password.errors %}
+        <span class="form-error">* {{ error }}</span>
+        {% endfor %}
+        {{ form.password(class="auth-form__field") }}
 
-    <a href="{{ url_for('auth.reset_password_request') }}" class="inline inline--dark">Forgot password?</a>
-    <div class="float-right">
+        <!-- show/hide icon must be nextElementSibling to password field -->
+        <i aria-hidden class="js-showhide-password fas fa-eye auth-form__password-icon" title="show/hide password" onlick=""></i>
+      </div>
+
       {{ form.remember_me(class="auth-form__check", checked="True") }} {{ form.remember_me.label }}
-    </div>
 
-    <p class="auth-form__btn">{{ form.submit(class="btn btn--solid") }}</p>
+      <div class="float-right">
+        <a href="{{ url_for('auth.reset_password_request') }}" class="inline inline--dark">Forgot password?</a>
+      </div>
 
-  </form>
+      <p class="auth-form__btn">{{ form.submit(class="btn btn--solid") }}</p>
+    </form>
 
-  {% include '_messages-auth.html' %}
+    {% include '_messages-auth.html' %}
 
   </section>
 
