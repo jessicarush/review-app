@@ -18,11 +18,11 @@
     <form action="" method="post" class="auth-form">
       {{ form.hidden_tag() }}
 
-      {{ form.email.label }}
-      {% for error in form.email.errors %}
+      {{ form.user_or_email.label }}
+      {% for error in form.user_or_email.errors %}
       <span class="form-error">* {{ error }}</span>
       {% endfor %}
-      {{ form.email(class="auth-form__field") }}
+      {{ form.user_or_email(class="auth-form__field") }}
 
       <div class="relative-container">
         {{ form.password.label }}
