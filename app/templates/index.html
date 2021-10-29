@@ -37,7 +37,7 @@
       <p>Looks like the repository <a href="{{ base_url }}{{ selected_repo.repository }}" class="inline inline--dark" target="_blank">{{ selected_repo.repository }}</a> has no topics. Remember, directories, hidden files (.dot-files) and README.md files are ignored. This was a design decision on my part because that's just how I organize my study notes. If any new files are added to the github repository, you'll be prompted to add them here the next time you login.</p>
     </section>
   {% else %}
-    <section class="topics-container padded-lr-small">
+    <section class="topics-container">
       {% for topic in topics %}
         {% set topicloop = loop %} <!-- to access the loop variable in _topic.html -->
         {% include '_topic.html' %}

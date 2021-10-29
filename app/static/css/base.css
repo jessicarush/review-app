@@ -31,6 +31,7 @@ see my github notes at https://github.com/jessicarush/css-notes */
 /* DEFAULTS --------------------------------------------------------------- */
 
 html {
+  background-color: var(--sidebar-color);
   font-size: 15px;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -392,11 +393,6 @@ td {
   padding-right: 35px;
 }
 
-.padded-lr-small {
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
 .relative-container {
   position: relative;
 }
@@ -429,6 +425,7 @@ td {
   grid-gap: 8px;
   grid-auto-rows: auto;
   grid-template-columns: repeat(auto-fit, minmax(335px, 1fr));
+  padding: 8px;
 }
 
 .topic {
@@ -436,14 +433,6 @@ td {
   border: solid 1px rgb(230,230,230);
   padding: 60px 20px 20px 20px;
   position: relative;
-}
-
-@media screen and (max-width: 690px) {
-  .topic {
-    box-sizing: border-box;
-    margin: 5px 0 0 0;
-    width: 100%;
-  }
 }
 
 .topic__id {
