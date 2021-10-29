@@ -44,6 +44,7 @@ body {
   background-image: url('../img/vintage_speckles.png');
   background-repeat: repeat;
   margin: 0;
+  min-height: 100vh;
 }
 
 p {
@@ -167,6 +168,9 @@ td {
   overflow-wrap: break-word;
 }
 
+.footer-copy {
+  font-size: .9rem;
+}
 
 
 /* LINKS & BUTTONS -------------------------------------------------------- */
