@@ -17,7 +17,7 @@ class Config():
         'sqlite:///' + os.path.join(basedir, 'data.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    # Extend csrf token expirey to 1 week
+    # Extend csrf token expiry to 1 week
     # Note: If set to None, the CSRF token is valid for the life of the session
     WTF_CSRF_TIME_LIMIT = 3600 * 24 * 7
 
@@ -34,6 +34,10 @@ class Config():
 
     # For receiving emailed error log, contact emails:
     ADMINS = [os.environ.get('ADMIN')]
+
+    # This email address is used for the following:
+    # - will be used as the sender for the password reset emails
+    HOSTNAME_EMAIL = 'no-reply@review.zebro.id'
 
     # The api url for a github repo containing files to be studied:
     API_START = 'https://api.github.com/repos/'
