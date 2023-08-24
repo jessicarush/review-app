@@ -12,13 +12,13 @@ from wtforms.validators import DataRequired, NumberRange, ValidationError
 
 class ReviewForm(FlaskForm):
     '''Form for entering review session data.'''
-    filename = SelectField('Log a study session', choices=[])
+    filename = SelectField('Review topic', choices=[])
     time_spent = IntegerField('For how long (mins)?', validators=[DataRequired()])
     skill_before = DecimalField(
         'Skill before', places=1, validators=[NumberRange(min=0, max=5)])
     skill_after = DecimalField(
         'Skill after', places=1, validators=[NumberRange(min=0, max=5)])
-    review_submit = SubmitField('Log review')
+    review_submit = SubmitField('Log study session')
 
 
 class DeleteReviewForm(FlaskForm):

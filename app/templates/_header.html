@@ -17,7 +17,7 @@
 
 {% else %}  <!-- the user is NOT coming from /update -->
 
-  <h1 class="secondary-heading">User</h1>
+  <h1 class="secondary-heading secondary-heading--nospaceabove">User</h1>
   <a href="" class="primary primary--active" title="User settings (coming soon)">
     {{ current_user.username }}
   </a>
@@ -125,11 +125,13 @@
           <div class="menu-arrow"></div>
         </div>
 
+        <div>
         {{ review_form.time_spent.label(class="secondary-heading") }}
         {% for error in review_form.time_spent.errors %}
         <span class="form-error">* {{ error }}</span>
         {% endfor %}
         {{ review_form.time_spent(class="sidebar-form__field") }}
+        </div>
 
         <div class="sidebar-form__field-group">
           <div>
@@ -228,6 +230,5 @@
     <li><a href="{{ url_for('main.admin') }}" class="primary primary--active">account admin</a></li>
     <li><a href="{{ url_for('auth.logout') }}" class="primary primary--active">logout</a></li>
   </ul>
-
 
 {% endif %}
